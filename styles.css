@@ -603,13 +603,17 @@ h1 {
   isolation: isolate;
   width: 100%;
   height: 100%;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   color: #fff;
   background: var(--tile-color);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   text-align: center;
+  padding: 0 12%;
 }
 
 .hex-card::before {
@@ -638,86 +642,78 @@ h1 {
 .hex-card-icon,
 .hex-card-title,
 .hex-card-subtitle {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  left: 12%;
-  right: 12%;
   display: block;
   color: #fff;
   text-align: center;
 }
 
 .hex-card-icon {
-  --icon-size: 1.65rem;
-  top: 7%;
-  left: 50%;
-  right: auto;
+  --icon-size: 1.6rem;
   width: var(--icon-size);
   height: var(--icon-size);
   display: grid;
   place-items: center;
+  margin-bottom: 0.25rem;
   border: 1px solid rgba(255, 255, 255, .3);
   border-radius: 50%;
   color: #fff;
   background: rgba(255, 255, 255, .12);
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, .12);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1;
   opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, -10px);
-  transition: all .35s var(--spring), visibility 0s linear .35s;
+  max-height: 0;
+  transform: translateY(-8px);
+  transition: opacity .3s ease, transform .3s ease, max-height .3s ease, margin .3s ease;
+  overflow: hidden;
 }
 
 .hex-card-title {
-  top: 50%;
-  font-size: 0.82rem;
+  margin: 0;
+  font-size: 0.85rem;
   font-weight: 800;
   line-height: 1.25;
   text-wrap: balance;
   text-shadow: 0 2px 9px rgba(0, 0, 0, .19);
-  transform: translateY(-50%);
-  transition: all .35s var(--spring);
+  transition: font-size .3s ease;
 }
 
 .hex-card-subtitle {
-  bottom: 8%;
-  font-size: 0.64rem;
+  margin-top: 0.35rem;
+  font-size: 0.68rem;
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.2;
   color: rgba(255, 255, 255, .95);
   text-wrap: balance;
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all .35s var(--spring), visibility 0s linear .35s;
+  max-height: 0;
+  transform: translateY(8px);
+  transition: opacity .3s ease, transform .3s ease, max-height .3s ease, margin .3s ease;
+  overflow: hidden;
 }
 
 .hex-tile:hover .hex-card-icon,
 .hex-tile:focus-within .hex-card-icon,
 .hex-tile:active .hex-card-icon {
   opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-  transition-delay: 0s;
+  max-height: 2rem;
+  transform: translateY(0);
 }
 
 .hex-tile:hover .hex-card-title,
 .hex-tile:focus-within .hex-card-title,
 .hex-tile:active .hex-card-title {
-  top: 48%;
-  font-size: 0.72rem;
-  line-height: 1.15;
-  transform: translateY(-50%);
+  font-size: 0.78rem;
 }
 
 .hex-tile:hover .hex-card-subtitle,
 .hex-tile:focus-within .hex-card-subtitle,
 .hex-tile:active .hex-card-subtitle {
   opacity: 1;
-  visibility: visible;
+  max-height: 3rem;
   transform: translateY(0);
-  transition-delay: 0s;
 }
 
 .hex-card:focus-visible {
