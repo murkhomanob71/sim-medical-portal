@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="SIM Group Medical Portal — Central Medical Department resources and operations.">
+  <title>SIM Group Medical Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="page-shell page-shell--dashboard">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="portal-brand">
+        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" class="brand-logo">
+        <div class="portal-brand-copy">
+          <p class="portal-brand-title">SIM Group Medical Portal</p>
+          <p class="portal-brand-subtitle">Central Medical Department</p>
+        </div>
+      </div>
+
+      <div class="clock-pill" aria-label="Live clock in Bangladesh time">
+        <span class="clock-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></span>
+        <span class="clock-copy">
+          <span class="clock-label">Bangladesh time</span>
+          <time class="clock-value" id="live-clock" aria-live="off"></time>
+        </span>
+      </div>
+
+      <a class="gradient-pill back-button" href="index.html" data-page-transition>
+        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+        <span>Back to Cover</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="dashboard-main" id="main-content">
+    <section class="portal-overview" aria-labelledby="portal-heading">
+      <p class="portal-kicker"><span class="kicker-dot" aria-hidden="true"></span>SIM GROUP · MEDICAL OPERATIONS</p>
+      <h1 id="portal-heading">Central medical resources</h1>
+      <p>Select a department or resource to continue.</p>
+    </section>
+
+    <section class="directory" aria-label="Medical portal directory">
+      <div class="hex-honeycomb">
+        <div class="hex-row hex-row--top">
+          <div class="hex-tile hex-tile--green">
+            <a class="hex-card" href="medical_requisition.html" aria-label="General Medical Requisition — Requisition, Stock, Catalog">
+              <span class="hex-card-icon" aria-hidden="true"><i class="bi bi-file-earmark-medical"></i></span>
+              <span class="hex-card-title">General Medical Requisition</span>
+              <span class="hex-card-subtitle">Requisition • Stock • Catalog</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hex-row hex-row--middle">
+          <div class="hex-tile hex-tile--blue">
+            <a class="hex-card" href="#" data-placeholder="true" aria-label="SIM Fabrics Ltd. — Notice Board and Sector Files">
+              <span class="hex-card-icon" aria-hidden="true"><i class="bi bi-building"></i></span>
+              <span class="hex-card-title">SIM Fabrics Ltd.</span>
+              <span class="hex-card-subtitle">Notice Board &amp; Sector Files</span>
+            </a>
+          </div>
+          <div class="hex-tile hex-tile--purple">
+            <a class="hex-card" href="#" data-placeholder="true" aria-label="SIM Group Central Medical Hub — Executive Medical Operations">
+              <span class="hex-card-icon" aria-hidden="true"><i class="bi bi-hospital"></i></span>
+              <span class="hex-card-title">SIM Group Central Medical Hub</span>
+              <span class="hex-card-subtitle">Executive Medical Operations</span>
+            </a>
+          </div>
+          <div class="hex-tile hex-tile--orange">
+            <a class="hex-card" href="#" data-placeholder="true" aria-label="Mozaffar Hossain Spinning Mills Ltd. — Notice Board and Sector Files">
+              <span class="hex-card-icon" aria-hidden="true"><i class="bi bi-diagram-3"></i></span>
+              <span class="hex-card-title">Mozaffar Hossain Spinning Mills Ltd.</span>
+              <span class="hex-card-subtitle">Notice Board &amp; Sector Files</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hex-row hex-row--bottom">
+          <div class="hex-tile hex-tile--teal">
+            <a class="hex-card" href="#" data-placeholder="true" aria-label="Notice Board and File Archive — Central Files Repository">
+              <span class="hex-card-icon" aria-hidden="true"><i class="bi bi-archive"></i></span>
+              <span class="hex-card-title">Notice Board &amp; File Archive</span>
+              <span class="hex-card-subtitle">Central Files Repository</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="portal-toast" role="status" aria-live="polite" data-toast></div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© 2026 SIM Group. All rights reserved.</p>
+      <p>Developed by: <a href="https://www.facebook.com/siratkhanbd" target="_blank" rel="noopener noreferrer" data-external-profile>Siratkhanbd</a></p>
+    </div>
+  </footer>
+</body>
+</html>
