@@ -475,7 +475,7 @@ h1 {
 
 .portal-overview {
   width: min(48rem, calc(100% - 2rem));
-  margin: clamp(1.35rem, 2.7vw, 2.15rem) auto .55rem;
+  margin: 0.5rem auto 0.2rem;
   text-align: center;
 }
 
@@ -503,18 +503,18 @@ h1 {
 .portal-overview h1 {
   margin: 0;
   color: var(--text-primary);
-  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  font-size: 1.65rem;
   font-weight: 750;
   letter-spacing: -.045em;
-  line-height: 1.18;
+  line-height: 1.15;
   text-wrap: balance;
 }
 
 .portal-overview > p:last-child {
-  margin: .45rem 0 0;
+  margin: 0.2rem 0 0;
   color: #74717b;
-  font-size: .9rem;
-  line-height: 1.5;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 .directory {
@@ -530,13 +530,13 @@ h1 {
   height margins interlock the rows with no vertical gaps.
 */
 .hex-honeycomb {
-  --hex-width: 11.5rem;
-  --hex-height: 10.0rem;
-  --hex-overlap: 2.5rem;
-  --hex-half-width: 5.75rem;
+  --hex-width: 9.5rem;
+  --hex-height: 8.25rem;
+  --hex-overlap: 2.05rem;
+  --hex-half-width: 4.75rem;
   width: 100%;
-  max-width: 70rem;
-  margin: 0.2rem auto 0.8rem;
+  max-width: 60rem;
+  margin: 0.1rem auto 0.4rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
