@@ -333,10 +333,16 @@ h1 {
 }
 
 /* Page 2: dashboard header */
-.page-shell--dashboard {
+.page-shell--dashboard:not(.requisition-page) {
   overflow: hidden;
   height: 100vh;
   height: 100svh;
+}
+
+.page-shell--requisition {
+  overflow-x: clip;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .topbar {
