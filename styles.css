@@ -466,21 +466,23 @@ h1 {
 
 /* Dashboard body and directory heading */
 .dashboard-main {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 0 0 .4rem;
+  padding: 0 0 0.4rem;
 }
 
 .portal-overview {
   width: min(48rem, calc(100% - 2rem));
-  margin: 0.5rem auto 0.2rem;
+  margin: 0.35rem auto 0.2rem;
   text-align: center;
 }
 
 .portal-kicker {
-  margin: 0 0 .42rem;
+  margin: 0 0 .35rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -521,7 +523,7 @@ h1 {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0 1rem .6rem;
+  padding: 0 1rem .4rem;
 }
 
 /*
@@ -530,13 +532,13 @@ h1 {
   height margins interlock the rows with no vertical gaps.
 */
 .hex-honeycomb {
-  --hex-width: 9.5rem;
-  --hex-height: 8.25rem;
-  --hex-overlap: 2.05rem;
-  --hex-half-width: 4.75rem;
+  --hex-width: 10.2rem;
+  --hex-height: 8.85rem;
+  --hex-overlap: 2.21rem;
+  --hex-half-width: 5.1rem;
   width: 100%;
-  max-width: 60rem;
-  margin: 0.1rem auto 0.4rem;
+  max-width: 65rem;
+  margin: 0.1rem auto 0.3rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -589,7 +591,7 @@ h1 {
 .hex-tile:hover,
 .hex-tile:focus-within {
   z-index: 50;
-  transform: scale(1.15);
+  transform: scale(1.3);
   filter:
     drop-shadow(0 8px 0 var(--tile-shadow))
     drop-shadow(0 23px 21px rgba(18, 17, 34, .27))
@@ -638,16 +640,16 @@ h1 {
 .hex-card-subtitle {
   position: absolute;
   z-index: 2;
-  left: 15%;
-  right: 15%;
+  left: 12%;
+  right: 12%;
   display: block;
   color: #fff;
   text-align: center;
 }
 
 .hex-card-icon {
-  --icon-size: clamp(2.2rem, 2.7vw, 2.5rem);
-  top: 6%;
+  --icon-size: 1.65rem;
+  top: 7%;
   left: 50%;
   right: auto;
   width: var(--icon-size);
@@ -659,36 +661,36 @@ h1 {
   color: #fff;
   background: rgba(255, 255, 255, .12);
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, .12);
-  font-size: 1.22rem;
+  font-size: 0.92rem;
   line-height: 1;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -14px);
-  transition: all .4s var(--spring), visibility 0s linear .4s;
+  transform: translate(-50%, -10px);
+  transition: all .35s var(--spring), visibility 0s linear .35s;
 }
 
 .hex-card-title {
   top: 50%;
-  font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+  font-size: 0.82rem;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.25;
   text-wrap: balance;
   text-shadow: 0 2px 9px rgba(0, 0, 0, .19);
   transform: translateY(-50%);
-  transition: all .4s var(--spring);
+  transition: all .35s var(--spring);
 }
 
 .hex-card-subtitle {
-  bottom: 18%;
-  font-size: clamp(0.68rem, 1vw, 0.78rem);
+  bottom: 8%;
+  font-size: 0.64rem;
   font-weight: 500;
-  line-height: 1.2;
-  color: rgba(255, 255, 255, .9);
+  line-height: 1.15;
+  color: rgba(255, 255, 255, .95);
   text-wrap: balance;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px);
-  transition: all .4s var(--spring), visibility 0s linear .4s;
+  transform: translateY(10px);
+  transition: all .35s var(--spring), visibility 0s linear .35s;
 }
 
 .hex-tile:hover .hex-card-icon,
@@ -704,9 +706,9 @@ h1 {
 .hex-tile:focus-within .hex-card-title,
 .hex-tile:active .hex-card-title {
   top: 48%;
-  font-size: clamp(.76rem, .96vw, .94rem);
-  line-height: 1.12;
-  transform: translateY(-50%) scale(.96);
+  font-size: 0.72rem;
+  line-height: 1.15;
+  transform: translateY(-50%);
 }
 
 .hex-tile:hover .hex-card-subtitle,
