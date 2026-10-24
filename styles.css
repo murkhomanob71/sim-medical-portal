@@ -137,7 +137,9 @@ h1 {
 
 /* Page 1: cover */
 .page-shell--cover {
-  overflow-x: clip;
+  overflow: hidden;
+  height: 100vh;
+  height: 100svh;
 }
 
 .cover-main {
@@ -147,7 +149,7 @@ h1 {
   min-height: 0;
   display: grid;
   place-items: center;
-  padding: clamp(1.25rem, 5vh, 3.5rem) clamp(1rem, 3vw, 2rem);
+  padding: 0.5rem 1rem;
 }
 
 .cover-main::before {
@@ -163,11 +165,11 @@ h1 {
 
 .cover-content {
   position: relative;
-  width: min(100%, 54rem);
+  width: min(100%, 48rem);
   margin-inline: auto;
-  padding: clamp(2rem, 5vw, 4.25rem) clamp(1.25rem, 5.5vw, 5rem);
+  padding: 1.8rem 2.5rem 2.1rem;
   border: 1px solid rgba(74, 20, 140, .1);
-  border-radius: clamp(1.6rem, 3.5vw, 2.6rem);
+  border-radius: 2rem;
   background: linear-gradient(155deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .78));
   box-shadow: 0 28px 80px rgba(43, 26, 75, .1), 0 5px 18px rgba(43, 26, 75, .05), inset 0 1px 0 rgba(255, 255, 255, .94);
   backdrop-filter: blur(12px);
@@ -194,10 +196,10 @@ h1 {
 }
 
 .cover-logo-wrap {
-  width: clamp(7rem, 13vw, 9rem);
+  width: 6.5rem;
   aspect-ratio: 1 / 1;
-  margin: 0 auto clamp(1.5rem, 3vw, 2rem);
-  padding: .4rem;
+  margin: 0 auto 1.2rem;
+  padding: .3rem;
   display: grid;
   place-items: center;
   border: 1px solid rgba(74, 20, 140, .12);
@@ -218,13 +220,13 @@ h1 {
 .cover-heading {
   display: grid;
   justify-items: center;
-  gap: .42rem;
+  gap: .3rem;
 }
 
 .cover-title {
   margin: 0;
   color: var(--text-primary);
-  font-size: clamp(2rem, 5.2vw, 4.5rem);
+  font-size: 3.2rem;
   font-weight: 800;
   letter-spacing: .04em;
   line-height: 1.06;
@@ -232,19 +234,19 @@ h1 {
 }
 
 .cover-group {
-  margin: .25rem 0 0;
+  margin: .15rem 0 0;
   padding-left: .4em;
   color: var(--purple-dark);
-  font-size: clamp(.9rem, 1.7vw, 1.16rem);
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: .4em;
   line-height: 1.4;
 }
 
 .cover-divider {
-  width: 3.8rem;
-  height: .22rem;
-  margin: 1.55rem auto 1.3rem;
+  width: 3.5rem;
+  height: .2rem;
+  margin: 1.1rem auto 1rem;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--purple), var(--orange), var(--green));
   opacity: .78;
@@ -252,21 +254,21 @@ h1 {
 
 .cover-address {
   width: fit-content;
-  max-width: min(100%, 38rem);
-  min-height: 3rem;
+  max-width: min(100%, 36rem);
+  min-height: 2.6rem;
   margin: 0 auto;
-  padding: .72rem 1.1rem;
+  padding: .5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .6rem;
+  gap: .5rem;
   border: 1px solid rgba(74, 20, 140, .09);
   border-radius: 999px;
   color: var(--text-secondary);
   background: rgba(255, 255, 255, .62);
-  font-size: clamp(.82rem, 1.2vw, .96rem);
+  font-size: .88rem;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.4;
   text-align: left;
   text-wrap: balance;
 }
@@ -274,23 +276,23 @@ h1 {
 .cover-address .bi {
   flex: 0 0 auto;
   color: var(--purple-dark);
-  font-size: 1rem;
+  font-size: .95rem;
 }
 
 .gradient-pill {
-  min-height: 2.85rem;
+  min-height: 2.6rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .72rem;
-  padding: .78rem 1.2rem;
+  gap: .65rem;
+  padding: .65rem 1.1rem;
   border: 0;
   border-radius: 999px;
   color: #fff;
   background: linear-gradient(90deg, var(--purple), var(--orange), var(--green));
-  box-shadow: 0 5px 0 rgba(74, 20, 140, .2), 0 13px 25px rgba(74, 20, 140, .2);
+  box-shadow: 0 4px 0 rgba(74, 20, 140, .2), 0 10px 20px rgba(74, 20, 140, .2);
   font: inherit;
-  font-size: .92rem;
+  font-size: .88rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
@@ -301,12 +303,12 @@ h1 {
   color: #fff;
   transform: translateY(-3px);
   filter: saturate(1.1);
-  box-shadow: 0 8px 0 rgba(74, 20, 140, .2), 0 19px 31px rgba(74, 20, 140, .25);
+  box-shadow: 0 7px 0 rgba(74, 20, 140, .2), 0 16px 26px rgba(74, 20, 140, .25);
 }
 
 .gradient-pill:active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 rgba(74, 20, 140, .2), 0 7px 14px rgba(74, 20, 140, .19);
+  box-shadow: 0 2px 0 rgba(74, 20, 140, .2), 0 6px 12px rgba(74, 20, 140, .19);
 }
 
 .gradient-pill:focus-visible {
@@ -315,14 +317,14 @@ h1 {
 }
 
 .enter-button {
-  min-width: 12.4rem;
-  margin-top: 1.8rem;
-  padding: 1.05rem 1.65rem;
-  font-size: 1rem;
+  min-width: 11.5rem;
+  margin-top: 1.3rem;
+  padding: .85rem 1.4rem;
+  font-size: .95rem;
 }
 
 .enter-button .bi {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   transition: transform .28s var(--spring);
 }
 
@@ -332,7 +334,9 @@ h1 {
 
 /* Page 2: dashboard header */
 .page-shell--dashboard {
-  overflow-x: clip;
+  overflow: hidden;
+  height: 100vh;
+  height: 100svh;
 }
 
 .topbar {
@@ -526,13 +530,13 @@ h1 {
   height margins interlock the rows with no vertical gaps.
 */
 .hex-honeycomb {
-  --hex-width: clamp(10.5rem, 18vw, 15.5rem);
-  --hex-height: clamp(9.135rem, 15.66vw, 13.48rem);
-  --hex-overlap: clamp(2.284rem, 3.915vw, 3.37rem);
-  --hex-half-width: clamp(5.25rem, 9vw, 7.75rem);
+  --hex-width: 11.5rem;
+  --hex-height: 10.0rem;
+  --hex-overlap: 2.5rem;
+  --hex-half-width: 5.75rem;
   width: 100%;
-  max-width: 82rem;
-  margin: .45rem auto 1.45rem;
+  max-width: 70rem;
+  margin: 0.2rem auto 0.8rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
