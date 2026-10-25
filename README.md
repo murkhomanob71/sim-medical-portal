@@ -128,12 +128,29 @@ Everything is stored in this browser's `localStorage`:
 
 ## Versioning
 
-`git` is not used in this folder. Before each change, copy the affected files into a
-timestamped folder:
+**Local snapshots** — before each change, copy the affected files into a timestamped folder:
 
 ```
 backups/<yyyyMMdd-HHmmss>/
 ```
+
+`backups/` is listed in `.gitignore`, so snapshots never leave this PC.
+
+**GitHub backup** — no `git` installation is required:
+
+```
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\setup-github-login.ps1   # once only
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\backup-to-github.ps1     # every backup
+```
+
+`setup-github-login.ps1` prints a device code; enter it at <https://github.com/login/device>
+(a phone works — the code only has to be authorised somewhere you are signed in). The
+issued token is kept DPAPI-encrypted for the current Windows user in
+`%APPDATA%\sim-medical-portal\github-token.dat`, so later backups never ask for a login.
+
+`backup-to-github.ps1` uploads this folder as one commit on branch `v3-portal`. Useful
+switches: `-DryRun` (list files only), `-Branch <name>` (save as a new version branch),
+`-Message "<text>"`. Running it twice with no file changes creates no new commit.
 
 ## Footer
 
