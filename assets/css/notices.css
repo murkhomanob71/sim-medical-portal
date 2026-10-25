@@ -1,0 +1,507 @@
+/* ==========================================================================
+   notices.css — Notice Board module (per-sector notices, offline)
+   ========================================================================== */
+
+.notice-main {
+  width: min(100%, var(--content-width));
+  margin: 0 auto;
+  padding: clamp(1.4rem, 3vw, 2.6rem) clamp(1rem, 3.5vw, 3.2rem) 2.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* --- Heading ------------------------------------------------------------- */
+.notice-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.6rem;
+}
+
+.notice-eyebrow {
+  margin: 0 0 .4rem;
+  color: var(--purple);
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.notice-heading h1 {
+  margin: 0;
+  color: var(--text-primary, #1a1a1a);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.15;
+}
+
+.notice-heading p.notice-subtitle {
+  margin: .45rem 0 0;
+  max-width: 46rem;
+  color: #6f6c78;
+  font-size: .92rem;
+  line-height: 1.55;
+}
+
+.notice-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* --- Category chips ------------------------------------------------------ */
+.notice-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem;
+  padding: .75rem .9rem;
+  border: 1px solid rgba(26, 26, 26, .07);
+  border-radius: .95rem;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(31, 23, 54, .05);
+}
+
+.chip {
+  padding: .38rem .8rem;
+  border: 1px solid rgba(74, 20, 140, .16);
+  border-radius: 999px;
+  background: #fff;
+  color: #4a4552;
+  font-size: .75rem;
+  font-weight: 650;
+  line-height: 1.2;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.chip:hover {
+  border-color: rgba(74, 20, 140, .38);
+  background: rgba(74, 20, 140, .05);
+}
+
+.chip.is-active {
+  border-color: transparent;
+  background: linear-gradient(135deg, #6a1b9a, #4a148c);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(74, 20, 140, .22);
+}
+
+.chip-count {
+  margin-left: .3rem;
+  padding: 0 .34rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .08);
+  font-size: .66rem;
+  font-weight: 750;
+}
+
+.chip.is-active .chip-count {
+  background: rgba(255, 255, 255, .24);
+}
+
+/* --- Layout -------------------------------------------------------------- */
+.notice-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(18rem, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+/* --- Notice cards -------------------------------------------------------- */
+.notice-list-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.notice-list {
+  display: grid;
+  gap: .7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notice-card {
+  position: relative;
+  padding: .95rem 1.05rem;
+  border: 1px solid rgba(26, 26, 26, .08);
+  border-left: 4px solid var(--accent, #6a1b9a);
+  border-radius: .85rem;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(31, 23, 54, .05);
+}
+
+.notice-card--pinned {
+  background: linear-gradient(120deg, rgba(255, 152, 0, .07), rgba(255, 255, 255, 0) 55%), #fff;
+}
+
+.notice-card--medical { --accent: #1b7a3e; }
+.notice-card--safety { --accent: #e65100; }
+.notice-card--hr { --accent: #00695c; }
+.notice-card--general { --accent: #6a1b9a; }
+
+.notice-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem .6rem;
+  margin-bottom: .35rem;
+}
+
+.notice-card-head h2 {
+  flex: 1 1 14rem;
+  min-width: 0;
+  margin: 0;
+  color: #1f1d26;
+  font-size: .98rem;
+  font-weight: 750;
+  letter-spacing: -.01em;
+  line-height: 1.3;
+}
+
+.notice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .14rem .5rem;
+  border-radius: 999px;
+  background: rgba(74, 20, 140, .08);
+  color: #5c2a86;
+  font-size: .64rem;
+  font-weight: 750;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.notice-badge--pinned {
+  background: rgba(230, 81, 0, .12);
+  color: #b34700;
+}
+
+.notice-badge--medical { background: rgba(27, 122, 62, .1); color: #1b7a3e; }
+.notice-badge--safety { background: rgba(230, 81, 0, .12); color: #b34700; }
+.notice-badge--hr { background: rgba(0, 105, 92, .1); color: #00695c; }
+.notice-badge--general { background: rgba(74, 20, 140, .08); color: #5c2a86; }
+
+.notice-card p.notice-body {
+  margin: 0;
+  color: #4d4955;
+  font-size: .83rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.notice-card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-top: .7rem;
+  padding-top: .55rem;
+  border-top: 1px dashed rgba(26, 26, 26, .1);
+}
+
+.notice-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .3rem .9rem;
+  color: #7b7785;
+  font-size: .72rem;
+}
+
+.notice-actions {
+  display: inline-flex;
+  gap: .35rem;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 1px solid rgba(26, 26, 26, .12);
+  border-radius: .55rem;
+  background: #fff;
+  color: #4a4552;
+  font-size: .8rem;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
+}
+
+.icon-button:hover {
+  border-color: rgba(74, 20, 140, .4);
+  background: rgba(74, 20, 140, .05);
+  color: #4a148c;
+}
+
+.icon-button--danger:hover {
+  border-color: rgba(185, 28, 28, .45);
+  background: rgba(185, 28, 28, .06);
+  color: #b91c1c;
+}
+
+.empty-state {
+  padding: 2.2rem 1rem;
+  border: 1px dashed rgba(26, 26, 26, .16);
+  border-radius: .95rem;
+  background: rgba(255, 255, 255, .6);
+  color: #7b7785;
+  font-size: .85rem;
+  text-align: center;
+}
+
+/* --- Compose card -------------------------------------------------------- */
+.compose-card {
+  position: sticky;
+  top: 1rem;
+  padding: 1rem 1.05rem 1.1rem;
+  border: 1px solid rgba(26, 26, 26, .07);
+  border-radius: .95rem;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(31, 23, 54, .07);
+}
+
+.compose-card h2 {
+  margin: 0 0 .15rem;
+  color: #1f1d26;
+  font-size: .95rem;
+  font-weight: 750;
+}
+
+.compose-card .compose-hint {
+  margin: 0 0 .8rem;
+  color: #7b7785;
+  font-size: .74rem;
+  line-height: 1.45;
+}
+
+.compose-field {
+  display: grid;
+  gap: .28rem;
+  margin-bottom: .65rem;
+}
+
+.compose-field span {
+  color: #5b5664;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.compose-field input,
+.compose-field select,
+.compose-field textarea {
+  width: 100%;
+  padding: .48rem .6rem;
+  border: 1px solid rgba(26, 26, 26, .14);
+  border-radius: .55rem;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: .82rem;
+  font-family: inherit;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.compose-field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.compose-field input:focus,
+.compose-field select:focus,
+.compose-field textarea:focus {
+  outline: none;
+  border-color: rgba(74, 20, 140, .45);
+  box-shadow: 0 0 0 3px rgba(74, 20, 140, .1);
+}
+
+.compose-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: .2rem 0 .85rem;
+}
+
+.compose-check {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: #4d4955;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.compose-submit {
+  width: 100%;
+  justify-content: center;
+}
+
+.compose-status {
+  min-height: 1rem;
+  margin: .5rem 0 0;
+  color: #1b7a3e;
+  font-size: .74rem;
+  font-weight: 600;
+}
+
+.compose-status.is-error {
+  color: #b91c1c;
+}
+
+/* --- Toolbar controls ---------------------------------------------------- */
+.notice-search {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-width: 15rem;
+  padding: .45rem .8rem;
+  border: 1px solid rgba(26, 26, 26, .14);
+  border-radius: 999px;
+  background: #fff;
+  color: #7b7785;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.notice-search:focus-within {
+  border-color: rgba(74, 20, 140, .45);
+  box-shadow: 0 0 0 3px rgba(74, 20, 140, .1);
+}
+
+.notice-search input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #1a1a1a;
+  font-size: .8rem;
+  font-family: inherit;
+}
+
+.notice-search input:focus {
+  outline: none;
+}
+
+.notice-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .48rem .9rem;
+  border: 1px solid rgba(74, 20, 140, .2);
+  border-radius: 999px;
+  background: #fff;
+  color: #4a148c;
+  font-size: .77rem;
+  font-weight: 650;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.notice-button:hover {
+  border-color: rgba(74, 20, 140, .45);
+  box-shadow: 0 8px 20px rgba(74, 20, 140, .14);
+  transform: translateY(-1px);
+}
+
+.sector-select {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .42rem .7rem;
+  border: 1px solid rgba(74, 20, 140, .16);
+  border-radius: 999px;
+  background: #fff;
+  color: #4a148c;
+  font-size: .76rem;
+  font-weight: 650;
+}
+
+.sector-select select {
+  max-width: 16rem;
+  border: 0;
+  background: transparent;
+  color: #1a1a1a;
+  font-size: .78rem;
+  font-weight: 650;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.sector-select select:focus {
+  outline: none;
+}
+
+/* --- Print --------------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 14mm 12mm;
+  }
+
+  .topbar,
+  .site-footer,
+  .notice-controls,
+  .notice-filters,
+  .compose-card,
+  .notice-actions,
+  .skip-link,
+  .portal-toast {
+    display: none !important;
+  }
+
+  body,
+  html {
+    background: #fff !important;
+  }
+
+  .notice-main {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .notice-layout {
+    display: block !important;
+  }
+
+  .notice-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    margin-bottom: .5rem;
+  }
+
+  .notice-card-head h2 {
+    font-size: 11pt !important;
+  }
+
+  .notice-card p.notice-body {
+    color: #111 !important;
+    font-size: 9.5pt !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .notice-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .compose-card {
+    position: static;
+  }
+}

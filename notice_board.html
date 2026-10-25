@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="SIM Group Medical Portal — sector notice board and file archive.">
+  <title>Notice Board · SIM Medical Portal</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="assets/css/inter.css">
+  <link rel="stylesheet" href="assets/icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/notices.css">
+
+  <script src="app.js" defer></script>
+  <script src="assets/js/notices.js" defer></script>
+</head>
+<body class="page-shell page-shell--notices">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="portal-brand">
+        <img src="logo.png" alt="SIM Group Logo" class="brand-logo">
+        <div class="portal-brand-copy">
+          <p class="portal-brand-title">SIM Group Medical Portal</p>
+          <p class="portal-brand-subtitle">Central Medical Department</p>
+        </div>
+      </div>
+
+      <div class="clock-pill" aria-label="Live clock in Bangladesh time">
+        <span class="clock-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></span>
+        <span class="clock-copy">
+          <span class="clock-label">Bangladesh time</span>
+          <time class="clock-value" id="live-clock" aria-live="off"></time>
+        </span>
+      </div>
+
+      <a class="gradient-pill back-button" href="dashboard.html" data-page-transition>
+        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+        <span>Back to Dashboard</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="notice-main" id="main-content">
+    <section class="notice-heading" aria-labelledby="notice-title">
+      <div>
+        <p class="notice-eyebrow">Notice Board</p>
+        <h1 id="notice-title">SIM Fabrics Ltd.</h1>
+        <p class="notice-subtitle" id="noticeSubtitle">Departmental notices, circulars and sector files — stored on this computer.</p>
+      </div>
+
+      <div class="notice-controls">
+        <label class="sector-select" for="sectorSelect">
+          <i class="bi bi-buildings" aria-hidden="true"></i>
+          <select id="sectorSelect" aria-label="Select sector"></select>
+        </label>
+        <button class="notice-button" type="button" id="printNotices">
+          <i class="bi bi-printer" aria-hidden="true"></i><span>Print</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="notice-filters" aria-label="Filter notices">
+      <button class="chip is-active" type="button" data-category="all">All <span class="chip-count" data-count="all">0</span></button>
+      <button class="chip" type="button" data-category="general">General <span class="chip-count" data-count="general">0</span></button>
+      <button class="chip" type="button" data-category="medical">Medical <span class="chip-count" data-count="medical">0</span></button>
+      <button class="chip" type="button" data-category="safety">Safety <span class="chip-count" data-count="safety">0</span></button>
+      <button class="chip" type="button" data-category="hr">HR <span class="chip-count" data-count="hr">0</span></button>
+
+      <label class="notice-search" for="noticeSearch" style="margin-left:auto">
+        <i class="bi bi-search" aria-hidden="true"></i>
+        <input id="noticeSearch" type="search" placeholder="Search notices…" aria-label="Search notices">
+      </label>
+    </section>
+
+    <div class="notice-layout">
+      <section aria-labelledby="listHeading">
+        <h2 id="listHeading" class="notice-list-heading">Notices</h2>
+        <ul class="notice-list" id="noticeList" aria-live="polite"></ul>
+      </section>
+
+      <aside class="compose-card" aria-labelledby="composeHeading">
+        <h2 id="composeHeading">Publish a notice</h2>
+        <p class="compose-hint">Notices are saved in this browser and stay available offline.</p>
+
+        <form id="noticeForm" novalidate>
+          <label class="compose-field" for="noticeTitleInput">
+            <span>Title</span>
+            <input id="noticeTitleInput" type="text" maxlength="120" placeholder="e.g. Free health check-up camp" required>
+          </label>
+
+          <label class="compose-field" for="noticeCategory">
+            <span>Category</span>
+            <select id="noticeCategory">
+              <option value="general">General</option>
+              <option value="medical">Medical</option>
+              <option value="safety">Safety</option>
+              <option value="hr">HR</option>
+            </select>
+          </label>
+
+          <label class="compose-field" for="noticeBodyInput">
+            <span>Details</span>
+            <textarea id="noticeBodyInput" maxlength="2000" placeholder="Write the full notice text here…" required></textarea>
+          </label>
+
+          <div class="compose-row">
+            <label class="compose-check" for="noticePinned">
+              <input id="noticePinned" type="checkbox">
+              <span>Pin to the top</span>
+            </label>
+          </div>
+
+          <button class="gradient-pill compose-submit" type="submit">
+            <i class="bi bi-send" aria-hidden="true"></i><span>Publish notice</span>
+          </button>
+          <p class="compose-status" id="composeStatus" role="status" aria-live="polite"></p>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© 2026 SIM Group. All rights reserved.</p>
+      <p>Developed by: <a href="https://www.facebook.com/siratkhanbd" target="_blank" rel="noopener noreferrer" data-external-profile>Siratkhanbd</a></p>
+    </div>
+  </footer>
+</body>
+</html>

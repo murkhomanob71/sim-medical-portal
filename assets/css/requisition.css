@@ -1,0 +1,827 @@
+/* Extracted from medical_requisition.html (v2) */
+
+    :root {
+      --req-card-border: rgba(74, 20, 140, .09);
+      --req-muted: #777381;
+      --req-soft: #f7f8fc;
+      --req-shadow: 0 18px 48px rgba(31, 23, 54, .075);
+    }
+
+    .requisition-main {
+      width: min(100%, 1480px);
+      flex: 1 0 auto;
+      margin-inline: auto;
+      padding: clamp(1.25rem, 3vw, 2.7rem) clamp(1rem, 3vw, 2rem) 2.5rem;
+    }
+
+    .requisition-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .requisition-eyebrow,
+    .section-eyebrow {
+      margin: 0 0 .45rem;
+      color: var(--purple-dark);
+      font-size: .69rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .requisition-heading h1 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: clamp(1.65rem, 3.2vw, 2.45rem);
+      font-weight: 800;
+      letter-spacing: -.045em;
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+
+    .requisition-heading .heading-subtitle {
+      margin: .55rem 0 0;
+      color: var(--req-muted);
+      font-size: .92rem;
+      line-height: 1.55;
+    }
+
+    .offline-badge {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: .48rem;
+      padding: .62rem .82rem;
+      border: 1px solid rgba(27, 94, 32, .13);
+      border-radius: 999px;
+      color: #276331;
+      background: rgba(255, 255, 255, .75);
+      box-shadow: 0 5px 16px rgba(35, 57, 39, .05);
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .offline-badge .bi {
+      color: #24803b;
+      font-size: .9rem;
+    }
+
+    .workspace-card,
+    .report-card,
+    .catalog-card {
+      border: 1px solid var(--req-card-border);
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: var(--req-shadow);
+    }
+
+    .workspace-card {
+      margin-bottom: 1.3rem;
+      padding: 1.5rem;
+    }
+
+    .workspace-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tabs {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .32rem;
+      border: 1px solid rgba(26, 26, 26, .055);
+      border-radius: 999px;
+      background: #f1f2f6;
+    }
+
+    .tab-button {
+      min-height: 2.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      padding: .68rem 1.05rem;
+      border: 0;
+      border-radius: 999px;
+      color: #676571;
+      background: transparent;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all .25s var(--spring);
+    }
+
+    .tab-button:hover:not(.active) {
+      color: var(--purple);
+      background: rgba(255, 255, 255, .75);
+    }
+
+    .tab-button.active {
+      color: #fff;
+      background: linear-gradient(100deg, var(--purple), var(--purple-dark), var(--orange));
+      box-shadow: 0 5px 12px rgba(74, 20, 140, .22);
+    }
+
+    .tab-button .bi {
+      font-size: .95rem;
+    }
+
+    .action-toolbar {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      flex-wrap: wrap;
+    }
+
+    .action-button {
+      min-height: 2.65rem;
+      padding: .76rem 1rem;
+      font-size: .79rem;
+    }
+
+    .action-button .bi {
+      font-size: .95rem;
+    }
+
+    .status-message {
+      min-width: 9rem;
+      color: var(--req-muted);
+      font-size: .75rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .status-message.is-success { color: #23652e; }
+    .status-message.is-error { color: #b42318; }
+
+    .report-card,
+    .catalog-card {
+      padding: 1.5rem;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .panel-heading h2,
+    .catalog-heading h2 {
+      margin: 0;
+      color: #201b2a;
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.25;
+    }
+
+    .section-eyebrow {
+      margin-bottom: .3rem;
+      font-size: .61rem;
+      letter-spacing: .14em;
+    }
+
+    .month-picker {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      color: #625e6b;
+      font-size: .8rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .field-control,
+    .table-input {
+      min-height: 2.5rem;
+      padding: .55rem .72rem;
+      border: 1px solid #d9d7e1;
+      border-radius: .65rem;
+      outline: none;
+      color: #272330;
+      background: #fff;
+      font: inherit;
+      font-size: .84rem;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .field-control:focus,
+    .table-input:focus {
+      border-color: #8b5bb7;
+      box-shadow: 0 0 0 3px rgba(106, 27, 154, .13);
+    }
+
+    .period-title {
+      min-height: 1.35rem;
+      margin: -.45rem 0 1rem;
+      color: #5b5664;
+      font-size: .88rem;
+      font-weight: 650;
+      text-align: center;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #e6e4eb;
+      border-radius: .9rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      color: #4b4654;
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+
+    .report-table thead {
+      background: #f6f6f9;
+    }
+
+    .report-table th {
+      padding: .78rem .85rem;
+      border-bottom: 1px solid #e3e1e8;
+      color: #4b4654;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .025em;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .report-table td {
+      padding: .68rem .85rem;
+      border-bottom: 1px solid #eeedf1;
+      vertical-align: middle;
+    }
+
+    .report-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .report-table tbody tr:hover {
+      background: rgba(106, 27, 154, .025);
+    }
+
+    .report-table tfoot td {
+      padding: .85rem;
+      border-top: 1px solid #ddd9e5;
+      border-bottom: 0;
+      color: #221d2a;
+      background: #faf9fc;
+      font-weight: 800;
+    }
+
+    .report-table .num,
+    .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .table-input {
+      width: 6rem;
+      min-height: 2.15rem;
+      padding: .38rem .55rem;
+      border-radius: .55rem;
+      font-size: .8rem;
+    }
+
+    .table-input.input-wide { width: 8rem; }
+
+    .qty-entry {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      white-space: nowrap;
+    }
+
+    .unit-label {
+      color: #777381;
+      font-size: .73rem;
+    }
+
+    .table-action,
+    .quiet-button {
+      min-height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: .42rem .7rem;
+      border: 1px solid rgba(180, 35, 24, .15);
+      border-radius: .6rem;
+      color: #b42318;
+      background: #fff7f6;
+      font: inherit;
+      font-size: .73rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+
+    .table-action:hover,
+    .quiet-button:hover {
+      border-color: rgba(180, 35, 24, .28);
+      background: #fff0ed;
+    }
+
+    .empty-row td {
+      padding: 1.5rem;
+      color: #85818d;
+      text-align: center;
+    }
+
+    .signature-editor {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: .75rem;
+      margin: 1.2rem 0 0;
+      padding: 1rem;
+      border: 1px solid #eceaf0;
+      border-radius: .9rem;
+      background: #fbfafe;
+    }
+
+    .signature-editor label,
+    .product-form label {
+      display: flex;
+      flex-direction: column;
+      gap: .38rem;
+      color: #625e6b;
+      font-size: .73rem;
+      font-weight: 700;
+    }
+
+    .report-signature {
+      width: min(100%, 22rem);
+      margin: 1.6rem 0 0 auto;
+      color: #302b37;
+      font-size: .84rem;
+      line-height: 1.5;
+    }
+
+    .report-signature .regards {
+      margin: 0 0 1.1rem;
+      color: #605b67;
+      font-weight: 600;
+    }
+
+    .signature-line {
+      width: 12rem;
+      height: 2rem;
+      border-bottom: 1px solid #6e6975;
+    }
+
+    .signature-name,
+    .signature-title,
+    .signature-company {
+      display: block;
+    }
+
+    .signature-name {
+      margin-top: .45rem;
+      font-weight: 800;
+    }
+
+    .signature-title {
+      color: #686370;
+      font-size: .78rem;
+    }
+
+    .signature-company {
+      margin-top: .45rem;
+      color: var(--purple-dark);
+      font-weight: 700;
+    }
+
+    .catalog-card {
+      margin-top: 1.35rem;
+    }
+
+    .catalog-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: .85rem;
+    }
+
+    .catalog-description {
+      margin: .4rem 0 0;
+      color: var(--req-muted);
+      font-size: .82rem;
+      line-height: 1.55;
+    }
+
+    .catalog-count {
+      flex: 0 0 auto;
+      padding: .42rem .72rem;
+      border-radius: 999px;
+      color: var(--purple-dark);
+      background: rgba(106, 27, 154, .08);
+      font-size: .73rem;
+      font-weight: 800;
+    }
+
+    .product-form {
+      display: grid;
+      grid-template-columns: minmax(10rem, 1.5fr) minmax(6rem, .65fr) minmax(8rem, .9fr) minmax(10rem, 1fr) auto;
+      align-items: end;
+      gap: .75rem;
+      margin: 1rem 0 1.15rem;
+      padding: 1rem;
+      border: 1px solid #eceaf0;
+      border-radius: .9rem;
+      background: #fbfafe;
+    }
+
+    .product-form input,
+    .product-form select {
+      width: 100%;
+    }
+
+    .add-product-button {
+      min-height: 2.55rem;
+      padding: .65rem .95rem;
+      border: 1px solid rgba(74, 20, 140, .18);
+      border-radius: .7rem;
+      color: #fff;
+      background: linear-gradient(100deg, var(--purple), var(--purple-dark));
+      box-shadow: 0 6px 13px rgba(74, 20, 140, .17);
+      font: inherit;
+      font-size: .79rem;
+      font-weight: 750;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .add-product-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 9px 17px rgba(74, 20, 140, .2);
+    }
+
+    .product-checkbox {
+      width: 1.08rem;
+      height: 1.08rem;
+      accent-color: var(--purple-dark);
+      cursor: pointer;
+    }
+
+    .catalog-table {
+      min-width: 760px;
+    }
+
+    .stock-table {
+      min-width: 1020px;
+    }
+
+    .print-heading {
+      display: none;
+    }
+
+    .print-heading h1 {
+      margin: 0 0 .2rem;
+      color: #111;
+      font-size: 16pt;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .print-heading p {
+      margin: 0 0 1rem;
+      color: #333;
+      font-size: 10pt;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .requisition-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .85rem;
+      }
+
+      .workspace-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .action-toolbar {
+        width: 100%;
+      }
+
+      .status-message {
+        margin-left: auto;
+      }
+
+      .product-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .product-form > label:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .requisition-main {
+        padding-top: 1.25rem;
+      }
+
+      .workspace-card {
+        padding: .8rem;
+      }
+
+      .report-card,
+      .catalog-card {
+        padding: 1rem;
+      }
+
+      .tabs {
+        width: 100%;
+      }
+
+      .tab-button {
+        flex: 1 1 50%;
+        padding-inline: .55rem;
+        font-size: .72rem;
+      }
+
+      .action-toolbar {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .action-button {
+        width: 100%;
+        gap: .42rem;
+        padding-inline: .65rem;
+        font-size: .72rem;
+      }
+
+      .status-message {
+        grid-column: 1 / -1;
+        margin: 0;
+        text-align: left;
+      }
+
+      .panel-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .month-picker {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .month-picker .field-control {
+        flex: 0 1 11rem;
+      }
+
+      .signature-editor {
+        grid-template-columns: 1fr;
+      }
+
+      .product-form {
+        grid-template-columns: 1fr 1fr;
+        padding: .8rem;
+      }
+
+      .product-form > label:first-child,
+      .product-form > label:nth-child(4),
+      .product-form .add-product-button {
+        grid-column: 1 / -1;
+      }
+
+      .catalog-heading {
+        align-items: flex-start;
+      }
+
+      .report-signature {
+        margin-left: 0;
+      }
+
+      .offline-badge {
+        font-size: .7rem;
+      }
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+
+      table {
+        font-size: 10px !important;
+        width: 100% !important;
+      }
+
+      th,
+      td {
+        padding: 4px 2px !important;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #111 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 10pt !important;
+      }
+
+      body.page-shell--dashboard {
+        display: block !important;
+        overflow: visible !important;
+      }
+
+      .topbar,
+      .site-footer,
+      .requisition-heading,
+      .workspace-card,
+      .tabs,
+      .tab-button,
+      .action-toolbar,
+      .action-button,
+      #catalogSection,
+      .no-print,
+      .portal-toast,
+      .skip-link {
+        display: none !important;
+      }
+
+      .requisition-main {
+        display: block !important;
+        width: 100% !important;
+        max-width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .panel {
+        display: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        color: #111 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+
+      .panel.active {
+        display: block !important;
+      }
+
+      .print-heading {
+        display: block !important;
+        margin-bottom: .25rem !important;
+        text-align: center !important;
+      }
+
+      .print-heading img {
+        display: block !important;
+        height: 55px !important;
+        width: auto !important;
+        margin: 0 auto 10px !important;
+        visibility: visible !important;
+      }
+
+      .panel-heading {
+        align-items: center !important;
+        justify-content: center !important;
+        margin: .15rem 0 .2rem !important;
+        text-align: center !important;
+      }
+
+      .panel-heading .section-eyebrow,
+      .month-picker {
+        display: none !important;
+      }
+
+      .panel-heading h2 {
+        color: #111 !important;
+        font-size: 13pt !important;
+        text-align: center !important;
+      }
+
+      .period-title {
+        min-height: 0 !important;
+        margin: 0 0 .8rem !important;
+        color: #222 !important;
+        font-size: 10pt !important;
+      }
+
+      .table-scroll {
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+      }
+
+      .report-table,
+      .report-table th,
+      .report-table td {
+        color: #111 !important;
+        background: #fff !important;
+        border-color: #555 !important;
+      }
+
+      .report-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        font-size: 10px !important;
+      }
+
+      .report-table th,
+      .report-table td {
+        padding: .35rem .45rem !important;
+      }
+
+      .report-table thead {
+        display: table-header-group;
+      }
+
+      .report-table tr {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .table-input {
+        width: auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        color: #111 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        font-size: 9pt !important;
+      }
+
+      .empty-row td {
+        color: #333 !important;
+      }
+
+      .report-signature {
+        display: block !important;
+        margin: 1.6rem 0 0 auto !important;
+        color: #111 !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .report-signature .regards,
+      .signature-title,
+      .signature-company {
+        color: #111 !important;
+      }
+
+      .signature-line {
+        border-color: #111 !important;
+      }
+
+      button,
+      input,
+      select {
+        print-color-adjust: exact;
+      }
+    }
