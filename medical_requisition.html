@@ -662,13 +662,15 @@
       }
 
       table {
-        font-size: 10px !important;
+        font-size: 9.5px !important;
         width: 100% !important;
+        border-collapse: collapse !important;
       }
 
       th,
       td {
-        padding: 4px 2px !important;
+        padding: 3.5px 4px !important;
+        border: 1px solid #000 !important;
       }
 
       html,
@@ -678,14 +680,14 @@
         min-height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
-        color: #111 !important;
+        color: #000 !important;
         background: #fff !important;
         box-shadow: none !important;
-        font-family: Arial, sans-serif !important;
+        font-family: 'Times New Roman', Times, serif !important;
         font-size: 10pt !important;
       }
 
-      body.page-shell--dashboard {
+      body.page-shell--requisition {
         display: block !important;
         overflow: visible !important;
       }
@@ -708,8 +710,8 @@
       .requisition-main {
         display: block !important;
         width: 100% !important;
-        max-width: 210mm !important;
-        margin: 0 !important;
+        max-width: 190mm !important;
+        margin: 0 auto !important;
         padding: 0 !important;
       }
 
@@ -720,7 +722,7 @@
         padding: 0 !important;
         border: 0 !important;
         border-radius: 0 !important;
-        color: #111 !important;
+        color: #000 !important;
         background: #fff !important;
         box-shadow: none !important;
       }
@@ -731,22 +733,36 @@
 
       .print-heading {
         display: block !important;
-        margin-bottom: .25rem !important;
+        margin-bottom: .3rem !important;
         text-align: center !important;
       }
 
       .print-heading img {
         display: block !important;
-        height: 55px !important;
+        height: 50px !important;
         width: auto !important;
-        margin: 0 auto 10px !important;
+        margin: 0 auto 6px !important;
         visibility: visible !important;
+      }
+
+      .print-heading h1 {
+        color: #000 !important;
+        font-size: 13pt !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+      }
+
+      .print-heading p {
+        color: #000 !important;
+        font-size: 11pt !important;
+        font-weight: 700 !important;
+        margin: 2px 0 0 !important;
       }
 
       .panel-heading {
         align-items: center !important;
         justify-content: center !important;
-        margin: .15rem 0 .2rem !important;
+        margin: .1rem 0 .2rem !important;
         text-align: center !important;
       }
 
@@ -756,16 +772,17 @@
       }
 
       .panel-heading h2 {
-        color: #111 !important;
-        font-size: 13pt !important;
+        color: #000 !important;
+        font-size: 12pt !important;
         text-align: center !important;
       }
 
       .period-title {
         min-height: 0 !important;
-        margin: 0 0 .8rem !important;
-        color: #222 !important;
+        margin: 0 0 .6rem !important;
+        color: #000 !important;
         font-size: 10pt !important;
+        text-align: center !important;
       }
 
       .table-scroll {
@@ -777,20 +794,40 @@
       .report-table,
       .report-table th,
       .report-table td {
-        color: #111 !important;
+        color: #000 !important;
         background: #fff !important;
-        border-color: #555 !important;
+        border: 1px solid #000 !important;
       }
 
       .report-table {
         min-width: 0 !important;
         width: 100% !important;
-        font-size: 10px !important;
+        font-size: 9.5px !important;
+        border-collapse: collapse !important;
       }
 
       .report-table th,
       .report-table td {
-        padding: .35rem .45rem !important;
+        padding: 3px 4px !important;
+        text-align: center !important;
+      }
+
+      .report-table th:first-child,
+      .report-table td:first-child {
+        width: 32px !important;
+      }
+
+      .report-table th:nth-child(2),
+      .report-table td:nth-child(2) {
+        text-align: left !important;
+      }
+
+      .report-table td:last-child {
+        text-align: left !important;
+      }
+
+      .report-table thead tr th {
+        font-weight: 700 !important;
       }
 
       .report-table thead {
@@ -820,20 +857,26 @@
 
       .report-signature {
         display: block !important;
-        margin: 1.6rem 0 0 auto !important;
-        color: #111 !important;
+        margin: 28mm 0 0 auto !important;
+        width: fit-content !important;
+        text-align: center !important;
+        color: #000 !important;
         break-inside: avoid !important;
         page-break-inside: avoid !important;
       }
 
       .report-signature .regards,
       .signature-title,
-      .signature-company {
-        color: #111 !important;
+      .signature-company,
+      .signature-name {
+        color: #000 !important;
       }
 
       .signature-line {
-        border-color: #111 !important;
+        border-color: #000 !important;
+        border-bottom: 1px solid #000 !important;
+        margin: 18px auto 6px !important;
+        width: 170px !important;
       }
 
       button,
@@ -1623,7 +1666,7 @@
         requisitionRows.push([++serial, product.name, quantityLabel, amount]);
       });
 
-      requisitionRows.push(['', '', 'Total =', requisitionTotal]);
+      requisitionRows.push(['', '', 'Total', requisitionTotal]);
       requisitionRows.push([], ['With Best Regards'], [], [signName], [signTitle], ['SIM Group']);
 
       const stockRows = [
@@ -1647,14 +1690,14 @@
         stockTotals.closing += closing;
         stockRows.push([index + 1, item.name, opening, received, total, issue, closing, item.remarks || '']);
       });
-      stockRows.push(['', 'Total =', stockTotals.opening, stockTotals.received, stockTotals.total, stockTotals.issue, stockTotals.closing, '']);
+      stockRows.push(['', 'Total', stockTotals.opening, stockTotals.received, stockTotals.total, stockTotals.issue, stockTotals.closing, '']);
 
       const workbook = XLSX.utils.book_new();
       const requisitionSheet = XLSX.utils.aoa_to_sheet(requisitionRows);
       const stockSheet = XLSX.utils.aoa_to_sheet(stockRows);
-      requisitionSheet['!cols'] = [{ wch: 8 }, { wch: 38 }, { wch: 14 }, { wch: 14 }];
-      requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-      requisitionSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
+      requisitionSheet['!cols'] = [{ wch: 6 }, { wch: 48 }, { wch: 16 }, { wch: 16 }];
+      requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, fitToHeight: 0 };
+      requisitionSheet['!margins'] = { left: 0.6, right: 0.6, top: 0.7, bottom: 0.7, header: 0.3, footer: 0.3 };
 
       // Merge the letter and signature lines across the four-column page width.
       const letterRows = [0, 1, 2, 3, 4, 6, 8, 9];
@@ -1666,18 +1709,12 @@
       }));
 
       stockSheet['!cols'] = [
-        { wch: 6 }, { wch: 30 }, { wch: 10 }, { wch: 10 },
-        { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }
+        { wch: 5 }, { wch: 38 }, { wch: 11 }, { wch: 11 },
+        { wch: 11 }, { wch: 11 }, { wch: 13 }, { wch: 16 }
       ];
-      stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-      stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
+      stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, fitToHeight: 0 };
+      stockSheet['!margins'] = { left: 0.6, right: 0.6, top: 0.7, bottom: 0.7, header: 0.3, footer: 0.3 };
 
-      const gridBorder = {
-        top: { style: 'thin', color: { rgb: 'FF64748B' } },
-        bottom: { style: 'thin', color: { rgb: 'FF64748B' } },
-        left: { style: 'thin', color: { rgb: 'FF64748B' } },
-        right: { style: 'thin', color: { rgb: 'FF64748B' } }
-      };
       function styleTable(sheet, headerRow, totalRow, columnCount) {
         for (let row = headerRow; row <= totalRow; row += 1) {
           for (let column = 0; column < columnCount; column += 1) {
@@ -1685,17 +1722,16 @@
             const cell = sheet[address] || (sheet[address] = { t: 's', v: '' });
             const isHeader = row === headerRow;
             const isTotal = row === totalRow;
+            const isCenter = column === 0 || (columnCount >= 4 && column >= 2);
             cell.s = {
-              font: { bold: isHeader || isTotal, color: { rgb: isHeader ? 'FFFFFFFF' : 'FF1A1A1A' } },
+              font: { bold: isHeader || isTotal, name: 'Times New Roman', sz: isHeader ? 11 : 10, color: { rgb: 'FF000000' } },
               border: {
-                top: { ...gridBorder.top },
-                bottom: { ...gridBorder.bottom },
-                left: { ...gridBorder.left },
-                right: { ...gridBorder.right }
+                top: { style: 'thin', color: { rgb: 'FF000000' } },
+                bottom: { style: 'thin', color: { rgb: 'FF000000' } },
+                left: { style: 'thin', color: { rgb: 'FF000000' } },
+                right: { style: 'thin', color: { rgb: 'FF000000' } }
               },
-              alignment: { vertical: 'center', horizontal: column === 0 ? 'center' : 'left', wrapText: true },
-              ...(isHeader ? { fill: { patternType: 'solid', fgColor: { rgb: 'FF4A148C' } } } : {}),
-              ...(isTotal ? { fill: { patternType: 'solid', fgColor: { rgb: 'FFF1F5F9' } } } : {})
+              alignment: { vertical: 'center', horizontal: isCenter ? 'center' : 'left', wrapText: true }
             };
           }
         }
