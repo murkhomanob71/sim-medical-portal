@@ -658,18 +658,18 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 10mm;
+        margin: 12mm;
       }
 
       table {
-        font-size: 9.5px !important;
+        font-size: 9px !important;
         width: 100% !important;
         border-collapse: collapse !important;
       }
 
       th,
       td {
-        padding: 3.5px 4px !important;
+        padding: 2.5px 3px !important;
         border: 1px solid #000 !important;
       }
 
@@ -710,7 +710,7 @@
       .requisition-main {
         display: block !important;
         width: 100% !important;
-        max-width: 190mm !important;
+        max-width: 186mm !important;
         margin: 0 auto !important;
         padding: 0 !important;
       }
@@ -802,28 +802,43 @@
       .report-table {
         min-width: 0 !important;
         width: 100% !important;
-        font-size: 9.5px !important;
+        font-size: 9px !important;
         border-collapse: collapse !important;
       }
 
       .report-table th,
       .report-table td {
-        padding: 3px 4px !important;
+        padding: 2px 3px !important;
         text-align: center !important;
       }
 
       .report-table th:first-child,
       .report-table td:first-child {
-        width: 32px !important;
+        width: 24px !important;
       }
 
       .report-table th:nth-child(2),
       .report-table td:nth-child(2) {
         text-align: left !important;
+        width: auto !important;
       }
 
-      .report-table td:last-child {
+      .stock-table th:nth-child(3),
+      .stock-table td:nth-child(3),
+      .stock-table th:nth-child(4),
+      .stock-table td:nth-child(4),
+      .stock-table th:nth-child(5),
+      .stock-table td:nth-child(5),
+      .stock-table th:nth-child(6),
+      .stock-table td:nth-child(6),
+      .stock-table th:nth-child(7),
+      .stock-table td:nth-child(7) {
+        width: 38px !important;
+      }
+
+      .stock-table td:last-child {
         text-align: left !important;
+        width: 60px !important;
       }
 
       .report-table thead tr th {
@@ -1709,11 +1724,11 @@
       }));
 
       stockSheet['!cols'] = [
-        { wch: 5 }, { wch: 38 }, { wch: 11 }, { wch: 11 },
-        { wch: 11 }, { wch: 11 }, { wch: 13 }, { wch: 16 }
+        { wch: 4 }, { wch: 52 }, { wch: 9 }, { wch: 9 },
+        { wch: 9 }, { wch: 9 }, { wch: 10 }, { wch: 14 }
       ];
       stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, fitToHeight: 0 };
-      stockSheet['!margins'] = { left: 0.6, right: 0.6, top: 0.7, bottom: 0.7, header: 0.3, footer: 0.3 };
+      stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.6, bottom: 0.6, header: 0.25, footer: 0.25 };
 
       function styleTable(sheet, headerRow, totalRow, columnCount) {
         for (let row = headerRow; row <= totalRow; row += 1) {
@@ -1724,14 +1739,14 @@
             const isTotal = row === totalRow;
             const isCenter = column === 0 || (columnCount >= 4 && column >= 2);
             cell.s = {
-              font: { bold: isHeader || isTotal, name: 'Times New Roman', sz: isHeader ? 11 : 10, color: { rgb: 'FF000000' } },
+              font: { bold: isHeader || isTotal, name: 'Times New Roman', sz: 9, color: { rgb: 'FF000000' } },
               border: {
                 top: { style: 'thin', color: { rgb: 'FF000000' } },
                 bottom: { style: 'thin', color: { rgb: 'FF000000' } },
                 left: { style: 'thin', color: { rgb: 'FF000000' } },
                 right: { style: 'thin', color: { rgb: 'FF000000' } }
               },
-              alignment: { vertical: 'center', horizontal: isCenter ? 'center' : 'left', wrapText: true }
+              alignment: { vertical: 'center', horizontal: isCenter ? 'center' : 'left', wrapText: false }
             };
           }
         }
