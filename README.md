@@ -152,6 +152,9 @@ issued token is kept DPAPI-encrypted for the current Windows user in
 switches: `-DryRun` (list files only), `-Branch <name>` (save as a new version branch),
 `-Message "<text>"`. Running it twice with no file changes creates no new commit.
 
+Shortcut: double-click **`Backup to GitHub.cmd`** in the project root (it runs the script
+and keeps the window open afterwards).
+
 ## Footer
 
 Every page ends with:
