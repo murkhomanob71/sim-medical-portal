@@ -733,30 +733,32 @@
 
       .print-heading {
         display: block !important;
-        margin-bottom: .3rem !important;
+        margin-bottom: 4px !important;
         text-align: center !important;
       }
 
       .print-heading img {
         display: block !important;
-        height: 50px !important;
+        height: 48px !important;
         width: auto !important;
-        margin: 0 auto 6px !important;
+        margin: 0 auto 4px !important;
         visibility: visible !important;
       }
 
       .print-heading h1 {
         color: #000 !important;
-        font-size: 13pt !important;
+        font-size: 12.5pt !important;
         font-weight: 700 !important;
         margin: 0 !important;
+        line-height: 1.1 !important;
       }
 
       .print-heading p {
         color: #000 !important;
         font-size: 11pt !important;
         font-weight: 700 !important;
-        margin: 2px 0 0 !important;
+        margin: 1px 0 0 !important;
+        line-height: 1.1 !important;
       }
 
       .panel-heading {
@@ -779,10 +781,11 @@
 
       .period-title {
         min-height: 0 !important;
-        margin: 0 0 .6rem !important;
+        margin: 0 0 4px !important;
         color: #000 !important;
         font-size: 10pt !important;
         text-align: center !important;
+        line-height: 1.1 !important;
       }
 
       .table-scroll {
@@ -802,19 +805,21 @@
       .report-table {
         min-width: 0 !important;
         width: 100% !important;
-        font-size: 9px !important;
+        font-size: 8.5px !important;
         border-collapse: collapse !important;
+        table-layout: fixed !important;
       }
 
       .report-table th,
       .report-table td {
-        padding: 2px 3px !important;
+        padding: 1.5px 2.5px !important;
         text-align: center !important;
+        vertical-align: middle !important;
       }
 
       .report-table th:first-child,
       .report-table td:first-child {
-        width: 24px !important;
+        width: 22px !important;
       }
 
       .report-table th:nth-child(2),
@@ -833,12 +838,12 @@
       .stock-table td:nth-child(6),
       .stock-table th:nth-child(7),
       .stock-table td:nth-child(7) {
-        width: 38px !important;
+        width: 34px !important;
       }
 
       .stock-table td:last-child {
         text-align: left !important;
-        width: 60px !important;
+        width: 52px !important;
       }
 
       .report-table thead tr th {
@@ -1724,8 +1729,8 @@
       }));
 
       stockSheet['!cols'] = [
-        { wch: 4 }, { wch: 52 }, { wch: 9 }, { wch: 9 },
-        { wch: 9 }, { wch: 9 }, { wch: 10 }, { wch: 14 }
+        { wch: 4 }, { wch: 56 }, { wch: 8 }, { wch: 8 },
+        { wch: 8 }, { wch: 8 }, { wch: 9 }, { wch: 12 }
       ];
       stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, fitToHeight: 0 };
       stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.6, bottom: 0.6, header: 0.25, footer: 0.25 };
@@ -1739,14 +1744,14 @@
             const isTotal = row === totalRow;
             const isCenter = column === 0 || (columnCount >= 4 && column >= 2);
             cell.s = {
-              font: { bold: isHeader || isTotal, name: 'Times New Roman', sz: 9, color: { rgb: 'FF000000' } },
+              font: { bold: isHeader || isTotal, name: 'Times New Roman', sz: 8, color: { rgb: 'FF000000' } },
               border: {
                 top: { style: 'thin', color: { rgb: 'FF000000' } },
                 bottom: { style: 'thin', color: { rgb: 'FF000000' } },
                 left: { style: 'thin', color: { rgb: 'FF000000' } },
                 right: { style: 'thin', color: { rgb: 'FF000000' } }
               },
-              alignment: { vertical: 'center', horizontal: isCenter ? 'center' : 'left', wrapText: false }
+              alignment: { vertical: 'center', horizontal: isCenter ? 'center' : 'left', wrapText: false, shrinkToFit: true }
             };
           }
         }
