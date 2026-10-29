@@ -7,850 +7,28 @@
   <meta name="description" content="SIM Fabrics Ltd. medical requisition, medicine stock report, and product catalog.">
   <title>SIM Medical Requisition &amp; Stock</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="assets/css/inter.css">
+  <link rel="stylesheet" href="assets/icons/bootstrap-icons.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/requisition.css">
+  <link rel="stylesheet" href="assets/css/requisition-extras.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+
   <script src="app.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js" defer></script>
-
-  <style>
-    :root {
-      --req-card-border: rgba(74, 20, 140, .09);
-      --req-muted: #777381;
-      --req-soft: #f7f8fc;
-      --req-shadow: 0 18px 48px rgba(31, 23, 54, .075);
-    }
-
-    .requisition-main {
-      width: min(100%, 1480px);
-      flex: 1 0 auto;
-      margin-inline: auto;
-      padding: clamp(1.25rem, 3vw, 2.7rem) clamp(1rem, 3vw, 2rem) 2.5rem;
-    }
-
-    .requisition-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .requisition-eyebrow,
-    .section-eyebrow {
-      margin: 0 0 .45rem;
-      color: var(--purple-dark);
-      font-size: .69rem;
-      font-weight: 800;
-      letter-spacing: .15em;
-      line-height: 1.3;
-      text-transform: uppercase;
-    }
-
-    .requisition-heading h1 {
-      margin: 0;
-      color: var(--text-primary);
-      font-size: clamp(1.65rem, 3.2vw, 2.45rem);
-      font-weight: 800;
-      letter-spacing: -.045em;
-      line-height: 1.1;
-      text-wrap: balance;
-    }
-
-    .requisition-heading .heading-subtitle {
-      margin: .55rem 0 0;
-      color: var(--req-muted);
-      font-size: .92rem;
-      line-height: 1.55;
-    }
-
-    .offline-badge {
-      display: inline-flex;
-      flex: 0 0 auto;
-      align-items: center;
-      gap: .48rem;
-      padding: .62rem .82rem;
-      border: 1px solid rgba(27, 94, 32, .13);
-      border-radius: 999px;
-      color: #276331;
-      background: rgba(255, 255, 255, .75);
-      box-shadow: 0 5px 16px rgba(35, 57, 39, .05);
-      font-size: .75rem;
-      font-weight: 700;
-    }
-
-    .offline-badge .bi {
-      color: #24803b;
-      font-size: .9rem;
-    }
-
-    .workspace-card,
-    .report-card,
-    .catalog-card {
-      border: 1px solid var(--req-card-border);
-      border-radius: 1rem;
-      background: #fff;
-      box-shadow: var(--req-shadow);
-    }
-
-    .workspace-card {
-      margin-bottom: 1.3rem;
-      padding: 1.5rem;
-    }
-
-    .workspace-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .tabs {
-      width: fit-content;
-      display: inline-flex;
-      align-items: center;
-      gap: .3rem;
-      padding: .32rem;
-      border: 1px solid rgba(26, 26, 26, .055);
-      border-radius: 999px;
-      background: #f1f2f6;
-    }
-
-    .tab-button {
-      min-height: 2.75rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .55rem;
-      padding: .68rem 1.05rem;
-      border: 0;
-      border-radius: 999px;
-      color: #676571;
-      background: transparent;
-      font: inherit;
-      font-size: .82rem;
-      font-weight: 700;
-      line-height: 1;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all .25s var(--spring);
-    }
-
-    .tab-button:hover:not(.active) {
-      color: var(--purple);
-      background: rgba(255, 255, 255, .75);
-    }
-
-    .tab-button.active {
-      color: #fff;
-      background: linear-gradient(100deg, var(--purple), var(--purple-dark), var(--orange));
-      box-shadow: 0 5px 12px rgba(74, 20, 140, .22);
-    }
-
-    .tab-button .bi {
-      font-size: .95rem;
-    }
-
-    .action-toolbar {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      flex-wrap: wrap;
-    }
-
-    .action-button {
-      min-height: 2.65rem;
-      padding: .76rem 1rem;
-      font-size: .79rem;
-    }
-
-    .action-button .bi {
-      font-size: .95rem;
-    }
-
-    .status-message {
-      min-width: 9rem;
-      color: var(--req-muted);
-      font-size: .75rem;
-      font-weight: 600;
-      text-align: right;
-    }
-
-    .status-message.is-success { color: #23652e; }
-    .status-message.is-error { color: #b42318; }
-
-    .report-card,
-    .catalog-card {
-      padding: 1.5rem;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .panel-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.15rem;
-    }
-
-    .panel-heading h2,
-    .catalog-heading h2 {
-      margin: 0;
-      color: #201b2a;
-      font-size: clamp(1.15rem, 2vw, 1.55rem);
-      font-weight: 800;
-      letter-spacing: -.03em;
-      line-height: 1.25;
-    }
-
-    .section-eyebrow {
-      margin-bottom: .3rem;
-      font-size: .61rem;
-      letter-spacing: .14em;
-    }
-
-    .month-picker {
-      display: flex;
-      align-items: center;
-      gap: .55rem;
-      color: #625e6b;
-      font-size: .8rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .field-control,
-    .table-input {
-      min-height: 2.5rem;
-      padding: .55rem .72rem;
-      border: 1px solid #d9d7e1;
-      border-radius: .65rem;
-      outline: none;
-      color: #272330;
-      background: #fff;
-      font: inherit;
-      font-size: .84rem;
-      transition: border-color .18s ease, box-shadow .18s ease;
-    }
-
-    .field-control:focus,
-    .table-input:focus {
-      border-color: #8b5bb7;
-      box-shadow: 0 0 0 3px rgba(106, 27, 154, .13);
-    }
-
-    .period-title {
-      min-height: 1.35rem;
-      margin: -.45rem 0 1rem;
-      color: #5b5664;
-      font-size: .88rem;
-      font-weight: 650;
-      text-align: center;
-    }
-
-    .table-scroll {
-      width: 100%;
-      overflow-x: auto;
-      border: 1px solid #e6e4eb;
-      border-radius: .9rem;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .report-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      color: #4b4654;
-      font-size: .82rem;
-      line-height: 1.45;
-    }
-
-    .report-table thead {
-      background: #f6f6f9;
-    }
-
-    .report-table th {
-      padding: .78rem .85rem;
-      border-bottom: 1px solid #e3e1e8;
-      color: #4b4654;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .025em;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    .report-table td {
-      padding: .68rem .85rem;
-      border-bottom: 1px solid #eeedf1;
-      vertical-align: middle;
-    }
-
-    .report-table tbody tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .report-table tbody tr:hover {
-      background: rgba(106, 27, 154, .025);
-    }
-
-    .report-table tfoot td {
-      padding: .85rem;
-      border-top: 1px solid #ddd9e5;
-      border-bottom: 0;
-      color: #221d2a;
-      background: #faf9fc;
-      font-weight: 800;
-    }
-
-    .report-table .num,
-    .num {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .table-input {
-      width: 6rem;
-      min-height: 2.15rem;
-      padding: .38rem .55rem;
-      border-radius: .55rem;
-      font-size: .8rem;
-    }
-
-    .table-input.input-wide { width: 8rem; }
-
-    .qty-entry {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      white-space: nowrap;
-    }
-
-    .unit-label {
-      color: #777381;
-      font-size: .73rem;
-    }
-
-    .table-action,
-    .quiet-button {
-      min-height: 2rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .4rem;
-      padding: .42rem .7rem;
-      border: 1px solid rgba(180, 35, 24, .15);
-      border-radius: .6rem;
-      color: #b42318;
-      background: #fff7f6;
-      font: inherit;
-      font-size: .73rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all .18s ease;
-    }
-
-    .table-action:hover,
-    .quiet-button:hover {
-      border-color: rgba(180, 35, 24, .28);
-      background: #fff0ed;
-    }
-
-    .empty-row td {
-      padding: 1.5rem;
-      color: #85818d;
-      text-align: center;
-    }
-
-    .signature-editor {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: .75rem;
-      margin: 1.2rem 0 0;
-      padding: 1rem;
-      border: 1px solid #eceaf0;
-      border-radius: .9rem;
-      background: #fbfafe;
-    }
-
-    .signature-editor label,
-    .product-form label {
-      display: flex;
-      flex-direction: column;
-      gap: .38rem;
-      color: #625e6b;
-      font-size: .73rem;
-      font-weight: 700;
-    }
-
-    .report-signature {
-      width: min(100%, 22rem);
-      margin: 1.6rem 0 0 auto;
-      color: #302b37;
-      font-size: .84rem;
-      line-height: 1.5;
-    }
-
-    .report-signature .regards {
-      margin: 0 0 1.1rem;
-      color: #605b67;
-      font-weight: 600;
-    }
-
-    .signature-line {
-      width: 12rem;
-      height: 2rem;
-      border-bottom: 1px solid #6e6975;
-    }
-
-    .signature-name,
-    .signature-title,
-    .signature-company {
-      display: block;
-    }
-
-    .signature-name {
-      margin-top: .45rem;
-      font-weight: 800;
-    }
-
-    .signature-title {
-      color: #686370;
-      font-size: .78rem;
-    }
-
-    .signature-company {
-      margin-top: .45rem;
-      color: var(--purple-dark);
-      font-weight: 700;
-    }
-
-    .catalog-card {
-      margin-top: 1.35rem;
-    }
-
-    .catalog-heading {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: .85rem;
-    }
-
-    .catalog-description {
-      margin: .4rem 0 0;
-      color: var(--req-muted);
-      font-size: .82rem;
-      line-height: 1.55;
-    }
-
-    .catalog-count {
-      flex: 0 0 auto;
-      padding: .42rem .72rem;
-      border-radius: 999px;
-      color: var(--purple-dark);
-      background: rgba(106, 27, 154, .08);
-      font-size: .73rem;
-      font-weight: 800;
-    }
-
-    .product-form {
-      display: grid;
-      grid-template-columns: minmax(10rem, 1.5fr) minmax(6rem, .65fr) minmax(8rem, .9fr) minmax(10rem, 1fr) auto;
-      align-items: end;
-      gap: .75rem;
-      margin: 1rem 0 1.15rem;
-      padding: 1rem;
-      border: 1px solid #eceaf0;
-      border-radius: .9rem;
-      background: #fbfafe;
-    }
-
-    .product-form input,
-    .product-form select {
-      width: 100%;
-    }
-
-    .add-product-button {
-      min-height: 2.55rem;
-      padding: .65rem .95rem;
-      border: 1px solid rgba(74, 20, 140, .18);
-      border-radius: .7rem;
-      color: #fff;
-      background: linear-gradient(100deg, var(--purple), var(--purple-dark));
-      box-shadow: 0 6px 13px rgba(74, 20, 140, .17);
-      font: inherit;
-      font-size: .79rem;
-      font-weight: 750;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .add-product-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 9px 17px rgba(74, 20, 140, .2);
-    }
-
-    .product-checkbox {
-      width: 1.08rem;
-      height: 1.08rem;
-      accent-color: var(--purple-dark);
-      cursor: pointer;
-    }
-
-    .catalog-table {
-      min-width: 760px;
-    }
-
-    .stock-table {
-      min-width: 1020px;
-    }
-
-    .print-heading {
-      display: none;
-    }
-
-    .print-heading h1 {
-      margin: 0 0 .2rem;
-      color: #111;
-      font-size: 16pt;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .print-heading p {
-      margin: 0 0 1rem;
-      color: #333;
-      font-size: 10pt;
-      text-align: center;
-    }
-
-    @media (max-width: 900px) {
-      .requisition-heading {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: .85rem;
-      }
-
-      .workspace-toolbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .action-toolbar {
-        width: 100%;
-      }
-
-      .status-message {
-        margin-left: auto;
-      }
-
-      .product-form {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .product-form > label:first-child {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .requisition-main {
-        padding-top: 1.25rem;
-      }
-
-      .workspace-card {
-        padding: .8rem;
-      }
-
-      .report-card,
-      .catalog-card {
-        padding: 1rem;
-      }
-
-      .tabs {
-        width: 100%;
-      }
-
-      .tab-button {
-        flex: 1 1 50%;
-        padding-inline: .55rem;
-        font-size: .72rem;
-      }
-
-      .action-toolbar {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .action-button {
-        width: 100%;
-        gap: .42rem;
-        padding-inline: .65rem;
-        font-size: .72rem;
-      }
-
-      .status-message {
-        grid-column: 1 / -1;
-        margin: 0;
-        text-align: left;
-      }
-
-      .panel-heading {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .month-picker {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .month-picker .field-control {
-        flex: 0 1 11rem;
-      }
-
-      .signature-editor {
-        grid-template-columns: 1fr;
-      }
-
-      .product-form {
-        grid-template-columns: 1fr 1fr;
-        padding: .8rem;
-      }
-
-      .product-form > label:first-child,
-      .product-form > label:nth-child(4),
-      .product-form .add-product-button {
-        grid-column: 1 / -1;
-      }
-
-      .catalog-heading {
-        align-items: flex-start;
-      }
-
-      .report-signature {
-        margin-left: 0;
-      }
-
-      .offline-badge {
-        font-size: .7rem;
-      }
-    }
-
-    @page {
-      size: A4 portrait;
-      margin: 10mm;
-    }
-
-    @media print {
-      @page {
-        size: A4 portrait;
-        margin: 10mm;
-      }
-
-      table {
-        font-size: 10px !important;
-        width: 100% !important;
-      }
-
-      th,
-      td {
-        padding: 4px 2px !important;
-      }
-
-      html,
-      body {
-        width: 100%;
-        min-width: 0 !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        color: #111 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        font-family: Arial, sans-serif !important;
-        font-size: 10pt !important;
-      }
-
-      body.page-shell--dashboard {
-        display: block !important;
-        overflow: visible !important;
-      }
-
-      .topbar,
-      .site-footer,
-      .requisition-heading,
-      .workspace-card,
-      .tabs,
-      .tab-button,
-      .action-toolbar,
-      .action-button,
-      #catalogSection,
-      .no-print,
-      .portal-toast,
-      .skip-link {
-        display: none !important;
-      }
-
-      .requisition-main {
-        display: block !important;
-        width: 100% !important;
-        max-width: 210mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      .panel {
-        display: none !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        color: #111 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-      }
-
-      .panel.active {
-        display: block !important;
-      }
-
-      .print-heading {
-        display: block !important;
-        margin-bottom: .25rem !important;
-        text-align: center !important;
-      }
-
-      .print-heading img {
-        display: block !important;
-        height: 55px !important;
-        width: auto !important;
-        margin: 0 auto 10px !important;
-        visibility: visible !important;
-      }
-
-      .panel-heading {
-        align-items: center !important;
-        justify-content: center !important;
-        margin: .15rem 0 .2rem !important;
-        text-align: center !important;
-      }
-
-      .panel-heading .section-eyebrow,
-      .month-picker {
-        display: none !important;
-      }
-
-      .panel-heading h2 {
-        color: #111 !important;
-        font-size: 13pt !important;
-        text-align: center !important;
-      }
-
-      .period-title {
-        min-height: 0 !important;
-        margin: 0 0 .8rem !important;
-        color: #222 !important;
-        font-size: 10pt !important;
-      }
-
-      .table-scroll {
-        overflow: visible !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-      }
-
-      .report-table,
-      .report-table th,
-      .report-table td {
-        color: #111 !important;
-        background: #fff !important;
-        border-color: #555 !important;
-      }
-
-      .report-table {
-        min-width: 0 !important;
-        width: 100% !important;
-        font-size: 10px !important;
-      }
-
-      .report-table th,
-      .report-table td {
-        padding: .35rem .45rem !important;
-      }
-
-      .report-table thead {
-        display: table-header-group;
-      }
-
-      .report-table tr {
-        break-inside: avoid !important;
-        page-break-inside: avoid !important;
-      }
-
-      .table-input {
-        width: auto !important;
-        min-height: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        color: #111 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        font-size: 9pt !important;
-      }
-
-      .empty-row td {
-        color: #333 !important;
-      }
-
-      .report-signature {
-        display: block !important;
-        margin: 1.6rem 0 0 auto !important;
-        color: #111 !important;
-        break-inside: avoid !important;
-        page-break-inside: avoid !important;
-      }
-
-      .report-signature .regards,
-      .signature-title,
-      .signature-company {
-        color: #111 !important;
-      }
-
-      .signature-line {
-        border-color: #111 !important;
-      }
-
-      button,
-      input,
-      select {
-        print-color-adjust: exact;
-      }
-    }
-  </style>
+  <script src="assets/vendor/xlsx.bundle.js" defer></script>
+  <script src="assets/js/requisition.js" defer></script>
 </head>
-<body class="page-shell page-shell--dashboard requisition-page">
+<body class="page-shell page-shell--requisition requisition-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="topbar">
     <div class="topbar-inner">
       <div class="portal-brand">
-        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" class="brand-logo">
+        <img src="logo.png" alt="SIM Group Logo" class="brand-logo">
         <div class="portal-brand-copy">
           <p class="portal-brand-title">SIM Group Medical Portal</p>
           <p class="portal-brand-subtitle">Central Medical Department</p>
@@ -860,61 +38,164 @@
       <div class="clock-pill" aria-label="Live clock in Bangladesh time">
         <span class="clock-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></span>
         <span class="clock-copy">
-          <span class="clock-label">Bangladesh time</span>
+          <span class="clock-label" data-i18n="clockLabel">Bangladesh time</span>
           <time class="clock-value" id="live-clock" aria-live="off"></time>
         </span>
       </div>
 
       <a class="gradient-pill back-button" href="dashboard.html" data-page-transition>
         <i class="bi bi-arrow-left" aria-hidden="true"></i>
-        <span>Back to Dashboard</span>
+        <span data-i18n="backToDashboard">Back to Dashboard</span>
       </a>
     </div>
   </header>
 
   <main class="requisition-main" id="main-content">
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Page heading + context controls                                     -->
+    <!-- ------------------------------------------------------------------ -->
     <section class="requisition-heading" aria-labelledby="page-title">
       <div>
-        <p class="requisition-eyebrow">Medical Operations · SIM Fabrics Ltd.</p>
-        <h1 id="page-title">Medical Requisition &amp; Stock</h1>
-        <p class="heading-subtitle">Manage monthly medicine requests, inventory, and the permanent product catalog.</p>
+        <p class="requisition-eyebrow">
+          <span data-i18n="medicalOperations">Medical Operations</span> ·
+          <span id="factoryLabel">SIM Fabrics Ltd.</span>
+        </p>
+        <h1 id="page-title" data-i18n="pageTitle">Medical Requisition &amp; Stock</h1>
+        <p class="heading-subtitle" data-i18n="pageSubtitle">Manage monthly medicine requests, inventory, and the permanent product catalog.</p>
       </div>
-      <div class="offline-badge"><i class="bi bi-shield-check" aria-hidden="true"></i><span>Saved in this browser</span></div>
+
+      <div class="heading-controls">
+        <label class="control-chip" for="factorySelect">
+          <i class="bi bi-buildings" aria-hidden="true"></i>
+          <select id="factorySelect" aria-label="Select factory"></select>
+        </label>
+
+        <label class="control-chip" for="langSelect">
+          <i class="bi bi-translate" aria-hidden="true"></i>
+          <select id="langSelect" aria-label="Interface language">
+            <option value="en">English</option>
+            <option value="bn">বাংলা</option>
+          </select>
+        </label>
+
+        <div class="offline-badge" title="All data is stored in this browser. Export a backup regularly.">
+          <i class="bi bi-shield-check" aria-hidden="true"></i>
+          <span data-i18n="savedLocally">Saved in this browser</span>
+        </div>
+      </div>
     </section>
 
+    <!-- ------------------------------------------------------------------ -->
+    <!-- KPI summary cards                                                   -->
+    <!-- ------------------------------------------------------------------ -->
+    <section class="kpi-grid" aria-label="Summary">
+      <article class="kpi-card kpi-card--purple">
+        <span class="kpi-icon" aria-hidden="true"><i class="bi bi-box-seam"></i></span>
+        <div class="kpi-body">
+          <p class="kpi-label" data-i18n="kpiProducts">Catalog products</p>
+          <p class="kpi-value" id="kpiProducts">0</p>
+        </div>
+      </article>
+
+      <article class="kpi-card kpi-card--green">
+        <span class="kpi-icon" aria-hidden="true"><i class="bi bi-receipt"></i></span>
+        <div class="kpi-body">
+          <p class="kpi-label" data-i18n="kpiRequisition">Requisition value</p>
+          <p class="kpi-value" id="kpiRequisition">৳ 0</p>
+        </div>
+      </article>
+
+      <article class="kpi-card kpi-card--orange">
+        <span class="kpi-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle"></i></span>
+        <div class="kpi-body">
+          <p class="kpi-label" data-i18n="kpiLowStock">Low stock items</p>
+          <p class="kpi-value" id="kpiLowStock">0</p>
+        </div>
+      </article>
+
+      <article class="kpi-card kpi-card--teal">
+        <span class="kpi-icon" aria-hidden="true"><i class="bi bi-calendar-x"></i></span>
+        <div class="kpi-body">
+          <p class="kpi-label" data-i18n="kpiExpiring">Expiring soon</p>
+          <p class="kpi-value" id="kpiExpiring">0</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Alerts                                                              -->
+    <!-- ------------------------------------------------------------------ -->
+    <div id="alertArea" class="alert-area" aria-live="polite"></div>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Workspace toolbar                                                   -->
+    <!-- ------------------------------------------------------------------ -->
     <section class="workspace-card bg-white shadow-xl rounded-2xl p-6" aria-label="Report tools and navigation">
       <div class="workspace-toolbar">
         <nav class="tabs no-print bg-gray-100 p-1 rounded-full" role="tablist" aria-label="Medical reports">
           <button class="tab-button active rounded-full px-4 py-2 font-semibold" id="tab-req" type="button" role="tab" aria-selected="true" aria-controls="req" data-tab-target="req">
-            <i class="bi bi-file-earmark-medical" aria-hidden="true"></i><span>Medicine Requisition</span>
+            <i class="bi bi-file-earmark-medical" aria-hidden="true"></i><span data-i18n="tabRequisition">Medicine Requisition</span>
           </button>
           <button class="tab-button rounded-full px-4 py-2 font-semibold text-gray-600" id="tab-stock" type="button" role="tab" aria-selected="false" aria-controls="stock" data-tab-target="stock">
-            <i class="bi bi-box-seam" aria-hidden="true"></i><span>Medicine Stock Report</span>
+            <i class="bi bi-box-seam" aria-hidden="true"></i><span data-i18n="tabStock">Medicine Stock Report</span>
           </button>
         </nav>
 
         <div class="action-toolbar no-print" aria-label="Report actions">
-          <button class="gradient-pill action-button" type="button" id="saveButton"><i class="bi bi-cloud-check" aria-hidden="true"></i><span>Save</span></button>
-          <button class="gradient-pill action-button" type="button" id="excelButton"><i class="bi bi-file-earmark-spreadsheet" aria-hidden="true"></i><span>Download Excel</span></button>
-          <button class="gradient-pill action-button" type="button" id="printButton"><i class="bi bi-printer" aria-hidden="true"></i><span>Print / PDF</span></button>
+          <label class="control-chip control-chip--status" for="approvalSelect" title="Report approval status">
+            <i class="bi bi-patch-check" aria-hidden="true"></i>
+            <select id="approvalSelect" aria-label="Approval status">
+              <option value="draft" data-i18n="statusDraft">Draft</option>
+              <option value="approved" data-i18n="statusApproved">Approved</option>
+              <option value="issued" data-i18n="statusIssued">Issued</option>
+            </select>
+          </label>
+
+          <button class="gradient-pill action-button" type="button" id="saveButton" title="Save now (Ctrl+S)">
+            <i class="bi bi-cloud-check" aria-hidden="true"></i><span data-i18n="save">Save</span>
+          </button>
+          <button class="gradient-pill action-button" type="button" id="excelButton">
+            <i class="bi bi-file-earmark-spreadsheet" aria-hidden="true"></i><span data-i18n="excel">Download Excel</span>
+          </button>
+          <button class="gradient-pill action-button" type="button" id="printButton">
+            <i class="bi bi-printer" aria-hidden="true"></i><span data-i18n="print">Print / PDF</span>
+          </button>
+          <button class="ghost-pill action-button" type="button" id="backupButton" title="Download a full JSON backup">
+            <i class="bi bi-download" aria-hidden="true"></i><span data-i18n="backup">Backup</span>
+          </button>
+          <button class="ghost-pill action-button" type="button" id="restoreButton" title="Restore from a JSON backup">
+            <i class="bi bi-upload" aria-hidden="true"></i><span data-i18n="restore">Restore</span>
+          </button>
+          <button class="ghost-pill action-button" type="button" id="historyButton" title="Saved months and stock movement log">
+            <i class="bi bi-clock-history" aria-hidden="true"></i><span data-i18n="history">History</span>
+          </button>
+          <input type="file" id="restoreInput" accept="application/json,.json" hidden>
           <span id="saveStatus" class="status-message" role="status" aria-live="polite"></span>
         </div>
       </div>
     </section>
 
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Requisition panel                                                   -->
+    <!-- ------------------------------------------------------------------ -->
     <section id="req" class="panel active report-card bg-white shadow-xl rounded-2xl p-6" role="tabpanel" aria-labelledby="tab-req">
       <div class="print-heading">
-        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" style="height: 55px; width: auto; margin: 0 auto 10px auto; display: block;">
-        <h1>SIM Fabrics Ltd. (Medical Department)</h1>
-        <p>Medical Requisition</p>
+        <img src="logo.png" alt="SIM Group Logo" class="print-logo">
+        <h1 id="printFactoryName">SIM Fabrics Ltd. (Medical Department)</h1>
+        <p data-i18n="printRequisition">Medical Requisition</p>
+        <div class="print-meta">
+          <span><b data-i18n="reportNo">Report No:</b> <span id="printReportNo">—</span></span>
+          <span><b data-i18n="status">Status:</b> <span id="printStatus">Draft</span></span>
+          <span><b data-i18n="generated">Generated:</b> <span id="printGenerated">—</span></span>
+        </div>
       </div>
       <div class="panel-heading">
         <div>
-          <p class="section-eyebrow">Monthly Report</p>
-          <h2>Monthly Medicine Requisition</h2>
+          <p class="section-eyebrow" data-i18n="monthlyReport">Monthly Report</p>
+          <h2 data-i18n="monthlyRequisition">Monthly Medicine Requisition</h2>
         </div>
         <label class="month-picker no-print" for="reqMonth">
-          <span>For the month of</span>
+          <span data-i18n="forTheMonthOf">For the month of</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" type="month" id="reqMonth" aria-label="Requisition month">
         </label>
       </div>
@@ -924,17 +205,17 @@
         <table id="reqTable" class="report-table w-full text-sm text-left text-gray-700">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Sl</th>
-              <th scope="col">Name of Medicine</th>
-              <th scope="col">Qty</th>
-              <th scope="col" class="num">Price (৳)</th>
-              <th scope="col" class="no-print">Action</th>
+              <th scope="col" data-i18n="colSl">Sl</th>
+              <th scope="col" data-i18n="colMedicine">Name of Medicine</th>
+              <th scope="col" data-i18n="colQty">Qty</th>
+              <th scope="col" class="num" data-i18n="colPrice">Price (৳)</th>
+              <th scope="col" class="no-print" data-i18n="colAction">Action</th>
             </tr>
           </thead>
           <tbody></tbody>
           <tfoot>
             <tr>
-              <td colspan="3" class="num"><b>Total</b></td>
+              <td colspan="3" class="num"><b data-i18n="total">Total</b></td>
               <td id="reqTotal" class="num"><b>৳ 0</b></td>
               <td class="no-print"></td>
             </tr>
@@ -943,16 +224,16 @@
       </div>
 
       <div class="signature-editor no-print" aria-label="Doctor signature details">
-        <label for="signNameInput">Doctor's name
+        <label for="signNameInput"><span data-i18n="doctorName">Doctor's name</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="signNameInput" type="text" value="Dr. Rashna Mahjabin Tonni" autocomplete="name">
         </label>
-        <label for="signTitleInput">Designation
+        <label for="signTitleInput"><span data-i18n="designation">Designation</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="signTitleInput" type="text" value="Sr. Medical Officer">
         </label>
       </div>
 
       <div class="report-signature">
-        <p class="regards">With Best Regards,</p>
+        <p class="regards" data-i18n="regards">With Best Regards,</p>
         <div class="signature-line" aria-hidden="true"></div>
         <strong class="signature-name" data-sign-name>Dr. Rashna Mahjabin Tonni</strong>
         <span class="signature-title" data-sign-title>Sr. Medical Officer</span>
@@ -960,47 +241,69 @@
       </div>
     </section>
 
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Stock panel                                                         -->
+    <!-- ------------------------------------------------------------------ -->
     <section id="stock" class="panel report-card bg-white shadow-xl rounded-2xl p-6" role="tabpanel" aria-labelledby="tab-stock" aria-hidden="true">
       <div class="print-heading">
-        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" style="height: 55px; width: auto; margin: 0 auto 10px auto; display: block;">
-        <h1>SIM Fabrics Ltd. (Medical Department)</h1>
-        <p>Medicine Stock Report</p>
+        <img src="logo.png" alt="SIM Group Logo" class="print-logo">
+        <h1 id="printStockFactoryName">SIM Fabrics Ltd. (Medical Department)</h1>
+        <p data-i18n="printStock">Medicine Stock Report</p>
+        <div class="print-meta">
+          <span><b data-i18n="reportNo">Report No:</b> <span id="printStockReportNo">—</span></span>
+          <span><b data-i18n="status">Status:</b> <span id="printStockStatus">Draft</span></span>
+          <span><b data-i18n="generated">Generated:</b> <span id="printStockGenerated">—</span></span>
+        </div>
       </div>
       <div class="panel-heading">
         <div>
-          <p class="section-eyebrow">Inventory Summary</p>
-          <h2>Medicine Stock Report</h2>
+          <p class="section-eyebrow" data-i18n="inventorySummary">Inventory Summary</p>
+          <h2 data-i18n="stockReport">Medicine Stock Report</h2>
         </div>
         <label class="month-picker no-print" for="stockMonth">
-          <span>For the month of</span>
+          <span data-i18n="forTheMonthOf">For the month of</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" type="month" id="stockMonth" aria-label="Stock report month">
         </label>
       </div>
       <h3 id="stockMonthTitle" class="period-title"></h3>
 
+      <div class="stock-tools no-print">
+        <label class="switch-row" for="syncIssueToggle">
+          <input type="checkbox" id="syncIssueToggle" checked>
+          <span class="switch-track" aria-hidden="true"></span>
+          <span data-i18n="autoSync">Auto-fill Issue from the requisition</span>
+        </label>
+        <button class="ghost-pill" type="button" id="rollForwardButton" title="Copy last month's closing stock into this month's opening stock">
+          <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+          <span data-i18n="rollForward">Opening = last month closing</span>
+        </button>
+      </div>
+
       <div class="table-scroll">
         <table id="stockTable" class="report-table stock-table w-full text-sm text-left text-gray-700">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Sl No.</th>
-              <th scope="col">Name of Medicine</th>
-              <th scope="col" class="num">Opening Stock</th>
-              <th scope="col" class="num">Received</th>
-              <th scope="col" class="num">Total</th>
-              <th scope="col" class="num">Issue</th>
-              <th scope="col" class="num">Closing Stock</th>
-              <th scope="col">Remarks</th>
+              <th scope="col" data-i18n="colSlNo">Sl No.</th>
+              <th scope="col" data-i18n="colMedicine">Name of Medicine</th>
+              <th scope="col" class="num" data-i18n="colOpening">Opening Stock</th>
+              <th scope="col" class="num" data-i18n="colReceived">Received</th>
+              <th scope="col" class="num" data-i18n="colTotal">Total</th>
+              <th scope="col" class="num" data-i18n="colIssue">Issue</th>
+              <th scope="col" class="num" data-i18n="colClosing">Closing Stock</th>
+              <th scope="col" class="no-print" data-i18n="colStatus">Status</th>
+              <th scope="col" data-i18n="colRemarks">Remarks</th>
             </tr>
           </thead>
           <tbody></tbody>
           <tfoot>
             <tr>
-              <td colspan="2" class="num"><b>Total</b></td>
+              <td colspan="2" class="num"><b data-i18n="total">Total</b></td>
               <td id="sOpening" class="num"></td>
               <td id="sReceived" class="num"></td>
               <td id="sTotal" class="num"></td>
               <td id="sIssue" class="num"></td>
               <td id="sClosing" class="num"></td>
+              <td class="no-print"></td>
               <td></td>
             </tr>
           </tfoot>
@@ -1008,7 +311,7 @@
       </div>
 
       <div class="report-signature">
-        <p class="regards">With Best Regards,</p>
+        <p class="regards" data-i18n="regards">With Best Regards,</p>
         <div class="signature-line" aria-hidden="true"></div>
         <strong class="signature-name" data-sign-name>Dr. Rashna Mahjabin Tonni</strong>
         <span class="signature-title" data-sign-title>Sr. Medical Officer</span>
@@ -1016,44 +319,88 @@
       </div>
     </section>
 
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Product catalog                                                     -->
+    <!-- ------------------------------------------------------------------ -->
     <section id="catalogSection" class="catalog-card bg-white shadow-xl rounded-2xl p-6" aria-labelledby="catalogTitle">
       <div class="catalog-heading">
         <div>
-          <p class="section-eyebrow">Permanent Catalog</p>
-          <h2 id="catalogTitle">Permanent Product List</h2>
-          <p class="catalog-description">Rate হলো প্রতি Box/Pcs-এর retail rate। অজানা rate থাকলে 0 দেখাবে—নিজে যাচাই করে বসাবেন।</p>
+          <p class="section-eyebrow" data-i18n="permanentCatalog">Permanent Catalog</p>
+          <h2 id="catalogTitle" data-i18n="productList">Permanent Product List</h2>
+          <p class="catalog-description" data-i18n="catalogHelp">Rate হলো প্রতি Box/Pcs-এর retail rate। অজানা rate থাকলে 0 দেখাবে—নিজে যাচাই করে বসাবেন।</p>
         </div>
         <span class="catalog-count" id="catalogCount">0 products</span>
       </div>
 
       <form id="productForm" class="product-form no-print">
-        <label for="newName">Product name
+        <label for="newName"><span data-i18n="productName">Product name</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="newName" type="text" placeholder="e.g. Paracetamol 500mg" required>
         </label>
-        <label for="newUnit">Unit
+        <label for="newUnit"><span data-i18n="unit">Unit</span>
           <select class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="newUnit">
             <option>Box</option><option>Pcs</option>
           </select>
         </label>
-        <label for="newPieces">Pieces per box
+        <label for="newPieces"><span data-i18n="piecesPerBox">Pieces per box</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="newPieces" type="number" min="0" step="1" placeholder="Optional">
         </label>
-        <label for="newRate">Retail rate / unit (৳)
+        <label for="newRate"><span data-i18n="retailRate">Retail rate / unit (৳)</span>
           <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="newRate" type="number" min="0" step="0.01" placeholder="0.00">
         </label>
-        <button class="add-product-button" type="submit"><i class="bi bi-plus-lg" aria-hidden="true"></i> Add product</button>
+        <label for="newMinStock"><span data-i18n="minStock">Min stock</span>
+          <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="newMinStock" type="number" min="0" step="1" placeholder="0">
+        </label>
+        <label for="newExpiry"><span data-i18n="expiry">Expiry</span>
+          <input class="field-control border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500" id="newExpiry" type="date">
+        </label>
+        <button class="add-product-button" type="submit"><i class="bi bi-plus-lg" aria-hidden="true"></i> <span data-i18n="addProduct">Add product</span></button>
       </form>
+
+      <div class="catalog-tools no-print">
+        <label class="search-field" for="catalogSearch">
+          <i class="bi bi-search" aria-hidden="true"></i>
+          <input id="catalogSearch" type="search" placeholder="Search products…" aria-label="Search products" data-i18n-placeholder="searchProducts">
+        </label>
+        <label class="control-chip" for="catalogUnitFilter">
+          <i class="bi bi-funnel" aria-hidden="true"></i>
+          <select id="catalogUnitFilter" aria-label="Filter by unit">
+            <option value="all" data-i18n="allUnits">All units</option>
+            <option value="Box">Box</option>
+            <option value="Pcs">Pcs</option>
+          </select>
+        </label>
+        <label class="control-chip" for="catalogSort">
+          <i class="bi bi-sort-down" aria-hidden="true"></i>
+          <select id="catalogSort" aria-label="Sort products">
+            <option value="name" data-i18n="sortName">Name A–Z</option>
+            <option value="rate-desc" data-i18n="sortRateDesc">Highest rate</option>
+            <option value="rate-asc" data-i18n="sortRateAsc">Lowest rate</option>
+            <option value="recent" data-i18n="sortRecent">Recently added</option>
+          </select>
+        </label>
+        <div class="bulk-actions">
+          <button class="ghost-pill" type="button" id="selectAllVisible"><i class="bi bi-check2-square" aria-hidden="true"></i><span data-i18n="selectAll">Select all</span></button>
+          <button class="ghost-pill" type="button" id="clearAllSelected"><i class="bi bi-x-square" aria-hidden="true"></i><span data-i18n="clearAll">Clear all</span></button>
+          <label class="bulk-qty" for="bulkQty">
+            <span data-i18n="colQty">Qty</span>
+            <input id="bulkQty" type="number" min="1" step="1" value="1" aria-label="Quantity for selected medicines">
+          </label>
+          <button class="ghost-pill" type="button" id="applyQtyButton"><i class="bi bi-hash" aria-hidden="true"></i><span data-i18n="applyQty">Apply qty</span></button>
+        </div>
+      </div>
 
       <div class="table-scroll">
         <table id="catalog" class="report-table catalog-table w-full text-sm text-left text-gray-700">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="select-column">Select</th>
-              <th scope="col">Product</th>
-              <th scope="col">Unit</th>
-              <th scope="col" class="num">Pieces/Box</th>
-              <th scope="col" class="num">Retail rate/unit</th>
-              <th scope="col" class="no-print">Delete</th>
+              <th scope="col" class="select-column" data-i18n="colSelect">Select</th>
+              <th scope="col" data-i18n="colProduct">Product</th>
+              <th scope="col" data-i18n="colUnit">Unit</th>
+              <th scope="col" class="num" data-i18n="colPieces">Pieces/Box</th>
+              <th scope="col" class="num" data-i18n="colRate">Retail rate/unit</th>
+              <th scope="col" class="num" data-i18n="colMin">Min</th>
+              <th scope="col" data-i18n="colExpiry">Expiry</th>
+              <th scope="col" class="no-print" data-i18n="colDelete">Delete</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -1069,700 +416,48 @@
     </div>
   </footer>
 
-  <script>
-    'use strict';
+  <!-- -------------------------------------------------------------------- -->
+  <!-- History dialog (months + movement log)                               -->
+  <!-- -------------------------------------------------------------------- -->
+  <dialog class="app-dialog" id="historyDialog" aria-labelledby="historyTitle">
+    <div class="app-dialog-head">
+      <h2 id="historyTitle" data-i18n="historyTitle">Saved months &amp; activity</h2>
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Close">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="app-dialog-body">
+      <section aria-labelledby="monthsHeading">
+        <h3 id="monthsHeading" class="dialog-section-title" data-i18n="savedMonths">Saved months</h3>
+        <ul class="month-list" id="monthList"></ul>
+      </section>
+      <section aria-labelledby="movementHeading">
+        <h3 id="movementHeading" class="dialog-section-title" data-i18n="movementLog">Stock movement log</h3>
+        <ul class="movement-list" id="movementList"></ul>
+      </section>
+    </div>
+    <div class="app-dialog-foot">
+      <button class="ghost-pill" type="button" data-close-dialog data-i18n="close">Close</button>
+    </div>
+  </dialog>
 
-    const PRODUCT_KEY = 'simProducts_v2';
-    const STATE_KEY = 'simAppState_v2';
-
-    // Product: name, unit, pieces per box, retail rate per unit.
-    const productSeed = [
-      ['Tab Napa Extend (665mg)', 'Box', '', 280],
-      ['Tab. Napa (500mg)', 'Box', '', 500],
-      ['Tab. Histacin (4mg)', 'Box', '', 150],
-      ['Tab. Alatrol (10mg)', 'Box', '', 750],
-      ['Tab. Torax/Rolac (10mg)', 'Box', '', 600],
-      ['Tab. Brodil (2mg)', 'Box', '', 130],
-      ['Tab. Flexi (100mg)', 'Box', '', 500],
-      ['Tab. Solivo (500mg)', 'Box', '', 450],
-      ['Tab. Myonil (50mg)', 'Box', '', 150],
-      ['Tab. Fusid (40mg)', 'Box', '', 200],
-      ['Tab. Norvis (50mg)/Algin', 'Box', '', 240],
-      ['Tab. Famotack (20mg)', 'Box', '', 180],
-      ['Tab. Filmet (400mg)', 'Box', '', 425],
-      ['Tab. Entacyd Plus', 'Box', '', 500],
-      ['Tab. Ofran (8mg)', 'Box', '', 330],
-      ['Tab. Deflux (10mg)', 'Box', '', 600],
-      ['Tab. Cinaron Plus', 'Box', '', 280],
-      ['Tab. Vergon (5mg)', 'Box', '', 442],
-      ['Optimox E/D', 'Pcs', '', 80],
-      ['Tear E/D', 'Box', '', 450],
-      ['Windel Plus Solution', 'Box', '', 300],
-      ['3cc Syringe', 'Box', '', 400],
-      ['Nichipore 2 inch', 'Pcs', '', 100],
-      ['Normal Saline 1000ml', 'Pcs', '', 120],
-      ['Viodin Solution 100ml', 'Box', '', 100],
-      ['Surgical Gauze', 'Box', '', 300],
-      ['Surgical Mask', 'Box', '', 100],
-      ['Blood Lancet', 'Box', '', 150],
-      ['Bactocin Ointment', 'Pcs', '', 100],
-      ['ORS-N', 'Box', '', 85],
-      ['Nix Rubbing Balm', 'Pcs', '', 40],
-      ['Hexisol (50mg)', 'Pcs', '', 140],
-      ['Hexisol (250mg)', 'Pcs', '', 60],
-      ['Burna Cream', 'Pcs', '', 200],
-      ['Prolin 3-0', 'Pcs', '', 200],
-      ['Marksilk 3.0', 'Pcs', '', 147.67],
-      ['Catgut 3.0', 'Pcs', '', 130],
-      ['Clofenac Gel', 'Pcs', '', 70],
-      ['Green Strip', 'Box', '', 200],
-      ['Than Gauze', 'Box', '', 433.33],
-      ['Gloves 7 inch (one time use)', 'Pcs', '', 5],
-      ['Surgical BP Blade', 'Pcs', '', 55],
-      ['Inj. Torax (30mg)/Winop', 'Pcs', '', 95],
-      ['Inj. Torax (60mg)', 'Pcs', '', 35],
-      ['Inj. Norvis (2ml)/Algin', 'Pcs', '', 32],
-      ['Inj. Maxpro 40mg', 'Pcs', '', 105],
-      ['Inj. Ofran (4ml)/Emistat', 'Pcs', '', 95],
-      ['Inj. TT Vaccine (Vial)', 'Pcs', '', 950],
-      ['Budicort (1mg/2ml)', 'Pcs', '', 70],
-      ['Inj. Avil (45.5mg/2ml)', 'Pcs', '', 37.6],
-      ['Inj. Cotson (100mg/2ml)', 'Pcs', '', 60],
-      // Additional stock-report products; retail rates were not provided.
-      ['Tab. Dinovo (500mg)/Solibo', 'Box', '', 0],
-      ['Tab. Cinaron Plus/Revert', 'Box', '', 0],
-      ['Tab. Vergon (5mg)/Promtil', 'Box', '', 0],
-      ['Tab. Pizo-A (0.5mg)', 'Box', '', 0],
-      ['Tab. Tenil (3mg)', 'Box', '', 0],
-      ['Cap. Traxyl (500mg)', 'Box', '', 0],
-      ['Inj. Esonix (40mg)', 'Pcs', '', 0],
-      ['Inj. Tranexyl (5ml)/Xamic', 'Pcs', '', 0],
-      ['Tab. NO-Spa (40mg)', 'Box', '', 0],
-      ['Tab. Indever (10mg)', 'Box', '', 0],
-      ['Tab. Amdocal (5mg)', 'Box', '', 0],
-      ['Tab. Norium (10mg)', 'Box', '', 0],
-      ['Tab. Reumacap SR', 'Box', '', 0],
-      ['Tab. Zox 500mg', 'Box', '', 0]
-    ];
-
-    // September 2026 stock report: name, opening, received, issue, remarks.
-    const stockSeed = [
-      ['Tab. Napa (500mg)', 1173, 0, 497, ''],
-      ['Tab. Napa Extend (665mg)', 507, 1080, 534, 'D-24516'],
-      ['Tab. Histacin (4mg)', 345, 0, 295, ''],
-      ['Tab. Alatrol (10mg)', 307, 0, 184, ''],
-      ['Tab. Brodil (2mg)', 539, 0, 143, ''],
-      ['Tab. Torax (10mg)/Rolac', 58, 200, 140, 'D-24516'],
-      ['Tab. Flexi (100mg)', 385, 200, 70, 'D-24516'],
-      ['Tab. Dinovo (500mg)/Solibo', 5, 150, 92, 'D-24516'],
-      ['Tab. Myonil (50mg)', 0, 150, 50, 'D-24517'],
-      ['Tab. Norvis (50mg)/Algin', 181, 450, 163, 'D-24517'],
-      ['Tab. Famotack (20mg)', 76, 240, 76, 'D-24517'],
-      ['Tab. Entacyd Plus', 171, 200, 269, 'D-24516'],
-      ['Tab. Ofran (8mg)/Emistat', 62, 150, 71, 'D-24517'],
-      ['Tab. Deflux (10mg)', 211, 200, 124, 'D-24518'],
-      ['Tab. Filmet (400mg)', 1315, 0, 145, ''],
-      ['Tab. Cinaron Plus/Revert', 384, 0, 65, ''],
-      ['Tab. Vergon (5mg)/Promtil', 602, 0, 62, ''],
-      ['Tab. Pizo-A (0.5mg)', 90, 200, 110, ''],
-      ['Tab. Tenil (3mg)', 192, 0, 6, ''],
-      ['Tab. Fusid (40mg)', 34, 0, 22, ''],
-      ['Cap. Traxyl (500mg)', 12, 60, 5, 'D-24519'],
-      ['Inj. Torax (30mg)/Winop', 7, 5, 9, 'D-24519'],
-      ['Inj. Torax (60mg)', 0, 5, 0, 'D-24518'],
-      ['Inj. Esonix (40mg)', 2, 10, 7, 'D-24518'],
-      ['Inj. Norvis (2ml)/Algin', 14, 0, 7, ''],
-      ['Inj. Ofran (4ml)/Emistat', 14, 0, 1, ''],
-      ['Inj. Tranexyl (5ml)/Xamic', 5, 0, 2, ''],
-      ['ORS-N', 77, 500, 536, 'D-24519'],
-      ['Tab. NO-Spa (40mg)', 194, 0, 18, ''],
-      ['Tab. Indever (10mg)', 188, 0, 4, ''],
-      ['Tab. Amdocal (5mg)', 23, 0, 4, ''],
-      ['Tab. Norium (10mg)', 0, 300, 41, 'D-24516'],
-      ['Tab. Reumacap SR', 200, 200, 10, 'D-24518'],
-      ['Tab. Zox 500mg', 38, 0, 13, '']
-    ];
-
-    function readStore(key, fallback) {
-      try {
-        const value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : fallback;
-      } catch (error) {
-        return fallback;
-      }
-    }
-
-    function safeStore(key, value) {
-      try {
-        localStorage.setItem(key, JSON.stringify(value));
-        return true;
-      } catch (error) {
-        setStatus('Could not save: browser storage is unavailable.', 'error');
-        return false;
-      }
-    }
-
-    const savedProducts = readStore(PRODUCT_KEY, null);
-    let products = Array.isArray(savedProducts)
-      ? savedProducts.map((product, index) => ({
-          id: product.id ?? index + 1,
-          name: String(product.name ?? '').trim(),
-          unit: product.unit === 'Pcs' ? 'Pcs' : 'Box',
-          pieces: product.pieces ?? '',
-          rate: Math.max(0, Number(product.rate) || 0)
-        })).filter((product) => product.name)
-      : productSeed.map((product, index) => ({
-          id: index + 1,
-          name: product[0],
-          unit: product[1],
-          pieces: product[2],
-          rate: product[3]
-        }));
-
-    const savedState = readStore(STATE_KEY, {}) || {};
-    let requisition = savedState.requisition && typeof savedState.requisition === 'object'
-      ? savedState.requisition
-      : {};
-    let stock = Array.isArray(savedState.stock)
-      ? savedState.stock
-      : stockSeed.map((row) => ({ name: row[0], opening: row[1], received: row[2], issue: row[3], remarks: row[4] }));
-
-    const $ = (selector, root = document) => root.querySelector(selector);
-    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-    const reqMonthInput = $('#reqMonth');
-    const stockMonthInput = $('#stockMonth');
-    const saveStatus = $('#saveStatus');
-
-    function setStatus(message, kind = '') {
-      if (!saveStatus) return;
-      saveStatus.textContent = message;
-      saveStatus.classList.remove('is-success', 'is-error');
-      if (kind) saveStatus.classList.add(`is-${kind}`);
-    }
-
-    function markUnsaved() {
-      setStatus('Unsaved changes');
-    }
-
-    function localMonthValue(date = new Date()) {
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      return `${date.getFullYear()}-${month}`;
-    }
-
-    function monthLabel(value) {
-      if (!value || !/^\d{4}-\d{2}$/.test(value)) return '';
-      const [year, month] = value.split('-').map(Number);
-      return new Date(year, month - 1, 1, 12).toLocaleString('en-US', { month: 'long', year: 'numeric' });
-    }
-
-    function money(value) {
-      return new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(Number(value) || 0);
-    }
-
-    function persistProducts() {
-      safeStore(PRODUCT_KEY, products);
-    }
-
-    function updateSignature() {
-      const name = $('#signNameInput')?.value.trim() || 'Dr. Rashna Mahjabin Tonni';
-      const title = $('#signTitleInput')?.value.trim() || 'Sr. Medical Officer';
-      $$('[data-sign-name]').forEach((element) => { element.textContent = name; });
-      $$('[data-sign-title]').forEach((element) => { element.textContent = title; });
-    }
-
-    function renderCatalog() {
-      const body = $('#catalog tbody');
-      const fragment = document.createDocumentFragment();
-
-      products.forEach((product) => {
-        const row = document.createElement('tr');
-        const selectCell = document.createElement('td');
-        selectCell.className = 'select-column';
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'product-checkbox h-4 w-4 rounded border-gray-300 text-purple-700 focus:ring-2 focus:ring-purple-500';
-        checkbox.checked = Boolean(requisition[product.id]);
-        checkbox.setAttribute('aria-label', `Add ${product.name} to requisition`);
-        checkbox.addEventListener('change', () => {
-          if (checkbox.checked) {
-            if (!requisition[product.id]) requisition[product.id] = { qty: 1 };
-          } else {
-            delete requisition[product.id];
-          }
-          renderReq();
-          markUnsaved();
-        });
-        selectCell.appendChild(checkbox);
-
-        const nameCell = document.createElement('td');
-        nameCell.className = 'font-semibold text-gray-800';
-        nameCell.textContent = product.name;
-
-        const unitCell = document.createElement('td');
-        unitCell.textContent = product.unit;
-
-        const piecesCell = document.createElement('td');
-        piecesCell.className = 'num';
-        const piecesInput = document.createElement('input');
-        piecesInput.type = 'number';
-        piecesInput.min = '0';
-        piecesInput.step = '1';
-        piecesInput.value = product.pieces ?? '';
-        piecesInput.placeholder = '—';
-        piecesInput.className = 'table-input border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500';
-        piecesInput.setAttribute('aria-label', `Pieces per box for ${product.name}`);
-        piecesInput.addEventListener('change', () => {
-          product.pieces = piecesInput.value;
-          markUnsaved();
-        });
-        piecesCell.appendChild(piecesInput);
-
-        const rateCell = document.createElement('td');
-        rateCell.className = 'num';
-        const rateInput = document.createElement('input');
-        rateInput.type = 'number';
-        rateInput.min = '0';
-        rateInput.step = '0.01';
-        rateInput.value = String(Number(product.rate) || 0);
-        rateInput.className = 'table-input border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500';
-        rateInput.setAttribute('aria-label', `Retail rate per ${product.unit} for ${product.name}`);
-        rateInput.addEventListener('change', () => {
-          product.rate = Math.max(0, Number(rateInput.value) || 0);
-          renderReq();
-          markUnsaved();
-        });
-        rateCell.appendChild(rateInput);
-
-        const deleteCell = document.createElement('td');
-        deleteCell.className = 'no-print';
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.className = 'table-action';
-        deleteButton.innerHTML = '<i class="bi bi-trash3" aria-hidden="true"></i><span>Delete</span>';
-        deleteButton.setAttribute('aria-label', `Delete ${product.name} permanently`);
-        deleteButton.addEventListener('click', () => {
-          if (!window.confirm(`Permanently delete “${product.name}” from the catalog?`)) return;
-          products = products.filter((item) => String(item.id) !== String(product.id));
-          delete requisition[product.id];
-          renderCatalog();
-          renderReq();
-          markUnsaved();
-        });
-        deleteCell.appendChild(deleteButton);
-
-        row.append(selectCell, nameCell, unitCell, piecesCell, rateCell, deleteCell);
-        fragment.appendChild(row);
-      });
-
-      body.replaceChildren(fragment);
-      $('#catalogCount').textContent = `${products.length} product${products.length === 1 ? '' : 's'}`;
-    }
-
-    function renderReq() {
-      $('#reqMonthTitle').textContent = `For the month of ${monthLabel(reqMonthInput.value)}`;
-      const body = $('#reqTable tbody');
-      const fragment = document.createDocumentFragment();
-      let total = 0;
-      let serial = 0;
-      const selected = products.filter((product) => Boolean(requisition[product.id]));
-
-      if (selected.length === 0) {
-        const row = document.createElement('tr');
-        row.className = 'empty-row';
-        const cell = document.createElement('td');
-        cell.colSpan = 5;
-        cell.textContent = 'No medicines selected yet. Choose a checkbox in the permanent product list below.';
-        row.appendChild(cell);
-        fragment.appendChild(row);
-      }
-
-      selected.forEach((product) => {
-        serial += 1;
-        const item = requisition[product.id] && typeof requisition[product.id] === 'object'
-          ? requisition[product.id]
-          : { qty: Number(requisition[product.id]) || 0 };
-        if (item.qty === undefined) item.qty = 1;
-        requisition[product.id] = item;
-        const qty = Math.max(0, Number(item.qty) || 0);
-        const amount = qty * (Number(product.rate) || 0);
-        total += amount;
-
-        const row = document.createElement('tr');
-        const serialCell = document.createElement('td');
-        serialCell.textContent = String(serial);
-        const nameCell = document.createElement('td');
-        nameCell.className = 'font-semibold text-gray-800';
-        nameCell.textContent = product.name;
-
-        const qtyCell = document.createElement('td');
-        const qtyEntry = document.createElement('span');
-        qtyEntry.className = 'qty-entry';
-        const qtyInput = document.createElement('input');
-        qtyInput.type = 'number';
-        qtyInput.min = '0';
-        qtyInput.step = '1';
-        qtyInput.value = String(qty);
-        qtyInput.className = 'table-input border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500';
-        qtyInput.setAttribute('aria-label', `Quantity of ${product.name}`);
-        qtyInput.addEventListener('change', () => {
-          item.qty = Math.max(0, Number(qtyInput.value) || 0);
-          renderReq();
-          markUnsaved();
-        });
-        const unit = document.createElement('span');
-        unit.className = 'unit-label';
-        unit.textContent = product.unit;
-        qtyEntry.append(qtyInput, unit);
-        qtyCell.appendChild(qtyEntry);
-
-        const amountCell = document.createElement('td');
-        amountCell.className = 'num';
-        amountCell.textContent = money(amount);
-
-        const actionCell = document.createElement('td');
-        actionCell.className = 'no-print';
-        const removeButton = document.createElement('button');
-        removeButton.type = 'button';
-        removeButton.className = 'table-action';
-        removeButton.innerHTML = '<i class="bi bi-x-lg" aria-hidden="true"></i><span>Remove</span>';
-        removeButton.addEventListener('click', () => {
-          delete requisition[product.id];
-          renderReq();
-          renderCatalog();
-          markUnsaved();
-        });
-        actionCell.appendChild(removeButton);
-
-        row.append(serialCell, nameCell, qtyCell, amountCell, actionCell);
-        fragment.appendChild(row);
-      });
-
-      body.replaceChildren(fragment);
-      $('#reqTotal').innerHTML = `<b>৳ ${money(total)}</b>`;
-    }
-
-    function updateStockCalculations() {
-      const rows = $$('#stockTable tbody tr');
-      const sums = { opening: 0, received: 0, total: 0, issue: 0, closing: 0 };
-
-      stock.forEach((item, index) => {
-        const opening = Number(item.opening) || 0;
-        const received = Number(item.received) || 0;
-        const issue = Number(item.issue) || 0;
-        const total = opening + received;
-        const closing = total - issue;
-        sums.opening += opening;
-        sums.received += received;
-        sums.total += total;
-        sums.issue += issue;
-        sums.closing += closing;
-
-        const row = rows[index];
-        const totalCell = row?.querySelector('[data-stock-total]');
-        const closingCell = row?.querySelector('[data-stock-closing]');
-        if (totalCell) totalCell.textContent = total.toLocaleString('en-US');
-        if (closingCell) {
-          closingCell.textContent = closing.toLocaleString('en-US');
-          closingCell.classList.toggle('negative-stock', closing < 0);
-        }
-      });
-
-      $('#sOpening').textContent = sums.opening.toLocaleString('en-US');
-      $('#sReceived').textContent = sums.received.toLocaleString('en-US');
-      $('#sTotal').textContent = sums.total.toLocaleString('en-US');
-      $('#sIssue').textContent = sums.issue.toLocaleString('en-US');
-      $('#sClosing').textContent = sums.closing.toLocaleString('en-US');
-    }
-
-    function renderStock() {
-      $('#stockMonthTitle').textContent = `For the month of ${monthLabel(stockMonthInput.value)}`;
-      const body = $('#stockTable tbody');
-      const fragment = document.createDocumentFragment();
-
-      stock.forEach((item, index) => {
-        const row = document.createElement('tr');
-        const serialCell = document.createElement('td');
-        serialCell.textContent = String(index + 1);
-        const nameCell = document.createElement('td');
-        nameCell.className = 'font-semibold text-gray-800';
-        nameCell.textContent = item.name;
-        const inputCells = {};
-
-        ['opening', 'received', 'issue'].forEach((key) => {
-          const cell = document.createElement('td');
-          cell.className = 'num';
-          const input = document.createElement('input');
-          input.type = 'number';
-          input.min = '0';
-          input.step = '1';
-          input.value = String(Number(item[key]) || 0);
-          input.className = 'table-input border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500';
-          input.setAttribute('aria-label', `${key} stock for ${item.name}`);
-          input.addEventListener('input', () => {
-            item[key] = input.value === '' ? 0 : Math.max(0, Number(input.value) || 0);
-            updateStockCalculations();
-            markUnsaved();
-          });
-          cell.appendChild(input);
-          inputCells[key] = cell;
-        });
-
-        const totalCell = document.createElement('td');
-        totalCell.className = 'num computed-value';
-        totalCell.dataset.stockTotal = 'true';
-        const closingCell = document.createElement('td');
-        closingCell.className = 'num computed-value';
-        closingCell.dataset.stockClosing = 'true';
-
-        const remarksCell = document.createElement('td');
-        const remarksInput = document.createElement('input');
-        remarksInput.type = 'text';
-        remarksInput.value = item.remarks || '';
-        remarksInput.className = 'table-input input-wide border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500';
-        remarksInput.setAttribute('aria-label', `Remarks for ${item.name}`);
-        remarksInput.addEventListener('change', () => {
-          item.remarks = remarksInput.value;
-          markUnsaved();
-        });
-        remarksCell.appendChild(remarksInput);
-
-        row.append(
-          serialCell,
-          nameCell,
-          inputCells.opening,
-          inputCells.received,
-          totalCell,
-          inputCells.issue,
-          closingCell,
-          remarksCell
-        );
-        fragment.appendChild(row);
-      });
-
-      body.replaceChildren(fragment);
-      updateStockCalculations();
-    }
-
-    function saveAll() {
-      const state = {
-        reqMonth: reqMonthInput.value,
-        stockMonth: stockMonthInput.value,
-        requisition,
-        stock,
-        signName: $('#signNameInput').value,
-        signTitle: $('#signTitleInput').value
-      };
-      const savedStateOk = safeStore(STATE_KEY, state);
-      const savedProductsOk = safeStore(PRODUCT_KEY, products);
-      if (savedStateOk && savedProductsOk) setStatus('Saved on this browser.', 'success');
-    }
-
-    function addProduct(event) {
-      event.preventDefault();
-      const name = $('#newName').value.trim();
-      const unit = $('#newUnit').value;
-      const pieces = $('#newPieces').value;
-      const rate = Math.max(0, Number($('#newRate').value) || 0);
-      if (!name) {
-        $('#newName').focus();
-        setStatus('Enter a product name first.', 'error');
-        return;
-      }
-      if (products.some((product) => product.name.toLocaleLowerCase() === name.toLocaleLowerCase())) {
-        setStatus('That product is already in the catalog.', 'error');
-        return;
-      }
-      const nextId = products.reduce((max, product) => Math.max(max, Number(product.id) || 0), 0) + 1;
-      products.push({ id: nextId, name, unit, pieces, rate });
-      renderCatalog();
-      $('#productForm').reset();
-      $('#newUnit').value = 'Box';
-      markUnsaved();
-    }
-
-    function exportExcel() {
-      if (!window.XLSX) {
-        setStatus('Excel export is unavailable. Check your internet connection and reload.', 'error');
-        return;
-      }
-
-      const today = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Asia/Dhaka',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      }).format(new Date()).replace(/\//g, '.');
-      const signName = $('#signNameInput').value.trim() || 'Dr. Rashna Mahjabin Tonni';
-      const signTitle = $('#signTitleInput').value.trim() || 'Sr. Medical Officer';
-
-      const requisitionRows = [
-        [today],
-        ['To'],
-        ['Director'],
-        ['SIM Group,'],
-        ['Thakurbaritek, Masumabad, Vulta, Rupgonj, Narayanganj.'],
-        [],
-        ['Subject: Requisition for medicines and accessories for the Medical Center'],
-        [],
-        ['Dear Sir,'],
-        ['With due respect, this is to inform you that, to work properly the following medicines and accessories are badly needed for The Medical Center:-'],
-        [],
-        ['Sl No.', 'Name', 'Amount', 'Price (BDT)']
-      ];
-
-      let serial = 0;
-      let requisitionTotal = 0;
-      products.filter((product) => Boolean(requisition[product.id])).forEach((product) => {
-        const item = requisition[product.id] && typeof requisition[product.id] === 'object'
-          ? requisition[product.id]
-          : { qty: Number(requisition[product.id]) || 0 };
-        const qty = Math.max(0, Number(item.qty) || 0);
-        const amount = qty * (Number(product.rate) || 0);
-        const quantityLabel = `${String(qty).padStart(2, '0')} ${product.unit.toLowerCase()}`;
-        requisitionTotal += amount;
-        requisitionRows.push([++serial, product.name, quantityLabel, amount]);
-      });
-
-      requisitionRows.push(['', '', 'Total =', requisitionTotal]);
-      requisitionRows.push([], ['With Best Regards'], [], [signName], [signTitle], ['SIM Group']);
-
-      const stockRows = [
-        ['SIM Fabrics Ltd. (Medical Department)'],
-        ['Medicine Stock Report'],
-        [`For the month of ${monthLabel(stockMonthInput.value)}`],
-        [],
-        ['Sl No.', 'Name of Medicine', 'Opening Stock', 'Received', 'Total', 'Issue', 'Closing Stock', 'Remarks']
-      ];
-      const stockTotals = { opening: 0, received: 0, total: 0, issue: 0, closing: 0 };
-      stock.forEach((item, index) => {
-        const opening = Number(item.opening) || 0;
-        const received = Number(item.received) || 0;
-        const issue = Number(item.issue) || 0;
-        const total = opening + received;
-        const closing = total - issue;
-        stockTotals.opening += opening;
-        stockTotals.received += received;
-        stockTotals.total += total;
-        stockTotals.issue += issue;
-        stockTotals.closing += closing;
-        stockRows.push([index + 1, item.name, opening, received, total, issue, closing, item.remarks || '']);
-      });
-      stockRows.push(['', 'Total =', stockTotals.opening, stockTotals.received, stockTotals.total, stockTotals.issue, stockTotals.closing, '']);
-
-      const workbook = XLSX.utils.book_new();
-      const requisitionSheet = XLSX.utils.aoa_to_sheet(requisitionRows);
-      const stockSheet = XLSX.utils.aoa_to_sheet(stockRows);
-      requisitionSheet['!cols'] = [{ wch: 8 }, { wch: 38 }, { wch: 14 }, { wch: 14 }];
-      requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-      requisitionSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
-
-      // Merge the letter and signature lines across the four-column page width.
-      const letterRows = [0, 1, 2, 3, 4, 6, 8, 9];
-      const signatureStart = requisitionRows.length - 6;
-      const signatureRows = Array.from({ length: 6 }, (_, index) => signatureStart + index);
-      requisitionSheet['!merges'] = [...letterRows, ...signatureRows].map((row) => ({
-        s: { r: row, c: 0 },
-        e: { r: row, c: 3 }
-      }));
-
-      stockSheet['!cols'] = [
-        { wch: 6 }, { wch: 30 }, { wch: 10 }, { wch: 10 },
-        { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }
-      ];
-      stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-      stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
-
-      const gridBorder = {
-        top: { style: 'thin', color: { rgb: 'FF64748B' } },
-        bottom: { style: 'thin', color: { rgb: 'FF64748B' } },
-        left: { style: 'thin', color: { rgb: 'FF64748B' } },
-        right: { style: 'thin', color: { rgb: 'FF64748B' } }
-      };
-      function styleTable(sheet, headerRow, totalRow, columnCount) {
-        for (let row = headerRow; row <= totalRow; row += 1) {
-          for (let column = 0; column < columnCount; column += 1) {
-            const address = XLSX.utils.encode_cell({ r: row, c: column });
-            const cell = sheet[address] || (sheet[address] = { t: 's', v: '' });
-            const isHeader = row === headerRow;
-            const isTotal = row === totalRow;
-            cell.s = {
-              font: { bold: isHeader || isTotal, color: { rgb: isHeader ? 'FFFFFFFF' : 'FF1A1A1A' } },
-              border: {
-                top: { ...gridBorder.top },
-                bottom: { ...gridBorder.bottom },
-                left: { ...gridBorder.left },
-                right: { ...gridBorder.right }
-              },
-              alignment: { vertical: 'center', horizontal: column === 0 ? 'center' : 'left', wrapText: true },
-              ...(isHeader ? { fill: { patternType: 'solid', fgColor: { rgb: 'FF4A148C' } } } : {}),
-              ...(isTotal ? { fill: { patternType: 'solid', fgColor: { rgb: 'FFF1F5F9' } } } : {})
-            };
-          }
-        }
-      }
-
-      const requisitionHeaderRow = 11;
-      const requisitionTotalRow = requisitionRows.length - 7;
-      const stockHeaderRow = 4;
-      const stockTotalRow = stockRows.length - 1;
-      styleTable(requisitionSheet, requisitionHeaderRow, requisitionTotalRow, 4);
-      styleTable(stockSheet, stockHeaderRow, stockTotalRow, 8);
-
-      XLSX.utils.book_append_sheet(workbook, requisitionSheet, 'Requisition');
-      XLSX.utils.book_append_sheet(workbook, stockSheet, 'Stock Report');
-      XLSX.writeFile(workbook, `SIM_Medical_Requisition_${reqMonthInput.value || 'report'}.xlsx`);
-      setStatus('Official A4 portrait workbook downloaded.', 'success');
-    }
-
-    function showTab(id) {
-      $$('.tab-button').forEach((button) => {
-        const selected = button.dataset.tabTarget === id;
-        button.classList.toggle('active', selected);
-        button.setAttribute('aria-selected', String(selected));
-        button.tabIndex = selected ? 0 : -1;
-      });
-      $$('.panel').forEach((panel) => {
-        const selected = panel.id === id;
-        panel.classList.toggle('active', selected);
-        panel.setAttribute('aria-hidden', String(!selected));
-      });
-      setStatus('');
-    }
-
-    // Initialize existing state and wire up controls.
-    reqMonthInput.value = savedState.reqMonth || localMonthValue();
-    stockMonthInput.value = savedState.stockMonth || '2026-09';
-    $('#signNameInput').value = savedState.signName || 'Dr. Rashna Mahjabin Tonni';
-    $('#signTitleInput').value = savedState.signTitle || 'Sr. Medical Officer';
-
-    $$('.tab-button').forEach((button) => {
-      button.addEventListener('click', () => showTab(button.dataset.tabTarget));
-      button.addEventListener('keydown', (event) => {
-        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-        event.preventDefault();
-        const tabs = $$('.tab-button');
-        const currentIndex = tabs.indexOf(button);
-        const nextIndex = event.key === 'ArrowRight'
-          ? (currentIndex + 1) % tabs.length
-          : (currentIndex - 1 + tabs.length) % tabs.length;
-        tabs[nextIndex].focus();
-        showTab(tabs[nextIndex].dataset.tabTarget);
-      });
-    });
-
-    $('#saveButton').addEventListener('click', saveAll);
-    $('#excelButton').addEventListener('click', exportExcel);
-    $('#printButton').addEventListener('click', () => window.print());
-    $('#productForm').addEventListener('submit', addProduct);
-    reqMonthInput.addEventListener('change', () => { renderReq(); markUnsaved(); });
-    stockMonthInput.addEventListener('change', () => { renderStock(); markUnsaved(); });
-    $('#signNameInput').addEventListener('input', () => { updateSignature(); markUnsaved(); });
-    $('#signTitleInput').addEventListener('input', () => { updateSignature(); markUnsaved(); });
-
-    renderCatalog();
-    renderReq();
-    renderStock();
-    updateSignature();
-  </script>
+  <!-- -------------------------------------------------------------------- -->
+  <!-- Destructive-action dialog                                            -->
+  <!-- -------------------------------------------------------------------- -->
+  <dialog class="app-dialog app-dialog--small" id="confirmDialog" aria-labelledby="confirmTitle">
+    <div class="app-dialog-head">
+      <h2 id="confirmTitle" data-i18n="confirmTitle">Please confirm</h2>
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Close">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="app-dialog-body">
+      <p id="confirmMessage" class="dialog-message"></p>
+    </div>
+    <div class="app-dialog-foot">
+      <button class="ghost-pill" type="button" data-close-dialog data-i18n="cancel">Cancel</button>
+      <button class="danger-pill" type="button" id="confirmAccept" data-i18n="continue">Continue</button>
+    </div>
+  </dialog>
 </body>
 </html>

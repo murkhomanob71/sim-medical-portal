@@ -1,0 +1,7 @@
+# versioned manual backups (local only, never pushed)
+backups/
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store
