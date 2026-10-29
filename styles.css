@@ -105,6 +105,39 @@ h1 {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+.footer-inner .dev-sign { margin: 0; display: inline-flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.footer-inner .dev-label { color: #6e6e6e; font-family: 'Courier Prime', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .82rem; font-weight: 400; letter-spacing: -.01em; }
+.dev-typewriter {
+  display: inline-flex;
+  align-items: center;
+  color: #1a1a1a;
+  font-family: 'Courier Prime', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  font-size: .86rem;
+  letter-spacing: 0;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(26,26,26,.28);
+  padding-bottom: 1px;
+  transition: color .2s ease, border-color .2s ease;
+  min-width: 0;
+}
+.dev-typewriter:hover { color: #000; border-bottom-color: #000; border-bottom-style: solid; }
+.dev-typewriter .tw-text { white-space: nowrap; }
+.dev-typewriter .tw-cursor {
+  display: inline-block;
+  width: .55em;
+  height: 1em;
+  margin-left: 3px;
+  background: #1a1a1a;
+  vertical-align: -2px;
+  animation: twBlink .95s step-end infinite;
+}
+.dev-typewriter.is-done .tw-cursor { opacity: 0; animation: none; transition: opacity .5s ease; }
+@keyframes twBlink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+@media (prefers-reduced-motion: reduce) {
+  .dev-typewriter .tw-cursor { animation: none; opacity: 0; }
+}
+
 
 .footer-inner {
   width: min(100%, var(--content-width));
@@ -135,7 +168,48 @@ h1 {
   text-underline-offset: 3px;
 }
 
-/* Page 1: cover */
+/* Page 1: cover — Full-page 360° splash loader */
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(255,255,255,1) 0, rgba(255,255,255,.96) 22rem, transparent 36rem),
+    radial-gradient(ellipse at 18% 32%, rgba(74,20,140,.06) 0, transparent 20rem),
+    radial-gradient(ellipse at 85% 75%, rgba(0,105,92,.05) 0, transparent 22rem),
+    #f7f8fc;
+  animation: splashFade .32s ease 1.32s forwards;
+}
+.splash-logo-wrap {
+  width: clamp(7rem, 15vw, 11rem);
+  height: clamp(7rem, 15vw, 11rem);
+  display: grid;
+  place-items: center;
+  padding: .5rem;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(74,20,140,.12);
+  box-shadow: 0 18px 44px rgba(43,26,75,.14), 0 0 0 12px rgba(255,255,255,.62);
+  animation: splashSpin 1.32s cubic-bezier(0.68, -0.15, 0.32, 1.15) both;
+}
+.splash-logo {
+  width: 84%;
+  height: 84%;
+  object-fit: contain;
+  display: block;
+}
+@keyframes splashSpin {
+  0% { transform: rotate(0deg) scale(.78); opacity: 0; filter: blur(5px); }
+  18% { opacity: 1; filter: blur(0); }
+  100% { transform: rotate(360deg) scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes splashFade {
+  0% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
 .page-shell--cover {
   overflow-x: clip;
 }
@@ -173,7 +247,7 @@ h1 {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   text-align: center;
-  animation: cover-arrive .7s ease both;
+  animation: cover-arrive .72s cubic-bezier(0.175,0.885,0.32,1.18) 1.68s both;
 }
 
 .cover-content::before {
@@ -194,6 +268,8 @@ h1 {
 }
 
 .cover-logo-wrap {
+  position: relative;
+  isolation: isolate;
   width: clamp(7rem, 13vw, 9rem);
   aspect-ratio: 1 / 1;
   margin: 0 auto clamp(1.5rem, 3vw, 2rem);
@@ -204,8 +280,29 @@ h1 {
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 14px 34px rgba(43, 26, 75, .12), 0 0 0 7px rgba(255, 255, 255, .55);
+  overflow: hidden;
+  animation: logoIntro 1.05s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.68s both;
 }
-
+.cover-logo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--purple), var(--orange), var(--green), var(--purple));
+  z-index: -1;
+  opacity: 0;
+  animation: ringReveal 1.05s ease 1.68s both;
+}
+.cover-logo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.85) 50%, transparent 58%);
+  transform: translateX(-130%);
+  animation: shineSweep 1s ease 2.18s both;
+  pointer-events: none;
+}
 .cover-logo-wrap .brand-logo {
   display: block;
   width: 100%;
@@ -213,6 +310,53 @@ h1 {
   object-fit: contain;
   object-position: center;
   image-rendering: auto;
+  animation: logoSpin 1.05s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.68s both;
+}
+@keyframes logoIntro {
+  0% { opacity: 0; transform: scale(0.55) rotate(-18deg); filter: blur(6px); }
+  55% { opacity: 1; transform: scale(1.06) rotate(3deg); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); }
+}
+@keyframes logoSpin {
+  0% { transform: scale(0.88) rotate(-180deg); opacity: 0; }
+  50% { transform: scale(1.02) rotate(12deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes ringReveal {
+  0% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+  35% { opacity: .55; }
+  100% { opacity: 0; transform: scale(1.22) rotate(180deg); }
+}
+@keyframes shineSweep {
+  0% { transform: translateX(-130%); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+/* stagger: sob part alada theke ese assemble — logo splash er por jora lagbe */
+.cover-heading, .cover-divider, .cover-address, .enter-button {
+  animation-timing-function: cubic-bezier(0.175,0.885,0.32,1.18);
+  animation-fill-mode: both;
+}
+.cover-heading { animation: headingAssemble .75s 1.82s both; }
+.cover-divider { animation: dividerAssemble .6s 1.95s both; }
+.cover-address { animation: addressAssemble .75s 2.08s both; }
+.enter-button { animation: buttonAssemble .7s 2.22s both; }
+
+@keyframes headingAssemble {
+  0% { opacity: 0; transform: translate(-160px, -90px) rotate(-8deg) scale(.85); filter: blur(4px); }
+  100% { opacity: 1; transform: translate(0,0) rotate(0) scale(1); filter: blur(0); }
+}
+@keyframes dividerAssemble {
+  0% { opacity: 0; transform: scaleX(0) scaleY(0.5); }
+  100% { opacity: .78; transform: scaleX(1) scaleY(1); }
+}
+@keyframes addressAssemble {
+  0% { opacity: 0; transform: translate(150px, 80px) rotate(5deg) scale(.88); filter: blur(4px); }
+  100% { opacity: 1; transform: translate(0,0) rotate(0) scale(1); filter: blur(0); }
+}
+@keyframes buttonAssemble {
+  0% { opacity: 0; transform: translateY(70px) scale(.75) rotate(2deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
 }
 
 .cover-heading {
@@ -396,15 +540,17 @@ h1 {
 }
 
 .clock-pill {
+  position: relative;
+  isolation: isolate;
   min-width: max-content;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: .68rem;
-  padding: .58rem .98rem .58rem .73rem;
-  border: 1px solid rgba(74, 20, 140, .11);
+  gap: .95rem;
+  padding: .78rem 1.45rem .78rem .95rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .88);
-  box-shadow: 0 5px 15px rgba(40, 24, 66, .055), inset 0 1px 0 rgba(255, 255, 255, .8);
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(26,26,26,.07);
+  box-shadow: 0 10px 28px rgba(26,26,26,.07), 0 4px 12px rgba(26,26,26,.04);
 }
 
 .clock-icon {
@@ -414,36 +560,60 @@ h1 {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--purple-dark);
-  background: rgba(106, 27, 154, .08);
-  font-size: 1rem;
+  color: #5a5468;
+  background: #f4f3f8;
+  border: 1px solid rgba(26,26,26,.06);
+  font-size: .98rem;
+  position: relative;
+  z-index: 1;
 }
 
 .clock-copy {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: .08rem;
+  gap: .26rem;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .clock-label {
-  color: #7d7785;
-  font-size: .58rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .42rem;
+  color: #9a95a6;
+  font-size: .60rem;
+  font-weight: 650;
+  letter-spacing: .20em;
+  line-height: 1;
   text-transform: uppercase;
+  text-align: center;
+  width: 100%;
 }
+.live-dot {
+  width: .36rem;
+  height: .36rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #9a95a6;
+  opacity: .9;
+}
+@keyframes livePulse { 0%,100%{opacity:.9} 50%{opacity:.55} }
 
 .clock-value {
   display: block;
-  color: #2c2535;
-  font-size: .72rem;
+  color: #1e1b24;
+  font-size: .80rem;
   font-variant-numeric: tabular-nums;
-  font-weight: 650;
-  letter-spacing: .005em;
+  font-weight: 700;
+  letter-spacing: .035em;
   line-height: 1.25;
   white-space: nowrap;
+  text-align: center;
+  width: 100%;
 }
 
 .back-button {

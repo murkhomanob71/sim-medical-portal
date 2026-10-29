@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Stock Report - SIM Fabrics Ltd.</title>
+    <style>
+        * { box-sizing: border-box; font-family: "Times New Roman", Times, serif; }
+        body { background-color: #f4f4f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; color: #000; }
+        .btn-container { margin-bottom: 20px; display: flex; gap: 15px; }
+        .btn { padding: 10px 20px; font-size: 15px; font-weight: bold; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; font-family: Arial, sans-serif; }
+        .btn-excel { background-color: #217346; } .btn-print { background-color: #0056b3; } .btn:hover { opacity: 0.85; }
+        .page { background: white; width: 210mm; min-height: 297mm; padding: 12mm 15mm; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); position: relative; }
+        .header { display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 20px; padding-bottom: 5px; }
+        .logo { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 80px; height: auto; }
+        .header-text { text-align: center; }
+        .header-text h2 { margin: 0; font-size: 24px; font-weight: bold; color: #000; letter-spacing: 0.5px; }
+        .header-text h3 { margin: 5px 0 2px 0; font-size: 18px; font-weight: normal; }
+        .header-text h4 { margin: 0; font-size: 16px; font-weight: normal; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; border: 2px solid #000; }
+        th, td { border: 2px solid #000; padding: 4px 6px; text-align: left; }
+        thead th { background-color: #fff; text-align: center; font-weight: bold; }
+        .text-center { text-align: center; } .text-right { text-align: right; } .font-bold { font-weight: bold; }
+        .footer-signature { margin-top: 40px; font-size: 14px; line-height: 1.5; page-break-inside: avoid; }
+        @media print { body { background: none; padding: 0; } .no-print { display: none !important; } .page { box-shadow: none; width: 100%; padding: 0; margin: 0; } @page { size: A4 portrait; margin: 12mm 15mm; } }
+    </style>
+</head>
+<body>
+    <div class="btn-container no-print">
+        <button class="btn btn-excel" onclick="alert('Live project e Stock → Download Excel e click korle same design e Excel download hobe')">📊 Download Excel File</button>
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+    <div class="page" id="printableContent">
+        <div class="header">
+            <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" class="logo" alt="SIM Fabrics Logo">
+            <div class="header-text">
+                <h2>SIM Fabrics Ltd.(Medical Department)</h2>
+                <h3>Medicine Stock Report</h3>
+                <h4>For the month of September - 2026</h4>
+            </div>
+        </div>
+        <table id="stockTable">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sl</th>
+                    <th style="width: 33%;">Name of Medicine</th>
+                    <th style="width: 11%;">Opening Stock</th>
+                    <th style="width: 10%;">Received</th>
+                    <th style="width: 10%;">Total</th>
+                    <th style="width: 9%;">Issue</th>
+                    <th style="width: 12%;">Closing Stock</th>
+                    <th style="width: 10%;">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="text-center">1</td><td>Tab. Napa(500mg)</td><td class="text-center">1173</td><td class="text-center"></td><td class="text-center">1,173</td><td class="text-center">497</td><td class="text-center">676</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">2</td><td>Tab. Napa Extend(665mg)</td><td class="text-center">507</td><td class="text-center">1080</td><td class="text-center">1,587</td><td class="text-center">534</td><td class="text-center">1,053</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">3</td><td>Tab. Histacin(4mg)</td><td class="text-center">345</td><td class="text-center"></td><td class="text-center">345</td><td class="text-center">295</td><td class="text-center">50</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">4</td><td>Tab. Alatrol(10mg)</td><td class="text-center">307</td><td class="text-center"></td><td class="text-center">307</td><td class="text-center">184</td><td class="text-center">123</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">5</td><td>Tab.Brodil(2mg)</td><td class="text-center">539</td><td class="text-center"></td><td class="text-center">539</td><td class="text-center">143</td><td class="text-center">396</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">6</td><td>Tab.Torax(10mg)/Rolac</td><td class="text-center">58</td><td class="text-center">200</td><td class="text-center">258</td><td class="text-center">140</td><td class="text-center">118</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">7</td><td>Tab. Flexi(100mg)</td><td class="text-center">385</td><td class="text-center">200</td><td class="text-center">585</td><td class="text-center">70</td><td class="text-center">515</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">8</td><td>Tab. Dinovo(500mg)/Solibo</td><td class="text-center">05</td><td class="text-center">150</td><td class="text-center">155</td><td class="text-center">92</td><td class="text-center">63</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">9</td><td>Tab.Myonil(50mg)</td><td class="text-center">00</td><td class="text-center">150</td><td class="text-center">150</td><td class="text-center">50</td><td class="text-center">100</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">10</td><td>Tab. Norvis(50mg)/Algin</td><td class="text-center">181</td><td class="text-center">450</td><td class="text-center">631</td><td class="text-center">163</td><td class="text-center">468</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">11</td><td>Tab.Famotack(20mg)</td><td class="text-center">76</td><td class="text-center">240</td><td class="text-center">316</td><td class="text-center">76</td><td class="text-center">240</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">12</td><td>Tab.Entacyd plus</td><td class="text-center">171</td><td class="text-center">200</td><td class="text-center">371</td><td class="text-center">269</td><td class="text-center">102</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">13</td><td>Tab.Ofran(8mg)/Emistat</td><td class="text-center">62</td><td class="text-center">150</td><td class="text-center">212</td><td class="text-center">71</td><td class="text-center">141</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">14</td><td>Tab.Deflux(10mg)</td><td class="text-center">211</td><td class="text-center">200</td><td class="text-center">411</td><td class="text-center">124</td><td class="text-center">287</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">15</td><td>Tab.Filmet(400mg)</td><td class="text-center">1315</td><td class="text-center"></td><td class="text-center">1,315</td><td class="text-center">145</td><td class="text-center">1,170</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">16</td><td>Tab. Cinaron Plus/Revert</td><td class="text-center">384</td><td class="text-center"></td><td class="text-center">384</td><td class="text-center">65</td><td class="text-center">319</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">18</td><td>Tab. Vergon(5mg)/Promtil</td><td class="text-center">602</td><td class="text-center"></td><td class="text-center">602</td><td class="text-center">62</td><td class="text-center">540</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">19</td><td>Tab.Pizo-A(0.5mg)</td><td class="text-center">90</td><td class="text-center">200</td><td class="text-center">290</td><td class="text-center">110</td><td class="text-center">180</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">20</td><td>Tab. Tenil(3mg)</td><td class="text-center">192</td><td class="text-center"></td><td class="text-center">192</td><td class="text-center">6</td><td class="text-center">186</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">22</td><td>Tab. Fusid(40mg)</td><td class="text-center">34</td><td class="text-center"></td><td class="text-center">34</td><td class="text-center">22</td><td class="text-center">12</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">24</td><td>Cap.Traxyl(500mg)</td><td class="text-center">12</td><td class="text-center">60</td><td class="text-center">72</td><td class="text-center">5</td><td class="text-center">67</td><td class="text-center">D-24519</td></tr>
+                <tr><td class="text-center">25</td><td>Inj. Torax(30mg)/Winop</td><td class="text-center">07</td><td class="text-center">05</td><td class="text-center">12</td><td class="text-center">9</td><td class="text-center">3</td><td class="text-center">D-24519</td></tr>
+                <tr><td class="text-center">26</td><td>Inj. Torax(60mg)</td><td class="text-center">00</td><td class="text-center">05</td><td class="text-center">5</td><td class="text-center"></td><td class="text-center">5</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">27</td><td>Inj. Esonix(40mg)</td><td class="text-center">02</td><td class="text-center">10</td><td class="text-center">12</td><td class="text-center">7</td><td class="text-center">5</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">28</td><td>Inj. Norvis(2ml)/Algin</td><td class="text-center">14</td><td class="text-center"></td><td class="text-center">14</td><td class="text-center">7</td><td class="text-center">7</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">29</td><td>Inj. Ofran(4ml)/ Emistat</td><td class="text-center">14</td><td class="text-center"></td><td class="text-center">14</td><td class="text-center">1</td><td class="text-center">13</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">30</td><td>Inj. Tranexyl(5ml)/Xamic</td><td class="text-center">05</td><td class="text-center"></td><td class="text-center">5</td><td class="text-center">2</td><td class="text-center">3</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">31</td><td>ORS-N</td><td class="text-center">77</td><td class="text-center">500</td><td class="text-center">577</td><td class="text-center">536</td><td class="text-center">41</td><td class="text-center">D-24519</td></tr>
+                <tr><td class="text-center">32</td><td>Tab . NO- Spa(40mg)</td><td class="text-center">194</td><td class="text-center"></td><td class="text-center">194</td><td class="text-center">18</td><td class="text-center">176</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">33</td><td>Tab . Indever(10mg)</td><td class="text-center">188</td><td class="text-center"></td><td class="text-center">188</td><td class="text-center">4</td><td class="text-center">184</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">34</td><td>Tab . Amdocal(5 mg )</td><td class="text-center">23</td><td class="text-center"></td><td class="text-center">23</td><td class="text-center">4</td><td class="text-center">19</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">35</td><td>Tab.Norium(10 mg)</td><td class="text-center">00</td><td class="text-center">300</td><td class="text-center">300</td><td class="text-center">41</td><td class="text-center">259</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">36</td><td>Tab. Reumacap SR</td><td class="text-center">200</td><td class="text-center">200</td><td class="text-center">400</td><td class="text-center">10</td><td class="text-center">390</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">37</td><td>Tab. Zox 500 mg</td><td class="text-center">38</td><td class="text-center"></td><td class="text-center">38</td><td class="text-center">13</td><td class="text-center">25</td><td class="text-center"></td></tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="text-center font-bold">Total</td>
+                    <td class="text-center font-bold">7,411</td>
+                    <td class="text-center font-bold">4,300</td>
+                    <td class="text-center font-bold">11,711</td>
+                    <td class="text-center"></td>
+                    <td class="text-center font-bold">7,936</td>
+                    <td class="text-center"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="footer-signature">
+            <p>With Best Regards</p>
+            <p><br></p>
+            <p><br></p>
+            <p><b>Dr. Rashna Mahjabin Tonni</b><br>Sr. Medical Officer<br>SIM Group</p>
+        </div>
+    </div>
+</body>
+</html>

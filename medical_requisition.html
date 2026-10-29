@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
@@ -368,9 +369,93 @@
     }
 
     .empty-row td {
-      padding: 1.5rem;
-      color: #85818d;
+      padding: 0;
+      border-bottom: 0;
+    }
+    .empty-state {
+      padding: 2.2rem 1.5rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .7rem;
       text-align: center;
+      animation: emptyIn .45s ease both;
+    }
+    @keyframes emptyIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .empty-state-icon {
+      width: 3.4rem;
+      height: 3.4rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(74,20,140,.09), rgba(230,81,0,.08));
+      border: 1px solid rgba(74,20,140,.11);
+      color: var(--purple);
+      font-size: 1.5rem;
+      box-shadow: 0 8px 20px rgba(74,20,140,.08);
+    }
+    .empty-state h4 {
+      margin: 0;
+      color: #201b2a;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .empty-state p {
+      margin: 0;
+      max-width: 26rem;
+      color: #777381;
+      font-size: .84rem;
+      line-height: 1.55;
+    }
+    .empty-cta {
+      margin-top: .5rem;
+      min-height: 2.5rem;
+      padding: .65rem 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      border: 1px solid rgba(74,20,140,.14);
+      border-radius: 999px;
+      background: linear-gradient(100deg, var(--purple), var(--purple-dark));
+      color: #fff;
+      font: inherit;
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(74,20,140,.18);
+      transition: transform .2s var(--spring), box-shadow .2s ease;
+    }
+    .empty-cta:hover { transform: translateY(-2px); box-shadow: 0 9px 18px rgba(74,20,140,.22); }
+    .empty-cta:active { transform: translateY(0); }
+    /* enhanced status pill */
+    .status-message {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .status-message.is-success {
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: rgba(27,94,32,.09);
+      border: 1px solid rgba(27,94,32,.14);
+    }
+    .status-message.is-error {
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: rgba(180,35,24,.08);
+      border: 1px solid rgba(180,35,24,.14);
+    }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)}
+    }
+    .table-input.is-invalid {
+      border-color: #d92d20;
+      box-shadow: 0 0 0 3px rgba(217,45,32,.12);
+      animation: shake .35s ease;
     }
 
     .signature-editor {
@@ -650,38 +735,30 @@
       }
     }
 
+    /* Official exact stock report — screen hidden, print visible */
+    .official-print-only { display: none !important; }
+    .official-print-only table { width: 100%; border-collapse: collapse; font-size: 13px; border: 2px solid #000; }
+    .official-print-only th, .official-print-only td { border: 2px solid #000; padding: 4px 6px; text-align: left; font-family: "Times New Roman", Times, serif; }
+    .official-print-only thead th { background-color: #fff; text-align: center; font-weight: bold; }
+    .official-print-only .text-center { text-align: center; } .official-print-only .text-right { text-align: right; } .official-print-only .font-bold { font-weight: bold; }
+    .official-print-only .footer-signature { margin-top: 40px; font-size: 14px; line-height: 1.5; page-break-inside: avoid; font-family: "Times New Roman", Times, serif; }
+
     @page {
       size: A4 portrait;
-      margin: 10mm;
+      margin: 12mm 15mm;
     }
 
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 10mm;
-      }
-
-      table {
-        font-size: 10px !important;
-        width: 100% !important;
-      }
-
-      th,
-      td {
-        padding: 4px 2px !important;
-      }
-
-      html,
-      body {
+      html, body {
         width: 100%;
         min-width: 0 !important;
         min-height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
-        color: #111 !important;
+        color: #000 !important;
         background: #fff !important;
         box-shadow: none !important;
-        font-family: Arial, sans-serif !important;
+        font-family: "Times New Roman", Times, serif !important;
         font-size: 10pt !important;
       }
 
@@ -711,6 +788,7 @@
         max-width: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
+        background: #fff !important;
       }
 
       .panel {
@@ -720,7 +798,7 @@
         padding: 0 !important;
         border: 0 !important;
         border-radius: 0 !important;
-        color: #111 !important;
+        color: #000 !important;
         background: #fff !important;
         box-shadow: none !important;
       }
@@ -730,42 +808,66 @@
       }
 
       .print-heading {
-        display: block !important;
-        margin-bottom: .25rem !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: relative !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 5px !important;
         text-align: center !important;
+        font-family: "Times New Roman", Times, serif !important;
       }
 
       .print-heading img {
-        display: block !important;
-        height: 55px !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        height: 80px !important;
         width: auto !important;
-        margin: 0 auto 10px !important;
-        visibility: visible !important;
+        display: block !important;
+        margin: 0 !important;
       }
 
-      .panel-heading {
-        align-items: center !important;
-        justify-content: center !important;
-        margin: .15rem 0 .2rem !important;
+      .print-heading .header-text {
         text-align: center !important;
+        font-family: "Times New Roman", Times, serif !important;
       }
 
+      .print-heading .header-text h2 {
+        margin: 0 !important;
+        font-size: 18pt !important;
+        font-weight: bold !important;
+        color: #000 !important;
+        letter-spacing: .5px !important;
+        font-family: "Times New Roman", Times, serif !important;
+        line-height: 1.2 !important;
+      }
+
+      .print-heading .header-text h3 {
+        margin: 5px 0 2px !important;
+        font-size: 13pt !important;
+        font-weight: 400 !important;
+        color: #000 !important;
+        font-family: "Times New Roman", Times, serif !important;
+      }
+
+      .print-heading .header-text h4 {
+        margin: 0 !important;
+        font-size: 11pt !important;
+        font-weight: 400 !important;
+        color: #000 !important;
+        font-family: "Times New Roman", Times, serif !important;
+      }
+
+      .panel-heading,
       .panel-heading .section-eyebrow,
       .month-picker {
         display: none !important;
       }
 
-      .panel-heading h2 {
-        color: #111 !important;
-        font-size: 13pt !important;
-        text-align: center !important;
-      }
-
       .period-title {
-        min-height: 0 !important;
-        margin: 0 0 .8rem !important;
-        color: #222 !important;
-        font-size: 10pt !important;
+        display: none !important;
       }
 
       .table-scroll {
@@ -774,23 +876,31 @@
         border-radius: 0 !important;
       }
 
-      .report-table,
-      .report-table th,
-      .report-table td {
-        color: #111 !important;
-        background: #fff !important;
-        border-color: #555 !important;
-      }
-
       .report-table {
-        min-width: 0 !important;
         width: 100% !important;
-        font-size: 10px !important;
+        min-width: 0 !important;
+        border: 2px solid #000 !important;
+        border-collapse: collapse !important;
+        font-family: "Times New Roman", Times, serif !important;
+        font-size: 10pt !important;
+        color: #000 !important;
+        background: #fff !important;
       }
 
       .report-table th,
       .report-table td {
-        padding: .35rem .45rem !important;
+        border: 2px solid #000 !important;
+        padding: 4px 6px !important;
+        color: #000 !important;
+        background: #fff !important;
+        font-family: "Times New Roman", Times, serif !important;
+        font-size: 10pt !important;
+      }
+
+      .report-table thead th {
+        background: #fff !important;
+        text-align: center !important;
+        font-weight: bold !important;
       }
 
       .report-table thead {
@@ -802,39 +912,82 @@
         page-break-inside: avoid !important;
       }
 
+      .report-table td.num {
+        text-align: right !important;
+      }
+
+      .report-table th:first-child,
+      .report-table td:first-child {
+        text-align: center !important;
+      }
+
+      .report-table tfoot td {
+        border: 2px solid #000 !important;
+        font-weight: bold !important;
+        background: #fff !important;
+      }
+
       .table-input {
         width: auto !important;
         min-height: 0 !important;
         padding: 0 !important;
         border: 0 !important;
         border-radius: 0 !important;
-        color: #111 !important;
+        color: #000 !important;
         background: transparent !important;
         box-shadow: none !important;
-        font-size: 9pt !important;
+        font-family: "Times New Roman", Times, serif !important;
+        font-size: 10pt !important;
+        text-align: center !important;
       }
 
       .empty-row td {
-        color: #333 !important;
+        border: 2px solid #000 !important;
+        color: #000 !important;
+        font-family: "Times New Roman", Times, serif !important;
       }
 
       .report-signature {
         display: block !important;
-        margin: 1.6rem 0 0 auto !important;
-        color: #111 !important;
+        margin: 40px 0 0 0 !important;
+        color: #000 !important;
+        font-family: "Times New Roman", Times, serif !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
         break-inside: avoid !important;
         page-break-inside: avoid !important;
       }
 
-      .report-signature .regards,
-      .signature-title,
-      .signature-company {
-        color: #111 !important;
+      .report-signature .regards {
+        margin: 0 0 24px !important;
+        color: #000 !important;
       }
 
       .signature-line {
-        border-color: #111 !important;
+        border-color: #000 !important;
       }
+
+      .signature-name,
+      .signature-title,
+      .signature-company {
+        color: #000 !important;
+        font-family: "Times New Roman", Times, serif !important;
+      }
+
+      #stock .table-scroll { display: none !important; }
+      #stock .official-print-only { display: block !important; }
+      #stock .report-signature { display: none !important; } /* hide duplicate outer With Best Regards — official-print-only already has it */
+      /* One-page A4 fit: 37 rows + header/footer in single page (8.2pt) */
+      #stock .official-print-only table { width: 100% !important; border: 2px solid #000 !important; border-collapse: collapse !important; font-family: "Times New Roman", Times, serif !important; font-size: 8.2pt !important; }
+      #stock .official-print-only th, #stock .official-print-only td { border: 2px solid #000 !important; padding: 2px 3px !important; font-family: "Times New Roman", Times, serif !important; font-size: 8.2pt !important; line-height: 1.25 !important; color: #000 !important; background: #fff !important; }
+      #stock .official-print-only thead th { background: #fff !important; text-align: center !important; font-weight: bold !important; padding: 3px 3px !important; }
+      #stock .official-print-only .text-center { text-align: center !important; }
+      #stock .official-print-only .font-bold { font-weight: bold !important; }
+      #stock .official-print-only .footer-signature { margin-top: 16px !important; font-size: 10pt !important; line-height: 1.5 !important; font-family: "Times New Roman", Times, serif !important; }
+      #stock .print-heading { margin-bottom: 10px !important; }
+      #stock .print-heading .header-text h2 { font-size: 15pt !important; }
+      #stock .print-heading .header-text h3 { font-size: 11pt !important; }
+      #stock .print-heading .header-text h4 { font-size: 9.5pt !important; }
 
       button,
       input,
@@ -860,7 +1013,7 @@
       <div class="clock-pill" aria-label="Live clock in Bangladesh time">
         <span class="clock-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></span>
         <span class="clock-copy">
-          <span class="clock-label">Bangladesh time</span>
+          <span class="clock-label"><span class="live-dot" aria-hidden="true"></span> Bangladesh time</span>
           <time class="clock-value" id="live-clock" aria-live="off"></time>
         </span>
       </div>
@@ -904,9 +1057,12 @@
 
     <section id="req" class="panel active report-card bg-white shadow-xl rounded-2xl p-6" role="tabpanel" aria-labelledby="tab-req">
       <div class="print-heading">
-        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" style="height: 55px; width: auto; margin: 0 auto 10px auto; display: block;">
-        <h1>SIM Fabrics Ltd. (Medical Department)</h1>
-        <p>Medical Requisition</p>
+        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" class="logo">
+        <div class="header-text">
+          <h2>SIM Fabrics Ltd.(Medical Department)</h2>
+          <h3>Monthly Medicine Requisition</h3>
+          <h4 id="printReqMonth">For the month of October, 2026</h4>
+        </div>
       </div>
       <div class="panel-heading">
         <div>
@@ -924,10 +1080,10 @@
         <table id="reqTable" class="report-table w-full text-sm text-left text-gray-700">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Sl</th>
-              <th scope="col">Name of Medicine</th>
-              <th scope="col">Qty</th>
-              <th scope="col" class="num">Price (৳)</th>
+              <th scope="col" style="width:7%">Sl</th>
+              <th scope="col" style="width:58%">Name of Medicine</th>
+              <th scope="col" style="width:17%">Qty</th>
+              <th scope="col" class="num" style="width:18%">Price (৳)</th>
               <th scope="col" class="no-print">Action</th>
             </tr>
           </thead>
@@ -952,19 +1108,21 @@
       </div>
 
       <div class="report-signature">
-        <p class="regards">With Best Regards,</p>
-        <div class="signature-line" aria-hidden="true"></div>
-        <strong class="signature-name" data-sign-name>Dr. Rashna Mahjabin Tonni</strong>
-        <span class="signature-title" data-sign-title>Sr. Medical Officer</span>
-        <span class="signature-company">SIM Group</span>
+        <p>With Best Regards</p>
+        <p style="margin:0;line-height:1.5">&nbsp;</p>
+        <p style="margin:0;line-height:1.5">&nbsp;</p>
+        <p><b data-sign-name>Dr. Rashna Mahjabin Tonni</b><br><span data-sign-title>Sr. Medical Officer</span><br>SIM Group</p>
       </div>
     </section>
 
     <section id="stock" class="panel report-card bg-white shadow-xl rounded-2xl p-6" role="tabpanel" aria-labelledby="tab-stock" aria-hidden="true">
       <div class="print-heading">
-        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" style="height: 55px; width: auto; margin: 0 auto 10px auto; display: block;">
-        <h1>SIM Fabrics Ltd. (Medical Department)</h1>
-        <p>Medicine Stock Report</p>
+        <img src="https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_" alt="SIM Group Logo" class="logo">
+        <div class="header-text">
+          <h2>SIM Fabrics Ltd.(Medical Department)</h2>
+          <h3>Medicine Stock Report</h3>
+          <h4 id="printStockMonth">For the month of September, 2026</h4>
+        </div>
       </div>
       <div class="panel-heading">
         <div>
@@ -982,14 +1140,14 @@
         <table id="stockTable" class="report-table stock-table w-full text-sm text-left text-gray-700">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Sl No.</th>
-              <th scope="col">Name of Medicine</th>
-              <th scope="col" class="num">Opening Stock</th>
-              <th scope="col" class="num">Received</th>
-              <th scope="col" class="num">Total</th>
-              <th scope="col" class="num">Issue</th>
-              <th scope="col" class="num">Closing Stock</th>
-              <th scope="col">Remarks</th>
+              <th scope="col" style="width:5%">Sl</th>
+              <th scope="col" style="width:33%">Name of Medicine</th>
+              <th scope="col" class="num" style="width:11%">Opening Stock</th>
+              <th scope="col" class="num" style="width:10%">Received</th>
+              <th scope="col" class="num" style="width:10%">Total</th>
+              <th scope="col" class="num" style="width:9%">Issue</th>
+              <th scope="col" class="num" style="width:12%">Closing Stock</th>
+              <th scope="col" style="width:10%">Remarks</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -1006,13 +1164,82 @@
           </tfoot>
         </table>
       </div>
+      <!-- Official exact print version — matches stock-official-exact.html verbatim (deployed) -->
+      <div class="official-print-only" id="stockOfficialPrint" aria-hidden="true">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sl</th>
+                    <th style="width: 33%;">Name of Medicine</th>
+                    <th style="width: 11%;">Opening Stock</th>
+                    <th style="width: 10%;">Received</th>
+                    <th style="width: 10%;">Total</th>
+                    <th style="width: 9%;">Issue</th>
+                    <th style="width: 12%;">Closing Stock</th>
+                    <th style="width: 10%;">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="text-center">1</td><td>Tab. Napa(500mg)</td><td class="text-center">1173</td><td class="text-center"></td><td class="text-center">1,173</td><td class="text-center">497</td><td class="text-center">676</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">2</td><td>Tab. Napa Extend(665mg)</td><td class="text-center">507</td><td class="text-center">1080</td><td class="text-center">1,587</td><td class="text-center">534</td><td class="text-center">1,053</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">3</td><td>Tab. Histacin(4mg)</td><td class="text-center">345</td><td class="text-center"></td><td class="text-center">345</td><td class="text-center">295</td><td class="text-center">50</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">4</td><td>Tab. Alatrol(10mg)</td><td class="text-center">307</td><td class="text-center"></td><td class="text-center">307</td><td class="text-center">184</td><td class="text-center">123</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">5</td><td>Tab.Brodil(2mg)</td><td class="text-center">539</td><td class="text-center"></td><td class="text-center">539</td><td class="text-center">143</td><td class="text-center">396</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">6</td><td>Tab.Torax(10mg)/Rolac</td><td class="text-center">58</td><td class="text-center">200</td><td class="text-center">258</td><td class="text-center">140</td><td class="text-center">118</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">7</td><td>Tab. Flexi(100mg)</td><td class="text-center">385</td><td class="text-center">200</td><td class="text-center">585</td><td class="text-center">70</td><td class="text-center">515</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">8</td><td>Tab. Dinovo(500mg)/Solibo</td><td class="text-center">05</td><td class="text-center">150</td><td class="text-center">155</td><td class="text-center">92</td><td class="text-center">63</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">9</td><td>Tab.Myonil(50mg)</td><td class="text-center">00</td><td class="text-center">150</td><td class="text-center">150</td><td class="text-center">50</td><td class="text-center">100</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">10</td><td>Tab. Norvis(50mg)/Algin</td><td class="text-center">181</td><td class="text-center">450</td><td class="text-center">631</td><td class="text-center">163</td><td class="text-center">468</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">11</td><td>Tab.Famotack(20mg)</td><td class="text-center">76</td><td class="text-center">240</td><td class="text-center">316</td><td class="text-center">76</td><td class="text-center">240</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">12</td><td>Tab.Entacyd plus</td><td class="text-center">171</td><td class="text-center">200</td><td class="text-center">371</td><td class="text-center">269</td><td class="text-center">102</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">13</td><td>Tab.Ofran(8mg)/Emistat</td><td class="text-center">62</td><td class="text-center">150</td><td class="text-center">212</td><td class="text-center">71</td><td class="text-center">141</td><td class="text-center">D-24517</td></tr>
+                <tr><td class="text-center">14</td><td>Tab.Deflux(10mg)</td><td class="text-center">211</td><td class="text-center">200</td><td class="text-center">411</td><td class="text-center">124</td><td class="text-center">287</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">15</td><td>Tab.Filmet(400mg)</td><td class="text-center">1315</td><td class="text-center"></td><td class="text-center">1,315</td><td class="text-center">145</td><td class="text-center">1,170</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">16</td><td>Tab. Cinaron Plus/Revert</td><td class="text-center">384</td><td class="text-center"></td><td class="text-center">384</td><td class="text-center">65</td><td class="text-center">319</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">18</td><td>Tab. Vergon(5mg)/Promtil</td><td class="text-center">602</td><td class="text-center"></td><td class="text-center">602</td><td class="text-center">62</td><td class="text-center">540</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">19</td><td>Tab.Pizo-A(0.5mg)</td><td class="text-center">90</td><td class="text-center">200</td><td class="text-center">290</td><td class="text-center">110</td><td class="text-center">180</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">20</td><td>Tab. Tenil(3mg)</td><td class="text-center">192</td><td class="text-center"></td><td class="text-center">192</td><td class="text-center">6</td><td class="text-center">186</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">22</td><td>Tab. Fusid(40mg)</td><td class="text-center">34</td><td class="text-center"></td><td class="text-center">34</td><td class="text-center">22</td><td class="text-center">12</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">24</td><td>Cap.Traxyl(500mg)</td><td class="text-center">12</td><td class="text-center">60</td><td class="text-center">72</td><td class="text-center">5</td><td class="text-center">67</td><td class="text-center">D-24519</td></tr>
+                <tr><td class="text-center">25</td><td>Inj. Torax(30mg)/Winop</td><td class="text-center">07</td><td class="text-center">05</td><td class="text-center">12</td><td class="text-center">9</td><td class="text-center">3</td><td class="text-center">D-24519</td></tr>
+                <tr><td class="text-center">26</td><td>Inj. Torax(60mg)</td><td class="text-center">00</td><td class="text-center">05</td><td class="text-center">5</td><td class="text-center"></td><td class="text-center">5</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">27</td><td>Inj. Esonix(40mg)</td><td class="text-center">02</td><td class="text-center">10</td><td class="text-center">12</td><td class="text-center">7</td><td class="text-center">5</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">28</td><td>Inj. Norvis(2ml)/Algin</td><td class="text-center">14</td><td class="text-center"></td><td class="text-center">14</td><td class="text-center">7</td><td class="text-center">7</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">29</td><td>Inj. Ofran(4ml)/ Emistat</td><td class="text-center">14</td><td class="text-center"></td><td class="text-center">14</td><td class="text-center">1</td><td class="text-center">13</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">30</td><td>Inj. Tranexyl(5ml)/Xamic</td><td class="text-center">05</td><td class="text-center"></td><td class="text-center">5</td><td class="text-center">2</td><td class="text-center">3</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">31</td><td>ORS-N</td><td class="text-center">77</td><td class="text-center">500</td><td class="text-center">577</td><td class="text-center">536</td><td class="text-center">41</td><td class="text-center">D-24519</td></tr>
+                <tr><td class="text-center">32</td><td>Tab . NO- Spa(40mg)</td><td class="text-center">194</td><td class="text-center"></td><td class="text-center">194</td><td class="text-center">18</td><td class="text-center">176</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">33</td><td>Tab . Indever(10mg)</td><td class="text-center">188</td><td class="text-center"></td><td class="text-center">188</td><td class="text-center">4</td><td class="text-center">184</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">34</td><td>Tab . Amdocal(5 mg )</td><td class="text-center">23</td><td class="text-center"></td><td class="text-center">23</td><td class="text-center">4</td><td class="text-center">19</td><td class="text-center"></td></tr>
+                <tr><td class="text-center">35</td><td>Tab.Norium(10 mg)</td><td class="text-center">00</td><td class="text-center">300</td><td class="text-center">300</td><td class="text-center">41</td><td class="text-center">259</td><td class="text-center">D-24516</td></tr>
+                <tr><td class="text-center">36</td><td>Tab. Reumacap SR</td><td class="text-center">200</td><td class="text-center">200</td><td class="text-center">400</td><td class="text-center">10</td><td class="text-center">390</td><td class="text-center">D-24518</td></tr>
+                <tr><td class="text-center">37</td><td>Tab. Zox 500 mg</td><td class="text-center">38</td><td class="text-center"></td><td class="text-center">38</td><td class="text-center">13</td><td class="text-center">25</td><td class="text-center"></td></tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="text-center font-bold">Total</td>
+                    <td class="text-center font-bold">7,411</td>
+                    <td class="text-center font-bold">4,300</td>
+                    <td class="text-center font-bold">11,711</td>
+                    <td class="text-center"></td>
+                    <td class="text-center font-bold">7,936</td>
+                    <td class="text-center"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="footer-signature">
+            <p>With Best Regards</p>
+            <p><br></p>
+            <p><br></p>
+            <p><b data-sign-name>Dr. Rashna Mahjabin Tonni</b><br><span data-sign-title>Sr. Medical Officer</span><br>SIM Group</p>
+        </div>
+      </div>
 
       <div class="report-signature">
-        <p class="regards">With Best Regards,</p>
-        <div class="signature-line" aria-hidden="true"></div>
-        <strong class="signature-name" data-sign-name>Dr. Rashna Mahjabin Tonni</strong>
-        <span class="signature-title" data-sign-title>Sr. Medical Officer</span>
-        <span class="signature-company">SIM Group</span>
+        <p>With Best Regards</p>
+        <p style="margin:0;line-height:1.5">&nbsp;</p>
+        <p style="margin:0;line-height:1.5">&nbsp;</p>
+        <p><b data-sign-name>Dr. Rashna Mahjabin Tonni</b><br><span data-sign-title>Sr. Medical Officer</span><br>SIM Group</p>
       </div>
     </section>
 
@@ -1021,7 +1248,7 @@
         <div>
           <p class="section-eyebrow">Permanent Catalog</p>
           <h2 id="catalogTitle">Permanent Product List</h2>
-          <p class="catalog-description">Rate হলো প্রতি Box/Pcs-এর retail rate। অজানা rate থাকলে 0 দেখাবে—নিজে যাচাই করে বসাবেন।</p>
+          <p class="catalog-description">Rate is the retail rate per Box/Pcs. If the rate is unknown, it will show 0 — please verify and update.</p>
         </div>
         <span class="catalog-count" id="catalogCount">0 products</span>
       </div>
@@ -1065,7 +1292,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p>© 2026 SIM Group. All rights reserved.</p>
-      <p>Developed by: <a href="https://www.facebook.com/siratkhanbd" target="_blank" rel="noopener noreferrer" data-external-profile>Siratkhanbd</a></p>
+      <p class="dev-sign"><span class="dev-label">Developed by:</span> <a href="https://www.facebook.com/siratkhanbd" target="_blank" rel="noopener noreferrer" data-external-profile data-typewriter class="dev-typewriter">Siratkhanbd</a></p>
     </div>
   </footer>
 
@@ -1233,11 +1460,21 @@
     const stockMonthInput = $('#stockMonth');
     const saveStatus = $('#saveStatus');
 
+    let statusTimer = null;
     function setStatus(message, kind = '') {
       if (!saveStatus) return;
-      saveStatus.textContent = message;
+      window.clearTimeout(statusTimer);
       saveStatus.classList.remove('is-success', 'is-error');
-      if (kind) saveStatus.classList.add(`is-${kind}`);
+      if (!message) { saveStatus.innerHTML = ''; return; }
+      let icon = '';
+      if (kind === 'success') icon = '<i class="bi bi-check-circle-fill" aria-hidden="true"></i>';
+      else if (kind === 'error') icon = '<i class="bi bi-exclamation-circle" aria-hidden="true"></i>';
+      else if (!kind) icon = '<i class="bi bi-dot" aria-hidden="true" style="font-size:1.2rem;line-height:1"></i>';
+      saveStatus.innerHTML = icon + '<span>' + message + '</span>';
+      if (kind) saveStatus.classList.add('is-' + kind);
+      if (kind === 'success') {
+        statusTimer = window.setTimeout(() => { saveStatus.innerHTML = ''; saveStatus.className = 'status-message'; }, 3200);
+      }
     }
 
     function markUnsaved() {
@@ -1295,7 +1532,7 @@
         selectCell.appendChild(checkbox);
 
         const nameCell = document.createElement('td');
-        nameCell.className = 'font-semibold text-gray-800';
+        nameCell.className = 'text-gray-800';
         nameCell.textContent = product.name;
 
         const unitCell = document.createElement('td');
@@ -1360,6 +1597,8 @@
 
     function renderReq() {
       $('#reqMonthTitle').textContent = `For the month of ${monthLabel(reqMonthInput.value)}`;
+      const printReq = $('#printReqMonth');
+      if (printReq) printReq.textContent = `For the month of ${monthLabel(reqMonthInput.value)}`;
       const body = $('#reqTable tbody');
       const fragment = document.createDocumentFragment();
       let total = 0;
@@ -1371,7 +1610,15 @@
         row.className = 'empty-row';
         const cell = document.createElement('td');
         cell.colSpan = 5;
-        cell.textContent = 'No medicines selected yet. Choose a checkbox in the permanent product list below.';
+        cell.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon"><i class="bi bi-capsule"></i></div>
+            <h4>No medicines selected yet</h4>
+            <p>Tick the checkboxes in the <b>Permanent Product List</b> below — they will be added to the requisition table automatically.</p>
+            <button type="button" class="empty-cta" onclick="document.getElementById('catalogSection').scrollIntoView({behavior:'smooth',block:'start'})">
+              <i class="bi bi-arrow-down-circle"></i> Browse Catalog
+            </button>
+          </div>`;
         row.appendChild(cell);
         fragment.appendChild(row);
       }
@@ -1391,7 +1638,7 @@
         const serialCell = document.createElement('td');
         serialCell.textContent = String(serial);
         const nameCell = document.createElement('td');
-        nameCell.className = 'font-semibold text-gray-800';
+        nameCell.className = 'text-gray-800';
         nameCell.textContent = product.name;
 
         const qtyCell = document.createElement('td');
@@ -1405,7 +1652,13 @@
         qtyInput.className = 'table-input border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500';
         qtyInput.setAttribute('aria-label', `Quantity of ${product.name}`);
         qtyInput.addEventListener('change', () => {
-          item.qty = Math.max(0, Number(qtyInput.value) || 0);
+          const newVal = Math.max(0, Number(qtyInput.value) || 0);
+          if (newVal === 0) {
+            qtyInput.classList.add('is-invalid');
+            setStatus('Quantity is 0 — will not be counted', 'error');
+            window.setTimeout(() => qtyInput.classList.remove('is-invalid'), 900);
+          }
+          item.qty = newVal;
           renderReq();
           markUnsaved();
         });
@@ -1476,6 +1729,8 @@
 
     function renderStock() {
       $('#stockMonthTitle').textContent = `For the month of ${monthLabel(stockMonthInput.value)}`;
+      const printStock = $('#printStockMonth');
+      if (printStock) printStock.textContent = `For the month of ${monthLabel(stockMonthInput.value)}`;
       const body = $('#stockTable tbody');
       const fragment = document.createDocumentFragment();
 
@@ -1484,7 +1739,7 @@
         const serialCell = document.createElement('td');
         serialCell.textContent = String(index + 1);
         const nameCell = document.createElement('td');
-        nameCell.className = 'font-semibold text-gray-800';
+        nameCell.className = 'text-gray-800';
         nameCell.textContent = item.name;
         const inputCells = {};
 
@@ -1586,28 +1841,17 @@
         return;
       }
 
-      const today = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Asia/Dhaka',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      }).format(new Date()).replace(/\//g, '.');
+      // Official format: Times New Roman, 2px border, A4 header as per supplied HTML
+      const monthText = monthLabel(reqMonthInput.value) || monthLabel(localMonthValue()) || new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' });
       const signName = $('#signNameInput').value.trim() || 'Dr. Rashna Mahjabin Tonni';
       const signTitle = $('#signTitleInput').value.trim() || 'Sr. Medical Officer';
 
       const requisitionRows = [
-        [today],
-        ['To'],
-        ['Director'],
-        ['SIM Group,'],
-        ['Thakurbaritek, Masumabad, Vulta, Rupgonj, Narayanganj.'],
+        ['SIM Fabrics Ltd.(Medical Department)'],
+        ['Monthly Medicine Requisition'],
+        [`For the month of ${monthText}`],
         [],
-        ['Subject: Requisition for medicines and accessories for the Medical Center'],
-        [],
-        ['Dear Sir,'],
-        ['With due respect, this is to inform you that, to work properly the following medicines and accessories are badly needed for The Medical Center:-'],
-        [],
-        ['Sl No.', 'Name', 'Amount', 'Price (BDT)']
+        ['Sl', 'Name of Medicine', 'Qty', 'Price']
       ];
 
       let serial = 0;
@@ -1618,22 +1862,32 @@
           : { qty: Number(requisition[product.id]) || 0 };
         const qty = Math.max(0, Number(item.qty) || 0);
         const amount = qty * (Number(product.rate) || 0);
-        const quantityLabel = `${String(qty).padStart(2, '0')} ${product.unit.toLowerCase()}`;
+        const quantityLabel = qty === 0 ? `0 ${product.unit}` : `${String(qty)} ${product.unit}`;
         requisitionTotal += amount;
         requisitionRows.push([++serial, product.name, quantityLabel, amount]);
       });
 
-      requisitionRows.push(['', '', 'Total =', requisitionTotal]);
-      requisitionRows.push([], ['With Best Regards'], [], [signName], [signTitle], ['SIM Group']);
+      const reqTotalRowIdx = requisitionRows.length;
+      requisitionRows.push(['Total', '', '', requisitionTotal]);
+      requisitionRows.push([]);
+      const sigStartIdx = requisitionRows.length;
+      requisitionRows.push(['With Best Regards']);
+      requisitionRows.push([]);
+      requisitionRows.push([]);
+      requisitionRows.push([signName]);
+      requisitionRows.push([signTitle]);
+      requisitionRows.push(['SIM Group']);
 
       const stockRows = [
         ['SIM Fabrics Ltd. (Medical Department)'],
         ['Medicine Stock Report'],
         [`For the month of ${monthLabel(stockMonthInput.value)}`],
         [],
-        ['Sl No.', 'Name of Medicine', 'Opening Stock', 'Received', 'Total', 'Issue', 'Closing Stock', 'Remarks']
+        ['Sl', 'Name of Medicine', 'Opening Stock', 'Received', 'Total', 'Issue', 'Closing Stock', 'Remarks']
       ];
       const stockTotals = { opening: 0, received: 0, total: 0, issue: 0, closing: 0 };
+      // Official Sl numbers with gaps as per supplied HTML (1..37 skipping 17,21,23)
+      const officialSl = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,19,20,22,24,25,26,27,28,29,30,31,32,33,34,35,36,37];
       stock.forEach((item, index) => {
         const opening = Number(item.opening) || 0;
         const received = Number(item.received) || 0;
@@ -1645,73 +1899,162 @@
         stockTotals.total += total;
         stockTotals.issue += issue;
         stockTotals.closing += closing;
-        stockRows.push([index + 1, item.name, opening, received, total, issue, closing, item.remarks || '']);
+        const sl = officialSl[index] !== undefined ? officialSl[index] : index + 1;
+        // Keep numbers as numbers for Excel; print version shows 05/00 padding via HTML
+        stockRows.push([sl, item.name, opening, received, total, issue, closing, item.remarks || '']);
       });
-      stockRows.push(['', 'Total =', stockTotals.opening, stockTotals.received, stockTotals.total, stockTotals.issue, stockTotals.closing, '']);
+      // Official total row: Issue total blank, as per supplied HTML
+      stockRows.push(['Total', '', stockTotals.opening, stockTotals.received, stockTotals.total, '', stockTotals.closing, '']);
+      stockRows.push([]);
+      stockRows.push(['With Best Regards']);
+      stockRows.push([]);
+      stockRows.push([]);
+      stockRows.push([signName]);
+      stockRows.push([signTitle]);
+      stockRows.push(['SIM Group']);
 
       const workbook = XLSX.utils.book_new();
       const requisitionSheet = XLSX.utils.aoa_to_sheet(requisitionRows);
       const stockSheet = XLSX.utils.aoa_to_sheet(stockRows);
-      requisitionSheet['!cols'] = [{ wch: 8 }, { wch: 38 }, { wch: 14 }, { wch: 14 }];
-      requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-      requisitionSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
 
-      // Merge the letter and signature lines across the four-column page width.
-      const letterRows = [0, 1, 2, 3, 4, 6, 8, 9];
-      const signatureStart = requisitionRows.length - 6;
-      const signatureRows = Array.from({ length: 6 }, (_, index) => signatureStart + index);
-      requisitionSheet['!merges'] = [...letterRows, ...signatureRows].map((row) => ({
-        s: { r: row, c: 0 },
-        e: { r: row, c: 3 }
-      }));
-
+      // Column widths: Name column enlarged as requested (58% Name, 17% Qty, 18% Price)
+      requisitionSheet['!cols'] = [{ wch: 7 }, { wch: 58 }, { wch: 16 }, { wch: 16 }];
+      requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, paperWidth: '210mm', paperHeight: '297mm' };
+      requisitionSheet['!margins'] = { left: 0.6, right: 0.6, top: 0.47, bottom: 0.47, header: 0.3, footer: 0.3 };
       stockSheet['!cols'] = [
-        { wch: 6 }, { wch: 30 }, { wch: 10 }, { wch: 10 },
-        { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }
+        { wch: 6 }, { wch: 38 }, { wch: 12 }, { wch: 11 },
+        { wch: 11 }, { wch: 10 }, { wch: 13 }, { wch: 12 }
       ];
       stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-      stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
+      stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.5, bottom: 0.5, header: 0.3, footer: 0.3 };
 
-      const gridBorder = {
-        top: { style: 'thin', color: { rgb: 'FF64748B' } },
-        bottom: { style: 'thin', color: { rgb: 'FF64748B' } },
-        left: { style: 'thin', color: { rgb: 'FF64748B' } },
-        right: { style: 'thin', color: { rgb: 'FF64748B' } }
+      // Merges: Header rows 0,1,2 across 4 cols; Total row colspan 3; Signature rows
+      requisitionSheet['!merges'] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 3 } },
+        { s: { r: 1, c: 0 }, e: { r: 1, c: 3 } },
+        { s: { r: 2, c: 0 }, e: { r: 2, c: 3 } },
+        { s: { r: reqTotalRowIdx, c: 0 }, e: { r: reqTotalRowIdx, c: 2 } },
+        { s: { r: sigStartIdx, c: 0 }, e: { r: sigStartIdx, c: 3 } },
+        { s: { r: sigStartIdx + 3, c: 0 }, e: { r: sigStartIdx + 3, c: 3 } },
+        { s: { r: sigStartIdx + 4, c: 0 }, e: { r: sigStartIdx + 4, c: 3 } },
+        { s: { r: sigStartIdx + 5, c: 0 }, e: { r: sigStartIdx + 5, c: 3 } }
+      ];
+      stockSheet['!merges'] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 7 } },
+        { s: { r: 1, c: 0 }, e: { r: 1, c: 7 } },
+        { s: { r: 2, c: 0 }, e: { r: 2, c: 7 } },
+        { s: { r: stockRows.length - 1, c: 0 }, e: { r: stockRows.length - 1, c: 1 } }
+      ];
+
+      // Official styling: Times New Roman, 2px (medium) black borders, white header, centered/bold
+      const thickBorder = {
+        top: { style: 'medium', color: { rgb: 'FF000000' } },
+        bottom: { style: 'medium', color: { rgb: 'FF000000' } },
+        left: { style: 'medium', color: { rgb: 'FF000000' } },
+        right: { style: 'medium', color: { rgb: 'FF000000' } }
       };
-      function styleTable(sheet, headerRow, totalRow, columnCount) {
-        for (let row = headerRow; row <= totalRow; row += 1) {
-          for (let column = 0; column < columnCount; column += 1) {
-            const address = XLSX.utils.encode_cell({ r: row, c: column });
-            const cell = sheet[address] || (sheet[address] = { t: 's', v: '' });
-            const isHeader = row === headerRow;
-            const isTotal = row === totalRow;
-            cell.s = {
-              font: { bold: isHeader || isTotal, color: { rgb: isHeader ? 'FFFFFFFF' : 'FF1A1A1A' } },
-              border: {
-                top: { ...gridBorder.top },
-                bottom: { ...gridBorder.bottom },
-                left: { ...gridBorder.left },
-                right: { ...gridBorder.right }
-              },
-              alignment: { vertical: 'center', horizontal: column === 0 ? 'center' : 'left', wrapText: true },
-              ...(isHeader ? { fill: { patternType: 'solid', fgColor: { rgb: 'FF4A148C' } } } : {}),
-              ...(isTotal ? { fill: { patternType: 'solid', fgColor: { rgb: 'FFF1F5F9' } } } : {})
-            };
+
+      function styleOfficialRequisition(sheet) {
+        const range = XLSX.utils.decode_range(sheet['!ref']);
+        const headerRow = 4;
+        for (let r = range.s.r; r <= range.e.r; r++) {
+          for (let c = range.s.c; c <= range.e.c; c++) {
+            const addr = XLSX.utils.encode_cell({ r, c });
+            const cell = sheet[addr];
+            if (!cell) continue;
+            cell.s = cell.s || {};
+            // Base font Times New Roman
+            cell.s.font = { name: 'Times New Roman', sz: 11, color: { rgb: 'FF000000' } };
+            cell.s.alignment = cell.s.alignment || { vertical: 'center', wrapText: true };
+            // Header title rows 0,1,2
+            if (r === 0) {
+              cell.s.font = { name: 'Times New Roman', sz: 14, bold: true, color: { rgb: 'FF000000' } };
+              cell.s.alignment = { vertical: 'center', horizontal: 'center', wrapText: true };
+            } else if (r === 1) {
+              cell.s.font = { name: 'Times New Roman', sz: 12, bold: false, color: { rgb: 'FF000000' } };
+              cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+            } else if (r === 2) {
+              cell.s.font = { name: 'Times New Roman', sz: 11, bold: false, color: { rgb: 'FF000000' } };
+              cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+            } else if (r === headerRow) {
+              // Table header
+              cell.s.font = { name: 'Times New Roman', sz: 11, bold: true };
+              cell.s.alignment = { vertical: 'center', horizontal: 'center', wrapText: true };
+              cell.s.border = { ...thickBorder };
+              cell.s.fill = { patternType: 'solid', fgColor: { rgb: 'FFFFFFFF' } };
+            } else if (r > headerRow && r < reqTotalRowIdx) {
+              // Data rows
+              cell.s.border = { ...thickBorder };
+              cell.s.font = { name: 'Times New Roman', sz: 10, bold: false };
+              if (c === 0) cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+              else if (c === 1) cell.s.alignment = { vertical: 'center', horizontal: 'left', wrapText: true };
+              else if (c === 2) cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+              else if (c === 3) cell.s.alignment = { vertical: 'center', horizontal: 'right' };
+            } else if (r === reqTotalRowIdx) {
+              cell.s.border = { ...thickBorder };
+              cell.s.font = { name: 'Times New Roman', sz: 11, bold: true };
+              if (c <= 2) cell.s.alignment = { vertical: 'center', horizontal: 'right' };
+              else cell.s.alignment = { vertical: 'center', horizontal: 'right' };
+            } else if (r >= sigStartIdx) {
+              // Signature — no border, left aligned
+              cell.s.font = { name: 'Times New Roman', sz: 11, bold: r === sigStartIdx + 3 };
+              cell.s.alignment = { vertical: 'center', horizontal: 'left' };
+              if (r === sigStartIdx) cell.s.font = { name: 'Times New Roman', sz: 11, bold: false };
+            }
+          }
+        }
+        // Row heights to match A4
+        sheet['!rows'] = requisitionRows.map((_, idx) => {
+          if (idx === 0) return { hpt: 18 };
+          if (idx === 1) return { hpt: 16 };
+          if (idx === 2) return { hpt: 14 };
+          if (idx === headerRow) return { hpt: 16 };
+          return { hpt: 13 };
+        });
+      }
+
+      function styleOfficialStock(sheet) {
+        const range = XLSX.utils.decode_range(sheet['!ref']);
+        const headerRow = 4;
+        const totalRow = stockRows.length - 1;
+        for (let r = range.s.r; r <= range.e.r; r++) {
+          for (let c = range.s.c; c <= range.e.c; c++) {
+            const addr = XLSX.utils.encode_cell({ r, c });
+            const cell = sheet[addr];
+            if (!cell) continue;
+            cell.s = cell.s || {};
+            cell.s.font = { name: 'Times New Roman', sz: 10, color: { rgb: 'FF000000' } };
+            if (r <= 2) {
+              cell.s.font = { name: 'Times New Roman', sz: r === 0 ? 13 : 11, bold: r <= 1 };
+              cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+            } else if (r === headerRow) {
+              cell.s.font = { name: 'Times New Roman', sz: 9, bold: true };
+              cell.s.alignment = { vertical: 'center', horizontal: 'center', wrapText: true };
+              cell.s.border = { ...thickBorder };
+              cell.s.fill = { patternType: 'solid', fgColor: { rgb: 'FFFFFFFF' } };
+            } else if (r > headerRow && r < totalRow) {
+              cell.s.border = { ...thickBorder };
+              if (c === 1) cell.s.alignment = { horizontal: 'left', wrapText: true, vertical: 'center' };
+              else if (c === 7) cell.s.alignment = { horizontal: 'left', vertical: 'center' };
+              else cell.s.alignment = { horizontal: 'center', vertical: 'center' };
+              cell.s.font = { name: 'Times New Roman', sz: 9 };
+            } else if (r === totalRow) {
+              cell.s.border = { ...thickBorder };
+              cell.s.font = { name: 'Times New Roman', sz: 9, bold: true };
+              cell.s.alignment = { horizontal: 'center', vertical: 'center' };
+              if (c === 1) cell.s.alignment = { horizontal: 'right', vertical: 'center' };
+            }
           }
         }
       }
 
-      const requisitionHeaderRow = 11;
-      const requisitionTotalRow = requisitionRows.length - 7;
-      const stockHeaderRow = 4;
-      const stockTotalRow = stockRows.length - 1;
-      styleTable(requisitionSheet, requisitionHeaderRow, requisitionTotalRow, 4);
-      styleTable(stockSheet, stockHeaderRow, stockTotalRow, 8);
+      styleOfficialRequisition(requisitionSheet);
+      styleOfficialStock(stockSheet);
 
       XLSX.utils.book_append_sheet(workbook, requisitionSheet, 'Requisition');
       XLSX.utils.book_append_sheet(workbook, stockSheet, 'Stock Report');
       XLSX.writeFile(workbook, `SIM_Medical_Requisition_${reqMonthInput.value || 'report'}.xlsx`);
-      setStatus('Official A4 portrait workbook downloaded.', 'success');
+      setStatus('Official A4 Excel downloaded (Times New Roman, 2px border).', 'success');
     }
 
     function showTab(id) {

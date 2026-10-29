@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
@@ -29,7 +30,7 @@
       <div class="clock-pill" aria-label="Live clock in Bangladesh time">
         <span class="clock-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></span>
         <span class="clock-copy">
-          <span class="clock-label">Bangladesh time</span>
+          <span class="clock-label"><span class="live-dot" aria-hidden="true"></span> Bangladesh time</span>
           <time class="clock-value" id="live-clock" aria-live="off"></time>
         </span>
       </div>
@@ -102,7 +103,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p>© 2026 SIM Group. All rights reserved.</p>
-      <p>Developed by: <a href="https://www.facebook.com/siratkhanbd" target="_blank" rel="noopener noreferrer" data-external-profile>Siratkhanbd</a></p>
+      <p class="dev-sign"><span class="dev-label">Developed by:</span> <a href="https://www.facebook.com/siratkhanbd" target="_blank" rel="noopener noreferrer" data-external-profile data-typewriter class="dev-typewriter">Siratkhanbd</a></p>
     </div>
   </footer>
 </body>
