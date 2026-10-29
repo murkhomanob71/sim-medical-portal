@@ -86,6 +86,40 @@
     });
   });
 
+  // Programmer-style typewriter for developer sign — runs once per page entry (Courier Prime, slow)
+  document.querySelectorAll('[data-typewriter]').forEach((el) => {
+    const full = el.textContent.trim();
+    if (!full) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      el.innerHTML = '<span class="tw-text">' + full + '</span>';
+      el.classList.add('is-done');
+      return;
+    }
+    el.setAttribute('aria-label', 'Developed by ' + full);
+    el.textContent = '';
+    const textSpan = document.createElement('span');
+    textSpan.className = 'tw-text';
+    const cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    el.append(textSpan, cursor);
+    let i = 0;
+    const typeNext = () => {
+      if (i <= full.length) {
+        textSpan.textContent = full.slice(0, i);
+        i += 1;
+        const lastChar = full[i - 2] || '';
+        const delay = lastChar === ' ' ? 75 : 148;
+        window.setTimeout(typeNext, delay + (Math.random() * 32));
+      } else {
+        el.classList.add('is-done');
+        window.setTimeout(() => { cursor.style.opacity = '0'; }, 2200);
+      }
+    };
+    window.setTimeout(typeNext, 760);
+  });
+
   // Offline cache / installable app. Only works over http(s); file:// pages skip it.
   if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
     window.addEventListener('load', () => {

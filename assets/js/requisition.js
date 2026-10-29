@@ -985,8 +985,11 @@
     const meta = currentFactoryMeta();
     $('#factorySelect').value = db.activeFactory;
     $('#factoryLabel').textContent = meta.name;
-    $('#printFactoryName').textContent = `${meta.name} (Medical Department)`;
-    $('#printStockFactoryName').textContent = `${meta.name} (Medical Department)`;
+    // v2.1 official header — hubuhu (no Report No meta)
+    const printReqMonth = document.getElementById('printReqMonth');
+    const printStockMonth = document.getElementById('printStockMonth');
+    if (printReqMonth) printReqMonth.textContent = `For the month of ${monthLabel(db.activeMonth)}`;
+    if (printStockMonth) printStockMonth.textContent = `For the month of ${monthLabel(db.activeMonth)}`;
 
     const record = currentMonthData();
     $('#approvalSelect').value = record.approval;
@@ -994,13 +997,15 @@
     const syncToggle = $('#syncIssueToggle');
     if (syncToggle) syncToggle.checked = db.syncIssue !== false;
 
+    // legacy print-meta nodes no longer in DOM — safe guard
+    const gen = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
     const generated = formatDateTime(new Date().toISOString());
-    $('#printReportNo').textContent = record.reportNo || '—';
-    $('#printStockReportNo').textContent = record.reportNo || '—';
-    $('#printStatus').textContent = t(`status${record.approval.charAt(0).toUpperCase()}${record.approval.slice(1)}`);
-    $('#printStockStatus').textContent = $('#printStatus').textContent;
-    $('#printGenerated').textContent = generated;
-    $('#printStockGenerated').textContent = generated;
+    gen('printReportNo', record.reportNo || '—');
+    gen('printStockReportNo', record.reportNo || '—');
+    gen('printStatus', t(`status${record.approval.charAt(0).toUpperCase()}${record.approval.slice(1)}`));
+    gen('printStockStatus', document.getElementById('printStatus') ? document.getElementById('printStatus').textContent : '');
+    gen('printGenerated', generated);
+    gen('printStockGenerated', generated);
 
     document.title = `${meta.name} · ${monthLabel(db.activeMonth)} · SIM Medical`;
   };
@@ -1690,25 +1695,16 @@
     const record = currentMonthData();
     const meta = currentFactoryMeta();
     const generatedOn = formatDateTime(new Date().toISOString());
-    const signature = record.signature || { name: '', title: '' };
-    const letterDate = new Intl.DateTimeFormat('en-GB', {
-      day: '2-digit', month: '2-digit', year: 'numeric'
-    }).format(new Date()).replace(/\//g, '.');
+    const signature = record.signature || { name: 'Dr. Rashna Mahjabin Tonni', title: 'Sr. Medical Officer' };
+    const monthText = monthLabel(db.activeMonth);
 
+    // v2.1 Official — Times New Roman, 2px border, A4 header
     const requisitionRows = [
-      [letterDate],
-      ['To'],
-      ['Director'],
-      ['SIM Group,'],
-      ['Thakurbaritek, Masumabad, Vulta, Rupgonj, Narayanganj.'],
+      ['SIM Fabrics Ltd.(Medical Department)'],
+      ['Monthly Medicine Requisition'],
+      [`For the month of ${monthText}`],
       [],
-      ['Subject: Requisition for medicines and accessories for the Medical Center'],
-      [],
-      ['Dear Sir,'],
-      ['With due respect, this is to inform you that, to work properly the following medicines and accessories are badly needed for The Medical Center:-'],
-      [],
-      ['Report No:', record.reportNo || '', '', `Status: ${record.approval.toUpperCase()}`],
-      ['Sl No.', 'Name', 'Amount', 'Price (BDT)']
+      ['Sl', 'Name of Medicine', 'Qty', 'Price']
     ];
 
     let serial = 0;
@@ -1719,20 +1715,20 @@
       const amount = qty * num(product.rate);
       total += amount;
       serial += 1;
-      requisitionRows.push([serial, product.name, `${pad(qty)} ${product.unit.toLowerCase()}`, amount]);
+      const quantityLabel = qty === 0 ? `0 ${product.unit}` : `${String(qty)} ${product.unit}`;
+      requisitionRows.push([serial, product.name, quantityLabel, amount]);
     });
 
-    requisitionRows.push(['', '', 'Total =', total]);
-    requisitionRows.push(
-      [],
-      ['With Best Regards'],
-      [],
-      [signature.name],
-      [signature.title],
-      ['SIM Group'],
-      [],
-      [`Generated: ${generatedOn}`]
-    );
+    const reqTotalRowIdx = requisitionRows.length;
+    requisitionRows.push(['Total', '', '', total]);
+    requisitionRows.push([]);
+    const sigStartIdx = requisitionRows.length;
+    requisitionRows.push(['With Best Regards']);
+    requisitionRows.push([]);
+    requisitionRows.push([]);
+    requisitionRows.push([signature.name || 'Dr. Rashna Mahjabin Tonni']);
+    requisitionRows.push([signature.title || 'Sr. Medical Officer']);
+    requisitionRows.push(['SIM Group']);
 
     const stockRows = [
       [`${meta.name} (Medical Department)`],
@@ -1740,10 +1736,12 @@
       [`For the month of ${monthLabel(db.activeMonth)}`],
       [`Report No: ${record.reportNo || ''}`, '', '', `Status: ${record.approval.toUpperCase()}`],
       [],
-      ['Sl No.', 'Name of Medicine', 'Opening Stock', 'Received', 'Total', 'Issue', 'Closing Stock', 'Remarks']
+      ['Sl', 'Name of Medicine', 'Opening Stock', 'Received', 'Total', 'Issue', 'Closing Stock', 'Remarks']
     ];
 
     const totals = { opening: 0, received: 0, total: 0, issue: 0, closing: 0 };
+    // Official Sl with gaps as per supplied HTML (1..37 skip 17,21,23) — v2.1 exact
+    const officialSl = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,19,20,22,24,25,26,27,28,29,30,31,32,33,34,35,36,37];
     record.stock.forEach((row, index) => {
       const product = findProduct(row.productId);
       const opening = num(row.opening);
@@ -1756,38 +1754,111 @@
       totals.total += rowTotal;
       totals.issue += issue;
       totals.closing += closing;
-      stockRows.push([index + 1, product ? product.name : row.name, opening, received, rowTotal, issue, closing, row.remarks || '']);
+      const sl = officialSl[index] !== undefined ? officialSl[index] : index + 1;
+      stockRows.push([sl, product ? product.name : row.name, opening, received, rowTotal, issue, closing, row.remarks || '']);
     });
-    stockRows.push(['', 'Total =', totals.opening, totals.received, totals.total, totals.issue, totals.closing, '']);
+    // Official total row — Issue blank as per supplied HTML
+    stockRows.push(['Total', '', totals.opening, totals.received, totals.total, '', totals.closing, '']);
 
     const workbook = XLSX.utils.book_new();
     const requisitionSheet = XLSX.utils.aoa_to_sheet(requisitionRows);
     const stockSheet = XLSX.utils.aoa_to_sheet(stockRows);
 
-    requisitionSheet['!cols'] = [{ wch: 8 }, { wch: 38 }, { wch: 14 }, { wch: 16 }];
-    requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-    requisitionSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
+    // v2.1 Official: hubuhu — requisition 8/52/20/20, stock 5/33/11/10/10/9/12/10
+    requisitionSheet['!cols'] = [{ wch: 8 }, { wch: 52 }, { wch: 20 }, { wch: 20 }];
+    requisitionSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, paperWidth: '210mm', paperHeight: '297mm' };
+    requisitionSheet['!margins'] = { left: 0.6, right: 0.6, top: 0.47, bottom: 0.47, header: 0.3, footer: 0.3 };
 
-    const letterRows = [0, 1, 2, 3, 4, 6, 8, 9, 11];
-    const signatureStart = requisitionRows.length - 7;
-    const signatureRows = Array.from({ length: 7 }, (_, index) => signatureStart + index);
-    requisitionSheet['!merges'] = [...letterRows, ...signatureRows]
-      .filter((row) => row >= 0 && row < requisitionRows.length)
-      .map((row) => ({ s: { r: row, c: 0 }, e: { r: row, c: 3 } }));
+    requisitionSheet['!merges'] = [
+      { s: { r: 0, c: 0 }, e: { r: 0, c: 3 } },
+      { s: { r: 1, c: 0 }, e: { r: 1, c: 3 } },
+      { s: { r: 2, c: 0 }, e: { r: 2, c: 3 } },
+      { s: { r: reqTotalRowIdx, c: 0 }, e: { r: reqTotalRowIdx, c: 2 } },
+      { s: { r: sigStartIdx, c: 0 }, e: { r: sigStartIdx, c: 3 } },
+      { s: { r: sigStartIdx + 3, c: 0 }, e: { r: sigStartIdx + 3, c: 3 } },
+      { s: { r: sigStartIdx + 4, c: 0 }, e: { r: sigStartIdx + 4, c: 3 } },
+      { s: { r: sigStartIdx + 5, c: 0 }, e: { r: sigStartIdx + 5, c: 3 } }
+    ];
 
     stockSheet['!cols'] = [
-      { wch: 6 }, { wch: 30 }, { wch: 10 }, { wch: 10 },
-      { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }
+      { wch: 5 }, { wch: 33 }, { wch: 11 }, { wch: 10 },
+      { wch: 10 }, { wch: 9 }, { wch: 12 }, { wch: 10 }
     ];
-    stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1 };
-    stockSheet['!margins'] = { left: 0.5, right: 0.5, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 };
-
+    stockSheet['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToWidth: 1, paperWidth: '210mm', paperHeight: '297mm' };
+    stockSheet['!margins'] = { left: 0.6, right: 0.6, top: 0.47, bottom: 0.47, header: 0.3, footer: 0.3 };
+    stockSheet['!merges'] = [
+      { s: { r: 0, c: 0 }, e: { r: 0, c: 7 } },
+      { s: { r: 1, c: 0 }, e: { r: 1, c: 7 } },
+      { s: { r: 2, c: 0 }, e: { r: 2, c: 7 } },
+      { s: { r: stockRows.length - 1, c: 0 }, e: { r: stockRows.length - 1, c: 1 } }
+    ];
+    // v2.1 Official styling: Times New Roman, 2px medium black border
+    const thickBorder = {
+      top: { style: 'medium', color: { rgb: 'FF000000' } },
+      bottom: { style: 'medium', color: { rgb: 'FF000000' } },
+      left: { style: 'medium', color: { rgb: 'FF000000' } },
+      right: { style: 'medium', color: { rgb: 'FF000000' } }
+    };
     const gridBorder = {
       top: { style: 'thin', color: { rgb: 'FF64748B' } },
       bottom: { style: 'thin', color: { rgb: 'FF64748B' } },
       left: { style: 'thin', color: { rgb: 'FF64748B' } },
       right: { style: 'thin', color: { rgb: 'FF64748B' } }
     };
+
+    // Requisition official style
+    (function styleOfficialRequisition(sheet) {
+      const range = XLSX.utils.decode_range(sheet['!ref']);
+      const headerRow = 4;
+      for (let r = range.s.r; r <= range.e.r; r++) {
+        for (let c = range.s.c; c <= range.e.c; c++) {
+          const addr = XLSX.utils.encode_cell({ r, c });
+          const cell = sheet[addr];
+          if (!cell) continue;
+          cell.s = cell.s || {};
+          cell.s.font = { name: 'Times New Roman', sz: 11, color: { rgb: 'FF000000' } };
+          cell.s.alignment = cell.s.alignment || { vertical: 'center', wrapText: true };
+          if (r === 0) {
+            cell.s.font = { name: 'Times New Roman', sz: 14, bold: true, color: { rgb: 'FF000000' } };
+            cell.s.alignment = { vertical: 'center', horizontal: 'center', wrapText: true };
+          } else if (r === 1) {
+            cell.s.font = { name: 'Times New Roman', sz: 12, bold: false, color: { rgb: 'FF000000' } };
+            cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+          } else if (r === 2) {
+            cell.s.font = { name: 'Times New Roman', sz: 11, bold: false, color: { rgb: 'FF000000' } };
+            cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+          } else if (r === headerRow) {
+            cell.s.font = { name: 'Times New Roman', sz: 11, bold: true };
+            cell.s.alignment = { vertical: 'center', horizontal: 'center', wrapText: true };
+            cell.s.border = { ...thickBorder };
+            cell.s.fill = { patternType: 'solid', fgColor: { rgb: 'FFFFFFFF' } };
+          } else if (r > headerRow && r < reqTotalRowIdx) {
+            cell.s.border = { ...thickBorder };
+            cell.s.font = { name: 'Times New Roman', sz: 10, bold: false };
+            if (c === 0) cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+            else if (c === 1) cell.s.alignment = { vertical: 'center', horizontal: 'left', wrapText: true };
+            else if (c === 2) cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+            else if (c === 3) cell.s.alignment = { vertical: 'center', horizontal: 'right' };
+          } else if (r === reqTotalRowIdx) {
+            cell.s.border = { ...thickBorder };
+            cell.s.font = { name: 'Times New Roman', sz: 11, bold: true };
+            if (c <= 2) cell.s.alignment = { vertical: 'center', horizontal: 'right' };
+            else cell.s.alignment = { vertical: 'center', horizontal: 'right' };
+          } else if (r >= sigStartIdx) {
+            cell.s.font = { name: 'Times New Roman', sz: 11, bold: r === sigStartIdx + 3 };
+            cell.s.alignment = { vertical: 'center', horizontal: 'left' };
+            if (r === sigStartIdx) cell.s.font = { name: 'Times New Roman', sz: 11, bold: false };
+          }
+        }
+      }
+      sheet['!rows'] = requisitionRows.map((_, idx) => {
+        if (idx === 0) return { hpt: 18 };
+        if (idx === 1) return { hpt: 16 };
+        if (idx === 2) return { hpt: 14 };
+        if (idx === headerRow) return { hpt: 16 };
+        return { hpt: 13 };
+      });
+    })(requisitionSheet);
 
     const styleTable = (sheet, headerRow, totalRow, columnCount) => {
       for (let row = headerRow; row <= totalRow; row += 1) {
@@ -1813,7 +1884,41 @@
     };
 
     styleTable(requisitionSheet, 12, requisitionRows.length - 8, 4);
-    styleTable(stockSheet, 5, stockRows.length - 1, 8);
+    // Official Stock styling: Times New Roman, 2px medium black border, white header centered
+    (function styleOfficialStock(sheet) {
+      const range = XLSX.utils.decode_range(sheet['!ref']);
+      const headerRow = 5;
+      const totalRow = stockRows.length - 1;
+      for (let r = range.s.r; r <= range.e.r; r++) {
+        for (let c = range.s.c; c <= range.e.c; c++) {
+          const addr = XLSX.utils.encode_cell({ r, c });
+          const cell = sheet[addr];
+          if (!cell) continue;
+          cell.s = cell.s || {};
+          cell.s.font = { name: 'Times New Roman', sz: 10, color: { rgb: 'FF000000' } };
+          if (r <= 2) {
+            cell.s.font = { name: 'Times New Roman', sz: r === 0 ? 13 : 11, bold: r <= 1 };
+            cell.s.alignment = { vertical: 'center', horizontal: 'center' };
+          } else if (r === headerRow) {
+            cell.s.font = { name: 'Times New Roman', sz: 9, bold: true };
+            cell.s.alignment = { vertical: 'center', horizontal: 'center', wrapText: true };
+            cell.s.border = { ...thickBorder };
+            cell.s.fill = { patternType: 'solid', fgColor: { rgb: 'FFFFFFFF' } };
+          } else if (r > headerRow && r < totalRow) {
+            cell.s.border = { ...thickBorder };
+            if (c === 1) cell.s.alignment = { horizontal: 'left', wrapText: true, vertical: 'center' };
+            else if (c === 7) cell.s.alignment = { horizontal: 'left', vertical: 'center' };
+            else cell.s.alignment = { horizontal: 'center', vertical: 'center' };
+            cell.s.font = { name: 'Times New Roman', sz: 9 };
+          } else if (r === totalRow) {
+            cell.s.border = { ...thickBorder };
+            cell.s.font = { name: 'Times New Roman', sz: 9, bold: true };
+            cell.s.alignment = { horizontal: 'center', vertical: 'center' };
+            if (c === 1) cell.s.alignment = { horizontal: 'right', vertical: 'center' };
+          }
+        }
+      }
+    })(stockSheet);
 
     XLSX.utils.book_append_sheet(workbook, requisitionSheet, 'Requisition');
     XLSX.utils.book_append_sheet(workbook, stockSheet, 'Stock Report');
