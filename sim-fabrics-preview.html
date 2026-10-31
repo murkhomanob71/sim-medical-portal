@@ -1,0 +1,1695 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIM Fabrics Ltd. — Medical & Safety Operations Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={
+  theme:{
+    extend:{
+      colors:{
+        brandPurple:'#4a148c', brandPurpleDark:'#6a1b9a', brandGreen:'#1b5e20', brandGreenDark:'#0d3311'
+      },
+      fontFamily:{ sans:['Inter','Noto Sans Bengali','sans-serif'] }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+@import url('https://fonts.maateen.me/solaiman-lipi/font.css');
+:root{ --paper:#f7f8fc; }
+body{ background: radial-gradient(ellipse at 50% -16%, rgba(255,255,255,1) 0, rgba(255,255,255,.96) 29rem, transparent 50rem), radial-gradient(ellipse at 16% 34%, rgba(106,27,154,.035) 0, transparent 28rem), radial-gradient(ellipse at 88% 72%, rgba(27,94,32,.035) 0, transparent 30rem), var(--paper); }
+.glass{ backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.gradient-brand{ background: linear-gradient(100deg, #4a148c, #6a1b9a 55%, #1b5e20); }
+.gradient-brand-soft{ background: linear-gradient(135deg, rgba(74,20,140,.08), rgba(27,94,32,.06)); }
+.hex-card{ transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s ease, filter .3s ease; cursor:pointer; }
+.hex-card:hover{ transform: translateY(-6px); box-shadow: 0 18px 36px rgba(43,26,75,.14), 0 6px 14px rgba(43,26,75,.08); }
+.tab-active{ background: linear-gradient(100deg, #4a148c, #6a1b9a); color:#fff; box-shadow: 0 6px 14px rgba(74,20,140,.18); }
+.drop-zone{ border: 2px dashed #d1cfe0; transition: all .2s ease; }
+.drop-zone.drag{ border-color: #6a1b9a; background: rgba(106,27,154,.06); }
+.bengali{ font-family: 'SolaimanLipi', 'Noto Sans Bengali', Inter, sans-serif; }
+/* === SolaimanLipi Official Notice Styles === */
+.notice-canvas{ font-family: 'SolaimanLipi', sans-serif; background:#fff; }
+.header-wrapper{ display:flex; flex-direction:row; align-items:center; justify-content:center; gap:16px; margin-bottom:12px; overflow:visible; }
+.header-logo-side{ height:60px; width:auto; object-fit:contain; }
+.header-text-group{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-top:8px; overflow:visible; }
+.header-company-side{ font-family:'SolaimanLipi',sans-serif; font-size:38px; font-weight:bold; color:#000000; line-height:1.4; letter-spacing:normal; letter-spacing:0.2px; margin:0; overflow:visible; text-align:center; }
+.header-address-side{ font-family:'SolaimanLipi',sans-serif; font-size:14px; color:#333333; margin-top:4px; text-align:center; }
+.header-divider-side{ border-bottom:2px solid #000000; width:100%; margin-top:10px; margin-bottom:20px; }
+.notice-title-wrap{ text-align:center; margin:12px 0; }
+.notice-title{ font-family:'SolaimanLipi',sans-serif; font-size:28px; font-weight:bold; color:#000; display:inline-block; border-bottom:2px solid #000000; padding-bottom:2px; }
+.notice-date{ font-family:'SolaimanLipi',sans-serif; font-size:16px; font-weight:bold; text-align:right; margin-bottom:20px; color:#000; }
+.notice-body{ font-family:'SolaimanLipi',sans-serif; font-size:17px; line-height:1.85; text-align:justify; color:#000; margin-bottom:16px; }
+.notice-agenda-head{ font-family:'SolaimanLipi',sans-serif; font-size:17px; font-weight:bold; text-decoration:underline; margin-top:20px; margin-bottom:12px; color:#000; }
+.notice-bullets{ list-style: none; padding-left:0; margin:0; }
+.notice-bullets li{ font-family:'SolaimanLipi',sans-serif; font-size:16px; line-height:1.7; margin-left:24px; margin-bottom:6px; color:#000; }
+.notice-sign{ font-family:'SolaimanLipi',sans-serif; font-size:16px; line-height:1.5; text-align:center; margin-top:60px; margin-left:auto; width:fit-content; color:#000; }
+.notice-sign-name{ font-family:'SolaimanLipi',sans-serif; font-size:17px; font-weight:bold; color:#000; }
+.notice-sign-designation{ font-family:'SolaimanLipi',sans-serif; font-size:15px; color:#000; }
+/* === Pictorial Crop Modal === */
+.crop-overlay{ position:fixed; inset:0; background:rgba(15,10,30,.78); backdrop-filter:blur(4px); z-index:10000; display:flex; align-items:center; justify-content:center; padding:16px; }
+.crop-boxed{ background:#fff; border-radius:16px; max-width:860px; width:100%; max-height:90vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.3); }
+.crop-canvas-wrap{ position:relative; flex:1; width:100%; display:flex; align-items:center; justify-content:center; overflow:visible; background:#0b0b0f; min-height:320px; }
+.crop-image{ max-width:100%; max-height:60vh; width:100%; display:block; user-select:none; -webkit-user-drag:none; object-fit:contain; }
+.crop-rect{ position:absolute; border:2px dashed #fff; box-shadow:0 0 0 2000px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.3); cursor:move; }
+.crop-handle{ position:absolute; width:14px; height:14px; background:#fff; border:2px solid #4a148c; border-radius:50%; box-shadow:0 1px 4px rgba(0,0,0,.3); }
+.crop-handle.nw{ top:-7px; left:-7px; cursor:nw-resize; } .crop-handle.ne{ top:-7px; right:-7px; cursor:ne-resize; } .crop-handle.sw{ bottom:-7px; left:-7px; cursor:sw-resize; } .crop-handle.se{ bottom:-7px; right:-7px; cursor:se-resize; }
+.crop-handle.n{ top:-7px; left:50%; margin-left:-7px; cursor:n-resize; } .crop-handle.s{ bottom:-7px; left:50%; margin-left:-7px; cursor:s-resize; } .crop-handle.e{ top:50%; right:-7px; margin-top:-7px; cursor:e-resize; } .crop-handle.w{ top:50%; left:-7px; margin-top:-7px; cursor:w-resize; }
+@media print{ .no-print{display:none!important} }
+</style>
+</head>
+<body class="min-h-screen text-[#1a1a1a] antialiased">
+<header class="sticky top-0 z-40 bg-white/80 glass border-b border-black/5">
+  <div class="max-w-[1440px] mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <img src="logo.png" alt="SIM Group" class="h-10 md:h-[42px] w-auto object-contain" onerror="this.src='https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_'">
+      <div>
+        <p class="text-[13px] md:text-[15px] font-extrabold tracking-tight leading-none">SIM Group Medical Portal</p>
+        <p class="text-[11px] text-[#73717a] font-medium">Central Medical Department</p>
+      </div>
+    </div>
+    <div class="hidden md:flex items-center gap-2 bg-white border border-black/5 rounded-full px-3 py-1.5 shadow-sm">
+      <span class="w-7 h-7 grid place-items-center rounded-full bg-[#f4f3f8] border border-black/5 text-[#5a5468]"><i class="bi bi-clock-history text-sm"></i></span>
+      <div class="text-center pr-1">
+        <p class="text-[9px] tracking-[.18em] font-bold text-[#9a95a6] uppercase leading-none">Bangladesh Time</p>
+        <p id="liveClock" class="text-[12px] font-bold tracking-wide tabular-nums">--:-- -- | --/--/---- | -----</p>
+      </div>
+    </div>
+    <a href="dashboard.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-[#4a148c] via-[#e65100] to-[#1b5e20] text-white rounded-full px-4 py-2 text-[13px] font-bold shadow-[0_5px_0_rgba(74,20,140,.2),0_13px_25px_rgba(74,20,140,.2)] hover:-translate-y-0.5 transition">
+      <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+  </div>
+</header>
+
+<div class="bg-white border-b border-black/5">
+  <div class="max-w-[1440px] mx-auto px-4 md:px-8 py-4 md:py-5">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
+      <div>
+        <div class="inline-flex items-center gap-2 text-[11px] font-extrabold tracking-[.16em] text-[#6a1b9a] uppercase">
+          <span class="w-2 h-2 rounded-full bg-[#1b5e20] shadow-[0_0_0_4px_rgba(27,94,32,.08)]"></span> SIM FABRICS LTD.
+        </div>
+        <h1 class="mt-1 text-[22px] md:text-[28px] font-extrabold tracking-tight leading-none">Medical &amp; Safety Operations Hub</h1>
+        <p class="mt-1.5 text-[13px] text-[#74717b]">Audit-ready training, incident &amp; health risk management — all records stored in this browser.</p>
+      </div>
+      <div class="flex items-center gap-2 text-[11px]">
+        <span class="inline-flex items-center gap-1.5 bg-[#f1f2f6] border border-black/5 rounded-full px-3 py-1.5 font-semibold text-[#4b4654]"><i class="bi bi-shield-check text-[#1b5e20]"></i> Offline Ready</span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-black/5 rounded-full px-3 py-1.5 font-bold text-[#1a1a1a]"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Workspace</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="max-w-[1440px] mx-auto px-4 md:px-8 py-6 md:py-8 space-y-8">
+  <section>
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <h2 class="flex items-center gap-3 text-[12px] md:text-[13px] font-extrabold tracking-[.14em] uppercase text-[#4a148c]">
+        <span class="w-1 h-5 rounded-full gradient-brand inline-block"></span> Training &amp; Compliance Programs
+        <span class="hidden md:inline-flex ml-1 bg-[#6a1b9a]/10 text-[#4a148c] rounded-full px-2.5 py-1 text-[11px] font-bold">6 Programs</span>
+      </h2>
+      <p class="text-[11px] text-[#777381] hidden md:block">Click any card to generate official Bengali notice</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+      <button onclick="handleOpenWorkspace('bloodborne')" class="hex-card group cursor-pointer text-left bg-white rounded-2xl border border-black/5 shadow-[0_10px_28px_rgba(43,26,75,.06)] p-5 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-brand-soft pointer-events-none opacity-0 group-hover:opacity-100 transition"></div>
+        <div class="relative flex items-start justify-between gap-3">
+          <div class="w-11 h-11 rounded-xl bg-[#1b5e20] text-white grid place-items-center text-lg shadow"><i class="bi bi-virus"></i></div>
+          <span class="text-[10px] font-extrabold tracking-widest bg-[#1b5e20] text-white rounded-full px-2.5 py-1">SAFETY</span>
+        </div>
+        <h3 class="relative mt-4 text-[15px] font-extrabold leading-tight">Bloodborne Disease Training</h3>
+        <p class="relative mt-1 text-[12px] text-[#676571] bengali">রক্তবাহিত সংক্রামক সচেতনতামূলক প্রশিক্ষণ</p>
+        <div onclick="handleOpenWorkspace('bloodborne')" class="relative mt-4 flex items-center gap-2 text-[12px] font-bold text-[#4a148c] cursor-pointer">Open workspace <i class="bi bi-arrow-right group-hover:translate-x-1 transition"></i></div>
+      </button>
+      <button onclick="handleOpenWorkspace('contagious')" class="hex-card group cursor-pointer text-left bg-white rounded-2xl border border-black/5 shadow-[0_10px_28px_rgba(43,26,75,.06)] p-5 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-brand-soft pointer-events-none opacity-0 group-hover:opacity-100 transition"></div>
+        <div class="relative flex items-start justify-between">
+          <div class="w-11 h-11 rounded-xl bg-[#0d47a1] text-white grid place-items-center text-lg"><i class="bi bi-lungs"></i></div>
+          <span class="text-[10px] font-extrabold tracking-widest bg-[#0d47a1] text-white rounded-full px-2.5 py-1">HEALTH</span>
+        </div>
+        <h3 class="relative mt-4 text-[15px] font-extrabold">Contagious Disease Training</h3>
+        <p class="relative mt-1 text-[12px] text-[#676571] bengali">সংক্রামক রোগ প্রতিরোধ সচেতনতামূলক প্রশিক্ষণ</p>
+        <div class="relative mt-4 flex items-center gap-2 text-[12px] font-bold text-[#4a148c] cursor-pointer">Open workspace <i class="bi bi-arrow-right"></i></div>
+      </button>
+      <button onclick="handleOpenWorkspace('cpr')" class="hex-card group cursor-pointer text-left bg-white rounded-2xl border border-black/5 shadow-[0_10px_28px_rgba(43,26,75,.06)] p-5 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-brand-soft pointer-events-none opacity-0 group-hover:opacity-100 transition"></div>
+        <div class="relative flex items-start justify-between">
+          <div class="w-11 h-11 rounded-xl bg-[#b91c1c] text-white grid place-items-center text-lg"><i class="bi bi-heart-pulse"></i></div>
+          <span class="text-[10px] font-extrabold tracking-widest bg-[#b91c1c] text-white rounded-full px-2.5 py-1">LIFE-SAVE</span>
+        </div>
+        <h3 class="relative mt-4 text-[15px] font-extrabold">CPR Training</h3>
+        <p class="relative mt-1 text-[12px] text-[#676571] bengali">সি.পি.আর বিষয়ক প্রশিক্ষণ</p>
+        <div class="relative mt-4 flex items-center gap-2 text-[12px] font-bold text-[#4a148c] cursor-pointer">Open workspace <i class="bi bi-arrow-right"></i></div>
+      </button>
+      <button onclick="handleOpenWorkspace('ergonomic')" class="hex-card group cursor-pointer text-left bg-white rounded-2xl border border-black/5 shadow-[0_10px_28px_rgba(43,26,75,.06)] p-5 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-brand-soft pointer-events-none opacity-0 group-hover:opacity-100 transition"></div>
+        <div class="relative flex items-start justify-between">
+          <div class="w-11 h-11 rounded-xl bg-[#4a148c] text-white grid place-items-center text-lg"><i class="bi bi-person-workspace"></i></div>
+          <span class="text-[10px] font-extrabold tracking-widest bg-[#4a148c] text-white rounded-full px-2.5 py-1">COMPLIANCE</span>
+        </div>
+        <h3 class="relative mt-4 text-[15px] font-extrabold">Ergonomic Training</h3>
+        <p class="relative mt-1 text-[12px] text-[#676571] bengali">আরগোনমিক বিষয়ক প্রশিক্ষণ</p>
+        <div class="relative mt-4 flex items-center gap-2 text-[12px] font-bold text-[#4a148c] cursor-pointer">Open workspace <i class="bi bi-arrow-right"></i></div>
+      </button>
+      <button onclick="handleOpenWorkspace('firstaid')" class="hex-card group cursor-pointer text-left bg-white rounded-2xl border border-black/5 shadow-[0_10px_28px_rgba(43,26,75,.06)] p-5 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-brand-soft pointer-events-none opacity-0 group-hover:opacity-100 transition"></div>
+        <div class="relative flex items-start justify-between">
+          <div class="w-11 h-11 rounded-xl bg-[#e65100] text-white grid place-items-center text-lg"><i class="bi bi-bandaid"></i></div>
+          <span class="text-[10px] font-extrabold tracking-widest bg-[#e65100] text-white rounded-full px-2.5 py-1">MANDATORY</span>
+        </div>
+        <h3 class="relative mt-4 text-[15px] font-extrabold">First Aid Training</h3>
+        <p class="relative mt-1 text-[12px] text-[#676571] bengali">প্রাথমিক চিকিৎসা বিষয়ক প্রশিক্ষণ</p>
+        <div class="relative mt-4 flex items-center gap-2 text-[12px] font-bold text-[#4a148c] cursor-pointer">Open workspace <i class="bi bi-arrow-right"></i></div>
+      </button>
+      <button onclick="handleOpenWorkspace('health_safety')" class="hex-card group cursor-pointer text-left bg-white rounded-2xl border border-black/5 shadow-[0_10px_28px_rgba(43,26,75,.06)] p-5 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-brand-soft pointer-events-none opacity-0 group-hover:opacity-100 transition"></div>
+        <div class="relative flex items-start justify-between">
+          <div class="w-11 h-11 rounded-xl bg-[#00695c] text-white grid place-items-center text-lg"><i class="bi bi-shield-plus"></i></div>
+          <span class="text-[10px] font-extrabold tracking-widest bg-[#00695c] text-white rounded-full px-2.5 py-1">HSE</span>
+        </div>
+        <h3 class="relative mt-4 text-[15px] font-extrabold">Health &amp; Safety Training</h3>
+        <p class="relative mt-1 text-[12px] text-[#676571] bengali">হেলথ এন্ড সেফটি</p>
+        <div class="relative mt-4 flex items-center gap-2 text-[12px] font-bold text-[#4a148c] cursor-pointer">Open workspace <i class="bi bi-arrow-right"></i></div>
+      </button>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="flex items-center gap-3 text-[12px] md:text-[13px] font-extrabold tracking-[.14em] uppercase text-[#1b5e20] mb-4">
+      <span class="w-1 h-5 rounded-full bg-[#1b5e20] inline-block"></span> Safety Incident &amp; Health Risk Management
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+      <button onclick="handleOpenWorkspace('rca')" class="text-left rounded-2xl p-[1px] gradient-brand cursor-pointer shadow-[0_10px_28px_rgba(43,26,75,.12)]">
+        <div class="bg-white rounded-[16px] p-6 md:p-7 flex flex-col h-full">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-[#1b5e20] text-white grid place-items-center text-xl"><i class="bi bi-search"></i></div>
+            <span class="bg-amber-100 text-amber-700 text-[11px] font-extrabold px-3 py-1 rounded-full">RCA • INVESTIGATION</span>
+          </div>
+          <h3 class="mt-4 text-[17px] font-extrabold">Injury Root Cause Analysis (RCA)</h3>
+          <p class="mt-1 text-[13px] text-[#676571]">5-Why, fishbone &amp; corrective action tracker — audit trail ready.</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-[13px] font-bold text-[#4a148c] cursor-pointer" onclick="handleOpenWorkspace('rca')">Open RCA Workspace <i class="bi bi-arrow-right-circle"></i></span>
+        </div>
+      </button>
+      <button onclick="handleOpenWorkspace('maternity')" class="text-left rounded-2xl p-[1px] bg-gradient-to-br cursor-pointer from-[#4a148c] to-[#e65100] shadow-[0_10px_28px_rgba(43,26,75,.12)]">
+        <div class="bg-white rounded-[16px] p-6 md:p-7 flex flex-col h-full">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-[#4a148c] text-white grid place-items-center text-xl"><i class="bi bi-heart"></i></div>
+            <span class="bg-fuchsia-100 text-fuchsia-700 text-[11px] font-extrabold px-3 py-1 rounded-full">MATERNITY • CARE</span>
+          </div>
+          <h3 class="mt-4 text-[17px] font-extrabold">Maternity Risk Management</h3>
+          <p class="mt-1 text-[13px] text-[#676571]">Pregnancy risk assessment, light-duty &amp; follow-up compliance.</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-[13px] font-bold text-[#4a148c] cursor-pointer" onclick="handleOpenWorkspace('maternity')">Open Maternity Workspace <i class="bi bi-arrow-right-circle"></i></span>
+        </div>
+      </button>
+    </div>
+  </section>
+  <p class="text-[11px] text-center text-[#9a95a6]">Design locked — generic notice form removed. All data is stored in this browser &amp; ready for buyer audit.</p>
+</main>
+
+<!-- WORKSPACE MODAL -->
+<div id="workspaceModal" class="fixed inset-0 z-[9999] hidden" style="position:fixed; inset:0; z-index:9999;">
+  <div class="absolute inset-0 bg-[#0f0a1e]/60 backdrop-blur-[2px]" onclick="handleCloseWorkspace()"></div>
+  <div class="relative max-w-[980px] mx-auto my-4 md:my-6 bg-white rounded-2xl shadow-2xl max-h-[92vh] flex flex-col overflow-hidden border border-black/10">
+    <div class="gradient-brand text-white px-5 md:px-7 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-white/20 grid place-items-center"><i class="bi bi-mortarboard"></i></div>
+        <div>
+          <p class="text-[11px] tracking-[.14em] font-bold opacity-80 uppercase">Training Workspace</p>
+          <h3 id="wsTitle" class="text-[15px] md:text-[17px] font-extrabold">—</h3>
+        </div>
+      </div>
+      <button onclick="handleCloseWorkspace()" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 grid place-items-center"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div id="workspaceTabBar" class="flex gap-2 p-3 bg-[#f7f8fc] border-b border-black/5 overflow-x-auto items-center">
+      <button data-tab="notice" onclick="switchTab('notice')" class="tab-btn tab-active whitespace-nowrap rounded-full py-2.5 px-5 text-[13px] font-bold leading-normal flex items-center justify-center"><i class="bi bi-file-earmark-text mr-1.5"></i> Notice Generator</button>
+      <button data-tab="pictorial" onclick="switchTab('pictorial')" class="tab-btn whitespace-nowrap rounded-full py-2.5 px-5 text-[13px] font-bold bg-white border border-black/5 leading-normal flex items-center justify-center"> <i class="bi bi-images mr-1.5"></i> Pictorial Evidence</button>
+      <button data-tab="attendance" onclick="switchTab('attendance')" class="tab-btn whitespace-nowrap rounded-full py-2.5 px-5 text-[13px] font-bold bg-white border border-black/5 leading-normal flex items-center justify-center"><i class="bi bi-people mr-1.5"></i> Attendance Sheet</button>
+    </div>
+
+    <div class="flex-1 overflow-auto bg-[#fcfcff]">
+      <!-- TAB 1: NOTICE -->
+      <div id="tab-notice" class="tab-panel p-5 md:p-6 space-y-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white rounded-xl border border-black/5 p-4">
+          <label class="flex flex-col gap-1.5 text-[12px] font-bold">Issue Date<input id="issueDate" type="date" class="border rounded-lg px-3 py-2 font-semibold" value="2026-10-29"></label>
+          <label class="flex flex-col gap-1.5 text-[12px] font-bold">Training Date<input id="trainingDate" type="date" class="border rounded-lg px-3 py-2 font-semibold" value="2026-10-30"></label>
+          <label class="flex flex-col gap-1.5 text-[12px] font-bold">Time<select id="trainingTime" class="border rounded-lg px-3 py-2 font-semibold">
+            <option>02:00 PM</option><option>02:30 PM</option><option>03:00 PM</option><option>03:30 PM</option><option>09:00 AM</option><option>10:00 AM</option><option>10:30 AM</option><option>11:00 AM</option>
+          </select></label>
+          <p class="md:col-span-3 text-[12px] text-[#4a148c] font-semibold">বাংলা বার: ইস্যু <span id="bnDayIssue" class="font-extrabold">—</span> • প্রশিক্ষণ <span id="bnDayTraining" class="font-extrabold">—</span> (auto from Issue/Training Date)</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-black/5 overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b bg-[#faf9ff]">
+            <p class="text-[11px] font-extrabold tracking-widest uppercase text-[#4a148c]">Official Bengali Notice Preview — Exact Database Template</p>
+            <div class="flex gap-2">
+              <button onclick="downloadDocx()" class="inline-flex items-center gap-1.5 bg-[#217346] text-white rounded-full px-4 py-1.5 text-[12px] font-bold"><i class="bi bi-file-earmark-word"></i> .docx</button>
+              <button onclick="downloadPdf('noticePreview')" class="inline-flex items-center gap-1.5 bg-[#b42318] text-white rounded-full px-4 py-1.5 text-[12px] font-bold"><i class="bi bi-file-earmark-pdf"></i> .pdf</button>
+            </div>
+          </div>
+          <div id="noticePreview" class="p-4 md:p-6 bg-white">
+            <!-- Injected by JS: A4 Notice from exact template -->
+            <div id="noticePaper" class="notice-canvas max-w-[710px] mx-auto bg-white overflow-hidden min-h-[720px] shadow-[0_10px_40px_rgba(0,0,0,.08)]">
+              <!-- content injected exactly per screenshot — SolaimanLipi -->
+            </div>
+            <p class="text-center text-[11px] text-[#9a95a6] mt-3">A4 Word-accurate preview — clean white page</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: PICTORIAL -->
+      <div id="tab-pictorial" class="tab-panel hidden p-5 md:p-6 space-y-5">
+        <div class="bg-white rounded-xl border border-black/5 p-4">
+          <p class="text-[12px] font-extrabold">Training Title for Evidence</p>
+          <input id="picTitle" type="text" class="mt-2 w-full border rounded-lg px-3 py-2 font-semibold" placeholder="e.g. First Aid Training — 30 Oct 2026">
+          <div id="dropZone" class="drop-zone mt-4 rounded-xl p-6 text-center bg-[#fcfcff]">
+            <i class="bi bi-cloud-arrow-up text-3xl text-[#4a148c]"></i>
+            <p class="mt-2 text-[13px] font-bold">Drag &amp; drop training photos here</p>
+            <p class="text-[12px] text-[#777]">or click to browse • JPG/PNG up to 10MB each</p>
+            <input id="fileInput" type="file" accept="image/*" multiple class="hidden">
+            <button onclick="document.getElementById('fileInput').click()" class="mt-3 bg-white border rounded-full px-4 py-1.5 text-[12px] font-bold">Browse Files</button>
+          </div>
+          <div id="thumbGrid" class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4"></div>
+          <div id="cropActionBar" class="hidden mt-3 flex gap-2">
+            <button onclick="openCropper(0)" class="inline-flex items-center gap-1.5 bg-[#4a148c] text-white rounded-full px-5 py-2 text-[12px] font-bold shadow"><i class="bi bi-crop"></i> ✂️ Crop / Edit Image</button>
+            <span class="text-[11px] text-[#777] self-center">First image will be cropped — use per-photo ✂️ for others</span>
+          </div>
+          <div class="flex gap-2 justify-end mt-4">
+            <button onclick="downloadDocxPictorial()" class="bg-[#217346] text-white rounded-full px-4 py-2 text-[12px] font-bold"><i class="bi bi-file-earmark-word"></i> Download .docx</button>
+            <button onclick="downloadPdf('pictorialPreview')" class="bg-[#b42318] text-white rounded-full px-4 py-2 text-[12px] font-bold"><i class="bi bi-file-earmark-pdf"></i> Download .pdf</button>
+          </div>
+        </div>
+        <div id="pictorialPreview" class="bg-white p-6 min-h-[520px] shadow-[0_8px_30px_rgba(0,0,0,.06)]">
+          <!-- PICTORIAL HEADER — CENTERED LOGO+TEXT BLOCK -->
+          <div style="display:flex; justify-content:center; align-items:center; gap:16px; width:100%; margin-bottom:12px;">
+            <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_'" alt="SIM FABRICS LTD" style="height:55px; width:auto; object-fit:contain;">
+            <div style="display:flex; flex-direction:column; align-items:flex-start; justify-content:center;">
+              <p style="font-family:Arial, sans-serif; font-size:28px; font-weight:bold; color:#333333; line-height:1.1; margin:0;">SIM FABRICS LTD</p>
+              <p style="font-family:Arial, sans-serif; font-size:13px; color:#555555; margin-top:4px;">Thakurbari Tek, Masumabad, Rupganj, Narayanganj.</p>
+            </div>
+          </div>
+          <div style="border-bottom:2px solid #000000; width:100%; margin-top:10px; margin-bottom:20px;"></div>
+          <!-- DOCUMENT TITLE -->
+          <h3 id="picHeader" style="font-family:'Times New Roman', Arial, sans-serif; font-size:20px; font-weight:bold; text-decoration:underline; text-underline-offset:4px; text-align:center; margin:20px 0;">Pictorial Evidence of <span class="trainingName">—</span></h3>
+          <!-- IMAGE AREA — clean, no borders/shadows -->
+          <div id="picPreviewGrid" style="display:flex; flex-direction:column; align-items:center; gap:20px; min-height:180px; padding:10px 0;">
+            <p style="color:#999; font-size:13px;">No images yet — upload to see A4 preview</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: ATTENDANCE -->
+      <div id="tab-attendance" class="tab-panel hidden p-6">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
+          <i class="bi bi-construction text-amber-600 text-xl"></i>
+          <div>
+            <p class="text-[13px] font-extrabold">Attendance Sheet — coming next</p>
+            <p class="text-[12px] text-[#6b5a00]">Participant name, ID, department, signature &amp; QR verification will be here. For now, use manual sheet.</p>
+          </div>
+        </div>
+        <div class="mt-4 bg-white border rounded-xl overflow-hidden">
+          <table class="w-full text-[12px] text-left">
+            <thead class="bg-[#f6f6f9] text-[11px] font-extrabold uppercase"><tr><th class="p-3">Sl</th><th class="p-3">Name</th><th class="p-3">ID</th><th class="p-3">Dept</th><th class="p-3">Signature</th></tr></thead>
+            <tbody class="divide-y"><tr><td class="p-3">1</td><td class="p-3">—</td><td class="p-3">—</td><td class="p-3">—</td><td class="p-3">—</td></tr><tr><td class="p-3">2</td><td class="p-3">—</td><td class="p-3">—</td><td class="p-3">—</td><td class="p-3">—</td></tr></tbody>
+          </table>
+          <div class="p-3 flex justify-end gap-2">
+            <button class="bg-white border rounded-full px-4 py-1.5 text-[12px] font-bold"><i class="bi bi-download"></i> Download Blank .docx</button>
+            <button class="bg-[#4a148c] text-white rounded-full px-4 py-1.5 text-[12px] font-bold">Download Blank .pdf</button>
+          </div>
+        </div>
+      </div>
+      <!-- RCA WORKSPACE (Injury Root Cause Analysis) -->
+      <div id="rcaWorkspace" class="hidden">
+        <!-- Input Controls -->
+        <div class="p-5 bg-white border-b">
+          <div class="flex gap-2 mb-4" id="rcaDeptTabs">
+            <button onclick="switchRcaDept('dyeing')" id="btnRcaDyeing" class="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-extrabold border bg-[#4a148c] text-white shadow">🧵 Dyeing Section</button>
+            <button onclick="switchRcaDept('printing')" id="btnRcaPrinting" class="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-bold border bg-gray-100 text-[#333] hover:bg-gray-200">🖨️ Printing Section</button>
+            <button onclick="switchRcaDept('weaving')" id="btnRcaWeaving" class="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-bold border bg-gray-100 text-[#333] hover:bg-gray-200">🧶 Weaving Section</button>
+          </div>
+          <div class="flex flex-col gap-3">
+            <label class="text-[11px] font-extrabold tracking-widest uppercase text-[#4a148c]">Report Period</label>
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4 bg-white border border-gray-100 rounded-xl p-3 shadow-sm justify-between">
+              <div class="flex items-center gap-2">
+                <button id="rcaPeriodPrev" type="button" class="w-8 h-8 rounded-full bg-white border border-gray-200 grid place-items-center text-[16px] font-bold hover:bg-gray-50 hover:border-[#4a148c]/30 transition" title="Previous bi-month">‹</button>
+                <div id="rcaPeriodBadge" class="px-5 py-2 bg-[#4a148c] text-white rounded-full text-[12px] font-bold tracking-wide shadow-sm">September-October : 2026</div>
+                <button id="rcaPeriodNext" type="button" class="w-8 h-8 rounded-full bg-white border border-gray-200 grid place-items-center text-[16px] font-bold hover:bg-gray-50 hover:border-[#4a148c]/30 transition" title="Next bi-month">›</button>
+              </div>
+              <div class="flex items-center gap-2 flex-1 justify-end flex-wrap">
+                <select id="rcaPeriodStartMonth" class="border border-gray-200 rounded-lg px-3 py-2 text-[11px] font-bold bg-white min-w-[130px] h-[36px]">
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option selected>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+                <span class="text-[11px] font-bold text-[#6b7280]">to</span>
+                <select id="rcaPeriodEndMonth" class="border border-gray-200 rounded-lg px-3 py-2 text-[11px] font-bold bg-white min-w-[130px] h-[36px]">
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option selected>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+                <select id="rcaPeriodYear" class="border border-gray-200 rounded-lg px-3 py-2 text-[11px] font-bold bg-white h-[36px] min-w-[90px]">
+                  <option>2025</option>
+                  <option selected>2026</option>
+                  <option>2027</option>
+                  <option>2028</option>
+                  <option>2029</option>
+                  <option>2030</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <label class="flex flex-col gap-1 text-[11px] font-bold">Sharp Cut — ধারালো কাটা আঘাত<input id="rcaSharp" type="number" min="0" class="border rounded-lg px-3 py-2 font-semibold" placeholder="0"></label>
+            <label class="flex flex-col gap-1 text-[11px] font-bold">Blunt Force — ভোঁতা আঘাত<input id="rcaBlunt" type="number" min="0" class="border rounded-lg px-3 py-2 font-semibold" placeholder="0"></label>
+            <label class="flex flex-col gap-1 text-[11px] font-bold">Burn Wound — পোড়া ক্ষত<input id="rcaBurn" type="number" min="0" class="border rounded-lg px-3 py-2 font-semibold" placeholder="0"></label>
+            <label class="flex flex-col gap-1 text-[11px] font-bold">Bone Fracture — হাড় ভাঙা<input id="rcaFracture" type="number" min="0" class="border rounded-lg px-3 py-2 font-semibold" placeholder="0"></label>
+            <label class="flex flex-col gap-1 text-[11px] font-bold">Mask Non-compliance — মাস্ক ব্যবহার না করা<input id="rcaMask" type="number" min="0" class="border rounded-lg px-3 py-2 font-semibold" placeholder="0"></label>
+          </div>
+          <div class="mt-4 flex gap-2 justify-end">
+            <button onclick="downloadRcaDocx()" class="inline-flex items-center gap-1.5 bg-[#217346] text-white rounded-full px-5 py-2 text-[12px] font-bold"><i class="bi bi-file-earmark-word"></i> 📥 Download .docx</button>
+            <button onclick="downloadRcaPdf()" class="inline-flex items-center gap-1.5 bg-[#b42318] text-white rounded-full px-5 py-2 text-[12px] font-bold"><i class="bi bi-file-earmark-pdf"></i> 🔴 Download .pdf</button>
+          </div>
+        </div>
+        <!-- A4 Preview -->
+        <div class="p-5 bg-white">
+          <div id="rcaPreview" class="bg-white min-h-[800px]" style="font-family:'SolaimanLipi', sans-serif; background:#ffffff; padding:40px;">
+            <!-- Header -->
+            <div class="header-wrapper" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:16px; margin-bottom:12px; overflow:visible;">
+              <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_'" style="height:55px; width:auto; object-fit:contain;" alt="logo">
+              <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+                <h2 style="font-family:'SolaimanLipi',sans-serif; font-size:32px; font-weight:bold; color:#000; line-height:1.1; margin:0; text-align:center;">সিম ফেব্রিক্স লিঃ</h2>
+                <p style="font-family:'SolaimanLipi',sans-serif; font-size:14px; color:#333; margin-top:4px; text-align:center;">ঠাকুরবাড়ীটেক, মাসুমাবাদ, ভুলতা, রূপগঞ্জ, নারায়ণগঞ্জ</p>
+              </div>
+            </div>
+            <div class="header-divider-side" style="border-bottom:2px solid #000; width:100%; margin:10px 0 20px 0;"></div>
+            <!-- Title -->
+            <div style="text-align:center; margin:12px 0;">
+              <p style="font-family:'Times New Roman', 'SolaimanLipi', sans-serif; font-size:22px; font-weight:bold; color:#000;">Injury Root Cause Analysis for <span id="rcaTitleSection">Dyeing Section</span></p>
+              <p style="font-family:'SolaimanLipi', sans-serif; font-size:18px; font-weight:bold; color:#000; margin-top:4px;">Month of <span id="rcaTitleMonth">September-October : 2026</span></p>
+            </div>
+            <!-- Section 1: Table -->
+            <div style="margin-top:16px;">
+              <p style="font-family:'SolaimanLipi',sans-serif; font-size:18px; font-weight:bold; color:#000; display:inline-block; border-bottom:2px solid #000000; padding-bottom:3px; margin-bottom:10px;">আহত/ দুর্ঘটনার বিবরণঃ</p>
+              <table style="width:100%; border-collapse:collapse; margin-top:10px; border:1px solid #000000;">
+                <thead>
+                  <tr>
+                    <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:15px; font-family:'SolaimanLipi', sans-serif;">আহত/ দুর্ঘটনার বিবরণ</th>
+                    <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:15px; font-family:'SolaimanLipi', sans-serif;">সেকশন</th>
+                    <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:15px; font-family:'SolaimanLipi', sans-serif;">আহত দুর্ঘটনার সংখ্যা</th>
+                    <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:15px; font-family:'SolaimanLipi', sans-serif;">শতকরা হার</th>
+                  </tr>
+                </thead>
+                <tbody style="font-size:15px; text-align:center; font-family:'SolaimanLipi', sans-serif;">
+                  <tr><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;">ধারালো কাটা আঘাত</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" class="rcaSecCell">ডাইং</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellSharpCount">-</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellSharpPct">-</td></tr>
+                  <tr><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;">ভোঁতা আঘাত</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" class="rcaSecCell">ডাইং</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellBluntCount">-</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellBluntPct">-</td></tr>
+                  <tr><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;">পোড়া ক্ষত</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" class="rcaSecCell">ডাইং</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellBurnCount">-</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellBurnPct">-</td></tr>
+                  <tr><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;">হাড় ভাঙা</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" class="rcaSecCell">ডাইং</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellFractureCount">-</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellFracturePct">-</td></tr>
+                  <tr><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;">মাস্ক ব্যবহার না করা</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" class="rcaSecCell">ডাইং</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellMaskCount">-</td><td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif;" id="rcaCellMaskPct">-</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Section 2 -->
+            <div style="margin-top:18px;">
+              <p id="rcaRiskTitle" style="font-family:'SolaimanLipi',sans-serif; font-size:18px; font-weight:bold; color:#000; display:inline-block; border-bottom:2px solid #000000; padding-bottom:3px; margin-bottom:10px;">ডাইং সেকশনে ঝুকির প্রকৃতিঃ</p>
+              <ol id="rcaRiskList" style="font-family:'SolaimanLipi',sans-serif; font-size:16px; line-height:1.8; margin-left:20px; margin-top:8px; color:#000; list-style:none; padding-left:0;">
+                <li>১. মেঝে পিচ্ছিল থাকলে পায়ে ও আঙুলে আঘাত পেতে পারে।</li>
+                <li>২. শ্রমিকেরা মেটাল হ্যান্ড গ্লাভস ব্যবহার না করলে হাতের তালু ও আঙুল কেটে যেতে পারে।</li>
+                <li>৩. শ্রমিকেরা মাস্ক ব্যবহার না করলে শ্বাসকস্ট জনিত রোগ হতে পারে।</li>
+                <li>৪. সিজার রশি দিয়ে বাধা না থাকলে আঘাত পেতে পারে ও হাত/পা কেটে যেতে পারে।</li>
+                <li>৫. ফিনিসড মালামাল দ্বারা ফ্লোর আবদ্ধ থাকলে দুর্ঘটনা ঘটতে পারে।</li>
+                <li>৬. মেশিনের পুলি বেল্টে কাপড় পেচিয়ে দুর্ঘটনা ঘটতে পারে।</li>
+                <li>৭. কেমিক্যাল ড্রামের ঢাকনা অপ্রয়োজনে খোলা থাকলে শ্রমিকের চোখ ও চামড়ায় ক্ষত হতে পারে।</li>
+                <li>৮. ডাইং ক্যামিকেল ফ্লোরে পড়ে থাকলে শ্রমিকের চামড়ায় ক্ষত হতে পারে।</li>
+                <li>৯. ক্যামিকেল রুমের কর্মীদের হ্যান্ডেলিং ব্যবহার বিষয়ক প্রশিক্ষন দিতে হবে।</li>
+              </ol>
+            </div>
+            <!-- Section 3 -->
+            <div style="margin-top:16px;">
+              <p style="font-family:'SolaimanLipi',sans-serif; font-size:18px; font-weight:bold; color:#000; display:inline-block; border-bottom:2px solid #000000; padding-bottom:3px; margin-bottom:10px;">প্রতিরোধ ব্যবস্থাঃ</p>
+              <ol id="rcaPreventList" style="font-family:'SolaimanLipi',sans-serif; font-size:16px; line-height:1.8; margin-left:20px; margin-top:8px; color:#000; list-style:none; padding-left:0;">
+                <li>১. মেঝে পিচ্ছিল থাকিলে পরিস্কার করার মাধ্যমে তা দূর করতে হবে।</li>
+                <li>২. শ্রমিকেরা মেটাল হ্যান্ড গ্লাভস ব্যবহার নিশ্চিত করতে হবে।</li>
+                <li>৩. মাস্ক ব্যবহার নিশ্চিত করতে হবে।</li>
+                <li>৪. সিজার রশি দিয়ে বাঁধা আছে কিনা তা নিশ্চিত করতে হবে।</li>
+                <li>৫. নির্ধারিত জায়গার বাহিরে রক্ষিত মালামাল অপসারণ করতে হবে।</li>
+                <li>৬. মেশিন ব্যবহারের সময় যথা নিয়মে পরিচালনা করতে হবে।</li>
+                <li>৭. ক্যামিকেল ড্রামের ঢাকনা দ্বারা আবদ্ধ করে রাখতে হবে।</li>
+                <li>৮. পড়ে থাকা ক্যামিকেল অপসারন করতে হবে।</li>
+                <li>৯. কর্মীদের জন্য প্রশিক্ষনের ব্যবস্থা করতে হবে।</li>
+              </ol>
+            </div>
+            <!-- Section 4 -->
+            <div style="margin-top:16px;">
+              <p style="font-family:'SolaimanLipi',sans-serif; font-size:18px; font-weight:bold; color:#000; display:inline-block; border-bottom:2px solid #000000; padding-bottom:3px; margin-bottom:10px;">কারখানা কর্তৃপক্ষের নেওয়া পদক্ষেপসমূহঃ</p>
+              <ol style="font-family:'SolaimanLipi',sans-serif; font-size:16px; line-height:1.8; margin-left:20px; margin-top:8px; color:#000; list-style:none; padding-left:0;">
+                <li>১. প্রয়োজনীয় পিপিই ব্যবহার ও রক্ষণাবেক্ষণে শ্রমিকদের সচেতন করতে হবে।</li>
+                <li>২. মেঝে সবসময় পরিষ্কার ও শুকনা রাখতে হবে।</li>
+                <li>৩. পুনঃপ্রশিক্ষন প্রদান করতে হবে।</li>
+              </ol>
+            </div>
+            <!-- Section 5 Signature -->
+            <div style="margin-left:auto; width:fit-content; text-align:center; margin-top:50px;">
+              <p style="font-family:'SolaimanLipi',sans-serif; font-size:15px; color:#000;">Signature</p>
+              <div style="height:40px;"></div>
+              <p style="font-family:'SolaimanLipi',sans-serif; font-size:15px; font-weight:bold; color:#000;">Doctor</p>
+            </div>
+          </div>
+          <p class="text-center text-[11px] text-[#9a95a6] mt-3">A4 preview — header & SolaimanLipi preserved • Download for audit copy</p>
+        </div>
+      </div>
+      <!-- MATERNITY WORKSPACE -->
+      <div id="maternityWorkspace" class="hidden">
+        <div class="p-5 bg-white border-b">
+          <div class="grid grid-cols-3 gap-4 items-end">
+            <label class="flex flex-col gap-1 text-[11px] font-bold">অ্যাসেসমেন্ট তারিখ<input id="maternityAssessmentDate" type="date" value="2026-10-01" class="h-10 border rounded-lg px-3 font-semibold"></label>
+            <label class="flex flex-col gap-1 text-[11px] font-bold">পরবর্তী এসেসমেন্ট তারিখ<input id="maternityNextAssessmentDate" type="date" value="2026-11-01" class="h-10 border rounded-lg px-3 font-semibold"></label>
+            <label class="flex flex-col gap-1 text-[11px] font-bold">নতুন রিস্কের অবস্থা<input id="maternityNewRiskStatus" type="text" value="কোন নতুন রিস্ক পাওয়া যায়নি ।" class="h-10 border rounded-lg px-3 font-semibold" placeholder="কোন নতুন রিস্ক পাওয়া যায়নি ।"></label>
+          </div>
+          <!-- Responsible Person Manager -->
+          <div class="mt-4 p-4 bg-[#faf9ff] border border-[#e5e7eb] rounded-xl">
+            <div class="flex items-center justify-between">
+              <p class="text-[11px] font-extrabold text-[#4a148c] flex items-center gap-1.5"><i class="bi bi-people"></i> দায়িত্বপ্রাপ্ত ব্যক্তি — Add / Change / Remove</p>
+              <span class="text-[10px] text-[#6b7280] bg-white border rounded-full px-2 py-0.5">Column 7 • Live Update</span>
+            </div>
+            <div id="responsibleTags" class="flex flex-wrap gap-2 mt-3"></div>
+            <div class="flex gap-2 mt-3">
+              <input id="newPersonInput" type="text" placeholder="নাম + পদবী  e.g.  রহিম উদ্দিন (এইচআর)  বা  তানিয়া আক্তার (সেবিকা)" class="flex-1 h-9 border rounded-lg px-3 text-[12px] font-medium bg-white" onkeydown="if(event.key==='Enter') addResponsiblePerson()">
+              <button onclick="addResponsiblePerson()" class="bg-[#4a148c] hover:bg-[#3a1070] text-white px-5 rounded-full text-[12px] font-bold inline-flex items-center gap-1"><i class="bi bi-plus-circle"></i> Add</button>
+            </div>
+            <p class="text-[10px] text-[#6b7280] mt-2">Tip: নতুন কেউ আসলে নাম লিখে Add করুন, ভুল হলে × দিয়ে Remove করুন — Table-এর ৭নং কলামে সাথে সাথে আপডেট হবে।</p>
+          </div>
+          <div class="mt-4 flex justify-end gap-3">
+            <button onclick="downloadMaternityDocx()" class="inline-flex items-center gap-1.5 bg-[#217346] text-white rounded-full px-5 py-2 text-[12px] font-bold"><i class="bi bi-file-earmark-word"></i> 📥 Download .docx</button>
+            <button onclick="downloadMaternityPdf()" class="inline-flex items-center gap-1.5 bg-[#b42318] text-white rounded-full px-5 py-2 text-[12px] font-bold"><i class="bi bi-file-earmark-pdf"></i> 🔴 Download .pdf</button>
+          </div>
+        </div>
+        <div class="p-5 bg-[#e8eaf0]">
+          <div id="maternityPreview" style="background:#e8eaf0; padding:0;">
+            <!-- PAGE 1 -->
+            <div id="maternityPage1" class="bg-white" style="font-family:'SolaimanLipi', sans-serif; background:#ffffff; padding:40px; min-height:1050px; margin:0 auto 24px auto; max-width:800px; box-shadow:0 4px 24px rgba(0,0,0,0.08); border:1px solid #e5e7eb;">
+              <!-- Header -->
+              <div class="header-wrapper" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:16px; margin-bottom:12px; overflow:visible;">
+                <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_'" style="height:55px; width:auto; object-fit:contain;" alt="logo">
+                <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+                  <h2 style="font-family:'SolaimanLipi',sans-serif; font-size:32px; font-weight:bold; color:#000; line-height:1.1; margin:0; text-align:center;">সিম ফেব্রিক্স লিঃ</h2>
+                  <p style="font-family:'SolaimanLipi',sans-serif; font-size:14px; color:#333; margin-top:4px; text-align:center;">ঠাকুরবাড়ীটেক, মাসুমাবাদ, ভুলতা, রূপগঞ্জ, নারায়ণগঞ্জ</p>
+                </div>
+              </div>
+              <div class="header-divider-side" style="border-bottom:2px solid #000; width:100%; margin:10px 0 20px 0;"></div>
+              <!-- Title -->
+              <div style="text-align:center; margin:12px 0;">
+                <p style="font-family:'SolaimanLipi', sans-serif; font-size:19px; font-weight:bold; color:#000;">প্রসূতি/ সন্তান সম্ভবা নারী কর্মীদের রিস্ক এসেসমেন্ট</p>
+              </div>
+              <div style="text-align:right; margin-top:8px;">
+                <p style="font-family:'SolaimanLipi',sans-serif; font-size:15px; color:#000;">তারিখঃ <span id="maternityTopDate">০১/১০/২০২৬ ইং</span></p>
+              </div>
+              <!-- Table Page 1 (Rows 1-4) -->
+              <div style="margin-top:16px; overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; margin-top:10px; border:1px solid #000000; table-layout:fixed;">
+                  <thead>
+                    <tr>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:4%;">ক্র/নং</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:14%;">ঝুঁকিসমূহ</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:15%;">প্রভাব</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:34%;">কারখানা কর্তৃক ব্যবস্থাসমূহ</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:10%;">পরবর্তী রিস্ক অ্যাসেসমেন্ট তারিখ</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:12%; word-break:keep-all;">নতুন রিস্ক</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:12%;">দায়িত্বপ্রাপ্ত ব্যক্তি</th>
+                    </tr>
+                  </thead>
+                  <tbody id="maternityTableBodyPage1" style="font-size:12px; text-align:center; font-family:'SolaimanLipi', sans-serif;">
+                  </tbody>
+                </table>
+              </div>
+              <div style="text-align:center; margin-top:16px;">
+                <p style="font-family:'SolaimanLipi',sans-serif; font-size:11px; color:#666;">— চলমান পাতা ১/২ —</p>
+              </div>
+            </div>
+            <!-- PAGE 2 -->
+            <div id="maternityPage2" class="bg-white" style="font-family:'SolaimanLipi', sans-serif; background:#ffffff; padding:40px; min-height:1050px; margin:0 auto; max-width:800px; box-shadow:0 4px 24px rgba(0,0,0,0.08); border:1px solid #e5e7eb;">
+              <!-- Header (repeated) -->
+              <div class="header-wrapper" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:16px; margin-bottom:12px; overflow:visible;">
+                <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_'" style="height:55px; width:auto; object-fit:contain;" alt="logo">
+                <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+                  <h2 style="font-family:'SolaimanLipi',sans-serif; font-size:32px; font-weight:bold; color:#000; line-height:1.1; margin:0; text-align:center;">সিম ফেব্রিক্স লিঃ</h2>
+                  <p style="font-family:'SolaimanLipi',sans-serif; font-size:14px; color:#333; margin-top:4px; text-align:center;">ঠাকুরবাড়ীটেক, মাসুমাবাদ, ভুলতা, রূপগঞ্জ, নারায়ণগঞ্জ</p>
+                </div>
+              </div>
+              <div class="header-divider-side" style="border-bottom:2px solid #000; width:100%; margin:10px 0 20px 0;"></div>
+              <div style="text-align:right; margin-top:8px;">
+                <p style="font-family:'SolaimanLipi',sans-serif; font-size:15px; color:#000;">তারিখঃ <span id="maternityTopDate2">০১/১০/২০২৬ ইং</span> <span style="font-size:11px; color:#666;">(পৃষ্ঠা ২/২)</span></p>
+              </div>
+              <!-- Table Page 2 (Rows 5-8) -->
+              <div style="margin-top:16px; overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; margin-top:10px; border:1px solid #000000; table-layout:fixed;">
+                  <thead>
+                    <tr>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:4%;">ক্র/নং</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:14%;">ঝুঁকিসমূহ</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:15%;">প্রভাব</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:34%;">কারখানা কর্তৃক ব্যবস্থাসমূহ</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:10%;">পরবর্তী রিস্ক অ্যাসেসমেন্ট তারিখ</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:12%; word-break:keep-all;">নতুন রিস্ক</th>
+                      <th style="border:1px solid #000000; padding:8px; text-align:center; font-weight:bold; background:#ffffff; font-size:12px; font-family:'SolaimanLipi', sans-serif; width:12%;">দায়িত্বপ্রাপ্ত ব্যক্তি</th>
+                    </tr>
+                  </thead>
+                  <tbody id="maternityTableBodyPage2" style="font-size:12px; text-align:center; font-family:'SolaimanLipi', sans-serif;">
+                  </tbody>
+                </table>
+              </div>
+              <!-- Footer signatures (only on page 2) -->
+              <div style="display:flex; justify-content:space-between; margin-top:60px;">
+                <div style="text-align:center;">
+                  <p style="font-family:'SolaimanLipi',sans-serif; font-size:13px; color:#000;">অ্যাসেসমেন্টকারী</p>
+                  <div style="height:40px;"></div>
+                  <p style="font-family:'SolaimanLipi',sans-serif; font-size:13px; font-weight:bold; color:#000;">ডা. রাশনা মাহজাবীন তন্বী</p>
+                  <p style="font-family:'SolaimanLipi',sans-serif; font-size:11px; color:#000;">এমবিবিএস (ডিইউ), ডি অ্যাজমা (ইউকে)<br/>পিজিটি (বিএসএমএমইউ), সিসিডি (বারডেম), সিএমইউ<br/>সিনিয়র মেডিকেল অফিসার<br/>সিম গ্রুপ</p>
+                </div>
+                <div style="text-align:center;">
+                  <div style="height:40px;"></div>
+                  <p style="font-family:'SolaimanLipi',sans-serif; font-size:13px; font-weight:bold; color:#000;">ব্যবস্থাপক, অ্যাডমিন অ্যান্ড কমপ্লায়েন্স</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-center text-[11px] text-[#6b7280] mt-3">A4 preview — 2-Page • SolaimanLipi preserved • Page 1: Rows 1-4 • Page 2: Rows 5-8 + Signature</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-3 bg-[#f7f8fc] border-t flex justify-between items-center">
+      <p class="text-[11px] text-[#777]">Database: 6 official Bengali templates • Signatory: শামছুল আরেফিন</p>
+      <button onclick="handleCloseWorkspace()" class="bg-white border rounded-full px-5 py-2 text-[12px] font-bold">Close Workspace</button>
+    </div>
+  </div>
+</div>
+
+<!-- CROP MODAL -->
+<div id="cropModal" class="crop-overlay hidden">
+  <div class="crop-boxed">
+    <div class="px-4 py-3 flex items-center justify-between border-b bg-[#faf9ff]">
+      <p class="text-[13px] font-extrabold flex items-center gap-2"><i class="bi bi-crop text-[#4a148c]"></i> Crop Training Photo</p>
+      <button onclick="closeCropper()" class="w-8 h-8 rounded-full bg-black/5 grid place-items-center"><i class="bi bi-x-lg text-sm"></i></button>
+    </div>
+    <div class="crop-canvas-wrap" id="cropWrap">
+      <img id="cropImage" class="crop-image" alt="crop" draggable="false">
+      <div id="cropRect" class="crop-rect">
+        <div class="crop-handle nw" data-dir="nw"></div>
+        <div class="crop-handle ne" data-dir="ne"></div>
+        <div class="crop-handle sw" data-dir="sw"></div>
+        <div class="crop-handle se" data-dir="se"></div>
+        <div class="crop-handle n" data-dir="n"></div>
+        <div class="crop-handle s" data-dir="s"></div>
+        <div class="crop-handle e" data-dir="e"></div>
+        <div class="crop-handle w" data-dir="w"></div>
+      </div>
+    </div>
+    <div class="p-3 flex gap-2 justify-end border-t bg-white">
+      <button onclick="closeCropper()" class="bg-white border rounded-full px-5 py-2 text-[12px] font-bold">Cancel</button>
+      <button onclick="applyCrop()" class="bg-[#1b5e20] text-white rounded-full px-5 py-2 text-[12px] font-bold shadow">✅ Apply Crop</button>
+    </div>
+    <p class="px-4 pb-2 text-[11px] text-[#777]">Drag to move • Drag corners to resize • Cropped image replaces A4 preview instantly</p>
+  </div>
+</div>
+
+<script>
+// ===== EXACT DATABASE FROM USER =====
+const SIM_FABRICS_HEADER = {
+  company: "সিম ফেব্রিক্স লিঃ",
+  address: "ঠাকুরবাড়ীটেক, মাসুমাবাদ, ভুলতা, রূপগঞ্জ, নারায়ণগঞ্জ",
+  signatory: "শামছুল আরেফিন",
+  designation: "(সিনিয়র নির্বাহী, মানবসম্পদ, প্রশাসন ও কমপ্লায়েন্স)"
+};
+
+const NOTICE_TEMPLATES = {
+  bloodborne: {
+    title: "রক্তবাহিত সংক্রামক সচেতনতামূলক বিষয়ক প্রশিক্ষণ",
+    body: "এতদ্বারা সিম ফেব্রিক্স লিঃ এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী [TRAINING_DATE] ইং তারিখ রোজ [DAY] অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর [TIME] ঘটিকার সময় \"রক্তবাহিত সংক্রামক সচেতনতামূলক বিষয়ক প্রশিক্ষণ\" এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে।\n\nউক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে",
+    agenda_title: "প্রশিক্ষণের আলোচ্য বিষয় সমূহঃ",
+    agendas: [
+      "HIV Virus/AIDS সম্পর্কিত সচেতনতা",
+      "Hepatitis B virus সম্পর্কিত সচেতনতা",
+      "Syphilis সম্পর্কিত সচেতনতা",
+      "Malaria সম্পর্কিত সচেতনতা"
+    ]
+  },
+  contagious: {
+    title: "সংক্রামক রোগ প্রতিরোধ বিষয়ক সচেতনতামূলক প্রশিক্ষণ",
+    body: "এতদ্বারা সিম ফেব্রিক্স লিঃ এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী [TRAINING_DATE] ইং তারিখ রোজ [DAY] অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর [TIME] ঘটিকার সময় \"সংক্রামক রোগ প্রতিরোধ বিষয়ক সচেতনতামূলক প্রশিক্ষণ\" এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে",
+    agenda_title: "প্রশিক্ষণের আলোচ্য সূচিঃ-",
+    agendas: [
+      "১. সংক্রামক রোগ কি?",
+      "২. সংক্রামক রোগের প্রকার, কারণ ও কিভাবে ছড়ায়?",
+      "৩. সংক্রামক রোগ প্রতিকার ও প্রতিরোধের উপায়।",
+      "৪. ব্যক্তিগত নিরাপত্তামূলক সামগ্রী (পিপিই) ব্যবহারবিধি।"
+    ],
+    body_footer: "উক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে"
+  },
+  cpr: {
+    title: "সি.পি.আর বিষয়ক প্রশিক্ষণ",
+    body: "এতদ্বারা সিম ফেব্রিক্স লিঃ এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী তারিখ [TRAINING_DATE] ইং তারিখ রোজ [DAY] অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর [TIME] ঘটিকার সময় \"সি.পি.আর বিষয়ক প্রশিক্ষণ\" এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে।\n\nউক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে",
+    agendas: []
+  },
+  ergonomic: {
+    title: "আরগোনমিক বিষয়ক প্রশিক্ষণ",
+    body: "এতদ্বারা সিম ফেব্রিক্স লিঃ এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী [TRAINING_DATE] ইং তারিখ রোজ [DAY] অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর [TIME] ঘটিকার সময় \"আরগোনমিক বিষয়ক প্রশিক্ষণ\" এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে।\n\nউক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে",
+    agendas: []
+  },
+  firstaid: {
+    title: "প্রাথমিক চিকিৎসা বিষয়ক প্রশিক্ষণ",
+    body: "এতদ্বারা সিম ফেব্রিক্স লিঃ এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী [TRAINING_DATE] ইং তারিখ রোজ [DAY] অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর [TIME] ঘটিকার সময় \"প্রাথমিক চিকিৎসা বিষয়ক প্রশিক্ষণ\" এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে।\n\nউক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে",
+    agenda_title: "প্রাথমিক চিকিৎসা প্রশিক্ষণের বিষয়ঃ",
+    agendas: [
+      "১. দুর্ঘটনা স্থানে ক্ষত ব্যবস্থাপনা।",
+      "২. দুর্ঘটনা স্থানে ক্ষত পরিষ্কার করা শেখানো।",
+      "৩. সাময়িকভাবে রক্ত ক্ষরণ বন্ধের উপায়।",
+      "৪. পোড়ার ক্ষত ব্যবস্থাপনা।",
+      "৫. হাড়ভাঙ্গা ক্ষত ব্যবস্থাপনা।"
+    ]
+  },
+  health_safety: {
+    title: "হেলথ এন্ড সেফটি",
+    body: "এতদ্বারা সিম ফেব্রিক্স লিঃ এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী [TRAINING_DATE] ইং তারিখ রোজ [DAY] অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর [TIME] ঘটিকার সময় \"হেলথ এন্ড সেফটি\" এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে। উক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে",
+    agenda_title: "প্রশিক্ষণের আলোচ্য সূচিঃ",
+    agendas: [
+      "১. কারখানার অভ্যন্তরে এবং প্রাঙ্গণে স্বাস্থ্যসম্মত কর্ম পরিবেশ তৈরি করা।",
+      "২. কারখানার অভ্যন্তরে এবং প্রতিটি বিভাগে স্বাস্থ্য সম্মত পরিবেশ পরিষ্কার ও ধুলামুক্ত রাখা।",
+      "৩. কারখানায় কর্মরত প্রতিটি শ্রমিক কর্মচারীকে স্বাস্থ্য সচেতন করে গড়ে তোলা।",
+      "৪. স্বাস্থ্য সম্পর্কিত নীতিমালা মোতাবেক সকল শ্রমিক কর্মচারীর জন্য হাসপাতাল, ডাক্তার ও প্রাথমিক চিকিৎসা সেবা নিশ্চিত করা।",
+      "৫. কারখানায় কর্মরত সকল স্তরের শ্রমিক কর্মচারীর জীবন ও সম্পদের নিরাপত্তা নিশ্চিত করা।",
+      "৬. অনাকাঙ্ক্ষিত বৈদ্যুতিক বা অগ্নি দুর্ঘটনা রোধে পর্যাপ্ত প্রশিক্ষণ প্রদান ও নিয়মিত অনুশীলন ব্যবস্থা চালু রাখা।"
+    ]
+  }
+};
+// ===== END DATABASE =====
+
+const TOPIC_LABEL = {
+  bloodborne: 'Bloodborne Disease Training',
+  contagious: 'Contagious Disease Training',
+  cpr: 'CPR Training',
+  ergonomic: 'Ergonomic Training',
+  firstaid: 'First Aid Training',
+  health_safety: 'Health & Safety Training',
+  rca: 'Injury Root Cause Analysis (RCA)',
+  maternity: 'Maternity Risk Management'
+};
+
+const bnDays=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+const bnNums={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+const toBn=(s)=> s.replace(/\d/g,d=>bnNums[d]);
+function fmtDate(d){
+  if(!d) return '—';
+  const dt=new Date(d+'T00:00:00');
+  if(isNaN(dt)) return d;
+  const dd=String(dt.getDate()).padStart(2,'0');
+  const mm=String(dt.getMonth()+1).padStart(2,'0');
+  const yyyy=dt.getFullYear();
+  return `${dd}/${mm}/${yyyy}`;
+}
+function fmtDateBn(d){ return toBn(fmtDate(d)); }
+function formatTimeBn(t){
+  if(!t) return '—';
+  // "02:00 PM" -> "০২:০০" (strip AM/PM, Bengali digits; দুপুর prefix is in template body)
+  let clean = t.replace(/\s*[AP]\.?M\.?/i,'').trim();
+  return toBn(clean);
+}
+
+// === React-equivalent Modal State (vanilla) ===
+let isWorkspaceOpen = false;
+let activeModule = null;
+let currentKey='bloodborne';
+function handleOpenWorkspace(moduleKey){
+  activeModule = moduleKey;
+  isWorkspaceOpen = true;
+  openWorkspace(moduleKey);
+}
+function handleCloseWorkspace(){
+  isWorkspaceOpen = false;
+  activeModule = null;
+  closeWorkspace();
+}
+
+function getFilledBody(tpl){
+  const train=document.getElementById('trainingDate').value;
+  const time=document.getElementById('trainingTime').value;
+  const dt=new Date(train+'T00:00:00');
+  const day=isNaN(dt)? '—' : bnDays[dt.getDay()];
+  const dateStr=train? fmtDateBn(train) : '—';
+  let body=tpl.body
+    .replace(/\[TRAINING_DATE\]/g, dateStr)
+    .replace(/\[DAY\]/g, day)
+    .replace(/\[TIME\]/g, time);
+  return body;
+}
+
+function renderNotice(){
+  const tpl=NOTICE_TEMPLATES[currentKey];
+  const issue=document.getElementById('issueDate').value;
+  const train=document.getElementById('trainingDate').value;
+  const time=document.getElementById('trainingTime').value;
+  const dtTrain=new Date(train+'T00:00:00'), dtIssue=new Date(issue+'T00:00:00');
+  const bnTrain=isNaN(dtTrain)?'—':bnDays[dtTrain.getDay()];
+  const bnIssue=isNaN(dtIssue)?'—':bnDays[dtIssue.getDay()];
+  document.getElementById('bnDayIssue').textContent=bnIssue;
+  document.getElementById('bnDayTraining').textContent=bnTrain;
+
+  // Also pictorial meta (guarded — elements removed in A4 redesign)
+  const _picDate=document.getElementById('picDate'); if(_picDate) _picDate.textContent=fmtDate(train);
+  const _picGen=document.getElementById('picGen'); if(_picGen) _picGen.textContent=new Date().toLocaleString('en-GB');
+  document.querySelectorAll('.trainingName').forEach(el=> el.textContent=TOPIC_LABEL[currentKey]||currentKey);
+
+  const paper=document.getElementById('noticePaper');
+  document.getElementById('wsTitle').textContent=TOPIC_LABEL[currentKey]||currentKey;
+  const filled=getFilledBody(tpl);
+  const paras=filled.split('\n\n');
+  document.getElementById('wsTitle').textContent=TOPIC_LABEL[currentKey];
+
+  // Build HTML — EXACT screenshot layout + FINAL 100% tweaks (24/14/26/16/15, Bengali digits)
+  const trainingNameForBody = tpl ? tpl.title : (TOPIC_LABEL[currentKey]||currentKey);
+  const timeBn = formatTimeBn(time);
+  const p1 = `এতদ্বারা ${SIM_FABRICS_HEADER.company} এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী ${fmtDateBn(train)} ইং তারিখ রোজ ${bnTrain} অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর ${timeBn} ঘটিকার সময় “<b>${trainingNameForBody}</b>” এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে।`;
+  const p2 = `উক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে।`;
+  let html=`
+    <!-- TOP HEADER — SIDE-BY-SIDE: LOGO LEFT + TEXT STACKED RIGHT -->
+    <div class="header-wrapper">
+      <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/d/1us-dKF3u2IhG1By9qiBEqOVAqqGv0mO_'" class="header-logo-side" alt="SIM Logo">
+      <div class="header-text-group">
+        <h2 class="header-company-side">`+SIM_FABRICS_HEADER.company+`</h2>
+        <p class="header-address-side">`+SIM_FABRICS_HEADER.address+`</p>
+      </div>
+    </div>
+    <div class="header-divider-side"></div>
+    <!-- DOCUMENT BODY -->
+    <div class="px-6 md:px-10 pb-6">
+      <p class="notice-title-wrap"><span class="notice-title">নোটিশ</span></p>
+      <p class="notice-date">তারিখঃ ${fmtDateBn(issue)} ইং</p>
+      <p class="notice-body">${p1}</p>
+      <p class="notice-body">${p2}</p>
+      `+ (tpl && tpl.agendas && tpl.agendas.length ? `
+      <p class="notice-agenda-head">${tpl.agenda_title || 'প্রশিক্ষণের আলোচ্য বিষয় সমূহঃ'}</p>
+      <ul class="notice-bullets">
+        `+ tpl.agendas.map(a=> `<li>${a.replace(/^[\u2022•]\s*/,'')}</li>`).join('') +`
+      </ul>
+      ` : ``) +`
+      <div class="notice-sign">
+        <p>ধন্যবাদান্তে,</p>
+        <div style="height:50px;" aria-hidden="true"></div>
+        <p class="notice-sign-name">${SIM_FABRICS_HEADER.signatory}</p>
+        <p class="notice-sign-designation">${SIM_FABRICS_HEADER.designation}</p>
+      </div>
+    </div>
+  `;
+  paper.innerHTML=html;
+}
+// === RCA DATA ===
+const rcaData = {
+  dyeing: {
+    titleSec: "Dyeing Section",
+    tableSec: "ডাইং",
+    sharpCount: "-",
+    sharpPct: "-",
+    bluntCount: "-",
+    bluntPct: "-",
+    burnCount: "-",
+    burnPct: "-",
+    fractureCount: "-",
+    fracturePct: "-",
+    maskCount: "-",
+    maskPct: "-",
+    riskTitle: "ডাইং সেকশনে ঝুকির প্রকৃতিঃ",
+    risks: [
+      "১. মেঝে পিচ্ছিল থাকলে পায়ে ও আঙুলে আঘাত পেতে পারে।",
+      "২. শ্রমিকেরা মেটাল হ্যান্ড গ্লাভস ব্যবহার না করলে হাতের তালু ও আঙুল কেটে যেতে পারে।",
+      "৩. শ্রমিকেরা মাস্ক ব্যবহার না করলে শ্বাসকস্ট জনিত রোগ হতে পারে।",
+      "৪. সিজার রশি দিয়ে বাধা না থাকলে আঘাত পেতে পারে ও হাত/পা কেটে যেতে পারে।",
+      "৫. ফিনিসড মালামাল দ্বারা ফ্লোর আবদ্ধ থাকলে দুর্ঘটনা ঘটতে পারে।",
+      "৬. মেশিনের পুলি বেল্টে কাপড় পেচিয়ে দুর্ঘটনা ঘটতে পারে।",
+      "৭. কেমিক্যাল ড্রামের ঢাকনা অপ্রয়োজনে খোলা থাকলে শ্রমিকের চোখ ও চামড়ায় ক্ষত হতে পারে।",
+      "৮. ডাইং ক্যামিকেল ফ্লোরে পড়ে থাকলে শ্রমিকের চামড়ায় ক্ষত হতে পারে।",
+      "৯. ক্যামিকেল রুমের কর্মীদের হ্যান্ডেলিং ব্যবহার বিষয়ক প্রশিক্ষন দিতে হবে।"
+    ],
+    prevents: [
+      "১. মেঝে পিচ্ছিল থাকিলে পরিস্কার করার মাধ্যমে তা দূর করতে হবে।",
+      "২. শ্রমিকেরা মেটাল হ্যান্ড গ্লাভস ব্যবহার নিশ্চিত করতে হবে।",
+      "৩. মাস্ক ব্যবহার নিশ্চিত করতে হবে।",
+      "৪. সিজার রশি দিয়ে বাঁধা আছে কিনা তা নিশ্চিত করতে হবে।",
+      "৫. নির্ধারিত জায়গার বাহিরে রক্ষিত মালামাল অপসারণ করতে হবে।",
+      "৬. মেশিন ব্যবহারের সময় যথা নিয়মে পরিচালনা করতে হবে।",
+      "৭. ক্যামিকেল ড্রামের ঢাকনা দ্বারা আবদ্ধ করে রাখতে হবে।",
+      "৮. পড়ে থাকা ক্যামিকেল অপসারন করতে হবে।",
+      "৯. কর্মীদের জন্য প্রশিক্ষনের ব্যবস্থা করতে হবে।"
+    ]
+  },
+  printing: {
+    titleSec: "Printing Section",
+    tableSec: "প্রিন্টিং",
+    sharpCount: "-",
+    sharpPct: "-",
+    bluntCount: "-",
+    bluntPct: "-",
+    burnCount: "-",
+    burnPct: "-",
+    fractureCount: "-",
+    fracturePct: "-",
+    maskCount: "-",
+    maskPct: "-",
+    riskTitle: "প্রিন্টিং সেকশনে ঝুকির প্রকৃতিঃ",
+    risks: [
+      "১. মেঝে পিচ্ছিল থাকলে পায়ে ও আঙুলে আঘাত পেতে পারে।",
+      "২. শ্রমিকেরা গামবুট, মেটাল হ্যান্ড গ্লাভস, সেইফটি চশমা ব্যবহার না করলে হাত, পা কেটে যেতে পারে ও চোখের ক্ষত হতে পারে।",
+      "৩. শ্রমিকেরা মাস্ক ব্যবহার না করলে শ্বাসকস্ট জনিত রোগ হতে পারে।",
+      "৪. সিজার রশি দিয়ে বাধা না থাকলে আঘাত পেতে পারে ও হাত/পা কেটে যেতে পারে।",
+      "৫. মালামাল অগোছালো/ ছড়ানো অবস্থায় থাকলে দুর্ঘটনা ঘটতে পারে।",
+      "৬. প্রয়োজনীয় পিপিই সরবরাহ করা না হলে স্বাস্থ্যঝুঁকি হতে পারে।",
+      "৭. কেমিক্যাল ড্রামের ঢাকনা অপ্রয়োজনে খোলা থাকলে শ্রমিকের চোখ ও চামড়ায় ক্ষত হতে পারে।",
+      "৮. ওয়াশিং ক্যামিকেল ফ্লোরে পড়ে থাকলে শ্রমিকের চামড়ায় ক্ষত হতে পারে।",
+      "৯. ক্যামিকেল রুমের কর্মীদের হ্যান্ডেলিং ব্যবহার বিষয়ক প্রশিক্ষন দিতে হবে।"
+    ],
+    prevents: [
+      "১. মেঝে পিচ্ছিল থাকিলে পরিস্কার করার মাধ্যমে তা দূর করতে হবে।",
+      "২. শ্রমিকেরা গামবুট, মেটাল হ্যান্ড গ্লাভস, সেইফটি চশমা ব্যবহার করতে হবে।",
+      "৩. মাস্ক ব্যবহার নিশ্চিত করতে হবে।",
+      "৪. সিজার রশি দিয়ে বাঁধা আছে কিনা তা নিশ্চিত করতে হবে।",
+      "৫. নির্ধারিত জায়গার বাহিরে রক্ষিত মালামাল অপসারণ করতে হবে।",
+      "৬. প্রয়োজনীয় পিপিই সরবরাহ করতে হবে এবং ব্যভার নিশ্চিত করতে হবে।",
+      "৭. ক্যামিকেল ড্রামের ঢাকনা দ্বারা আবদ্ধ করে রাখতে হবে।",
+      "৮. পড়ে থাকা ক্যামিকেল অপসারন করতে হবে।",
+      "৯. কর্মীদের জন্য প্রশিক্ষনের ব্যবস্থা করতে হবে।"
+    ]
+  },
+  weaving: {
+    titleSec: "Weaving Section",
+    tableSec: "উইভিং",
+    sharpCount: "-",
+    sharpPct: "-",
+    bluntCount: "-",
+    bluntPct: "-",
+    burnCount: "-",
+    burnPct: "-",
+    fractureCount: "-",
+    fracturePct: "-",
+    maskCount: "-",
+    maskPct: "-",
+    riskTitle: "উইভিং সেকশনে ঝুকির প্রকৃতিঃ",
+    risks: [
+      "১. মেশিনে ঘূর্ণায়মান যন্ত্রাংশ/ কনভেয়ার বেল্ট ঢাকা না থাকলে শরীরে আঘাত লাগতে পারে।",
+      "২. শ্রমিকেরা মেটাল হ্যান্ড গ্লাভস, সেইফটি না করলে হাতের তালু ও আঙুল কেটে যেতে পারে।",
+      "৩. শ্রমিকেরা মাস্ক ব্যবহার না করলে শ্বাসকস্ট জনিত রোগ হতে পারে।",
+      "৪. মালামাল অতিরিক্ত উচ্চতায় রাখলে শ্রমিকের গায়ে পড়তে পারে।",
+      "৫. বৈদ্যুতিক তার ছেড়া/ ত্রুটিপূর্ণ থাকলে বৈদ্যুতিক শক লাগতে পারে।",
+      "৬. ডিবি বোর্ডের নিচে ম্যাট রাখা না থাকলে বৈদ্যুতিক শক লাগতে পারে।",
+      "৭. মালামাল অগোছালো/ ছড়ানো ছিটানো অবস্থায় থাকলে দুর্ঘটনা ঘটতে পারে।",
+      "৮. প্রয়োজনীয় পিপিই সরবরাহ করা না হলে স্বাস্থ্যঝুঁকি হতে পারে।"
+    ],
+    prevents: [
+      "১. মেশিনের ঘূর্ণায়মান যন্ত্রাংশ/ কনভেয়ার বেল্ট উপযুক্ত উপায়ে ঢেকে রাখতে পারে।",
+      "২. শ্রমিকেরা মেটাল হ্যান্ড গ্লাভস ব্যবহার নিশ্চিত করতে হবে।",
+      "৩. মাস্ক ব্যবহার নিশ্চিত করতে হবে।",
+      "৪. মালামাল অতিরিক্ত উচ্চতায় রাখা যাবে না।",
+      "৫. ছেড়া/ ত্রুটিপূর্ণ বৈদ্যুতিক তার দ্রুততার সাথে পরিবর্তন করতে হবে।",
+      "৬. সবসময় ডিবি বোর্ডের নিচে ম্যাট রাখতে হবে।",
+      "৭. কারখানার সকল জায়গায় মালামাল/উপকরণ গুছিয়ে রাখতে হবে।",
+      "৮. প্রয়োজনীয় পিপিই সরবারহ করতে হবে এবং ব্যবহার নিশ্চিত করতে হবে।",
+      "৯. কর্মীদের জন্য প্রশিক্ষনের ব্যবস্থা করতে হবে।"
+    ]
+  }
+};
+
+// === MATERNITY RISK MANAGEMENT DATA (CORRECTED SPELLINGS) ===
+const maternityData = [
+  {
+    risk: "একলামসিয়া (খিঁচুনি, অতিরিক্ত মাথাব্যথা, শরীরে পানি আসা)",
+    impact: "অনাগত শিশু বা রোগী অথবা উভয়েরই মৃত্যু ঘটতে পারে।",
+    action: "ডিকেএমসি হাসপাতাল কর্তৃপক্ষের সাথে এগ্রিমেন্ট করা আছে যাতে দ্রুত চিকিৎসা প্রদান করা যায়।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "অতিরিক্ত মাথাব্যথা",
+    impact: "জ্ঞান হারাতে পারে।",
+    action: "কারখানায় খণ্ডকালীন ডাক্তার ও সর্বকালীন নার্স নিয়োগ দেয়া আছে যাতে সুচিকিৎসা প্রদান করা যায়।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "অতিরিক্ত পরিশ্রম, ভারবহন ও মানসিক চাপে অ্যাবরশন হতে পারে।",
+    impact: "অনাগত সন্তানেরও মৃত্যু হয়। রোগীর অতিরিক্ত রক্তক্ষরণে অসুস্থ হওয়ার সম্ভাবনা থাকে। সন্তান ধারণক্ষমতা লোপ পেতে পারে।",
+    action: "ডিকেএমসি হাসপাতাল কর্তৃপক্ষের সাথে এগ্রিমেন্ট করা আছে যাতে দ্রুত হাসপাতালে নিয়ে চিকিৎসা প্রদান করা যায়। প্রসূতি নারী কর্মীদের ওভারটাইম করানো নিষেধ করা হয়েছে। সার্বিকভাবে সহযোগিতা প্রাপ্তির জন্য প্রসূতি নারী কর্মীদেরও কর্মকালীন সময়ে “অগ্রাধিকার” লেখা ব্যাজ পরিধান করার নির্দেশ প্রদান করা হয়েছে। প্রসূতি নারী কর্মীদের ভারবহন করা নিষেধ করা হয়েছে। কাজের মাঝে মাঝে বিশ্রাম প্রদানের নির্দেশ দেয়া হয়েছে।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "রক্তের চাপ বাড়া বা কমা।",
+    impact: "এর ফলে শিশু ও মায়ের শারীরিক ক্ষতি হতে পারে।",
+    action: "রক্তের চাপ ঠিক রাখার জন্য সঙ্গে সঙ্গে ডাক্তারের কাছে নিতে হবে। এ জন্য কারখানায় নিজস্ব ডাক্তার নিয়োগ দেওয়া আছে ও বিনামূল্যে ওষুধ প্রদান করা হয়।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "চোখে ঝাপসা দেখা।",
+    impact: "চোখে সমস্যা হতে পারে।",
+    action: "ডাক্তারের পরামর্শ নিতে হবে, এজন্য কারখানায় নিজস্ব ডাক্তার রয়েছে। যথেষ্ট বিশ্রাম নেওয়ার উপদেশ প্রদান করা হয় এবং পুষ্টিকর খাবার খাওয়ার পরামর্শ প্রদান করা হয়।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "অস্বাস্থ্যকর পানি পানের ফলে ডায়রিয়া, জন্ডিস হওয়ার সম্ভাবনা থাকে।",
+    impact: "এর ফলে রোগীর পাশাপাশি শিশুরও উল্লেখিত রোগসমূহ হতে পারে। ফলে রোগী ও শিশুর স্বাস্থ্যহানি এবং অপুষ্টিতে ভুগতে পারে।",
+    action: "জীবাণুমুক্ত ও পরিচ্ছন্ন পান করার পানির ব্যবস্থা রয়েছে এবং ডাক্তার রয়েছে।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "অতিরিক্ত পরিশ্রমের ফলে অপুষ্ট শিশু জন্ম দিতে পারে।",
+    impact: "অপুষ্ট শিশুর মৃত্যুর হার বেশি থাকে অথবা প্রতিবন্ধী হতে পারে।",
+    action: "অতিরিক্ত পরিশ্রম না করার জন্য পরামর্শ প্রদান। অল্প বয়সে সন্তান ধারণা না করার জন্য পরামর্শ প্রদান করা হয়।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  },
+  {
+    risk: "মাথা ঘোরা ও বমি হতে পারে।",
+    impact: "মা ও শিশুর পানিশূন্যতা দেখা দিতে পারে। রোগী পড়ে যেতে পারে।",
+    action: "ডাক্তারের পরামর্শ প্রদান করা হয়। মানসিক ও শারীরিকভাবে প্রশান্তিতে থাকার পরামর্শ প্রদান করা হয়।",
+    person: "সাবিনা আক্তার (কল্যাণ কর্মকর্তা), অলি মণ্ডল (সেবিকা), তানিয়া আক্তার (সেবিকা)"
+  }
+];
+const maternityHeaders = ["ক্র/নং", "ঝুঁকিসমূহ", "প্রভাব", "কারখানা কর্তৃক ব্যবস্থাসমূহ", "পরবর্তী রিস্ক অ্যাসেসমেন্ট তারিখ", "নতুন রিস্ক", "দায়িত্বপ্রাপ্ত ব্যক্তি"];
+let maternityResponsiblePersons = [
+  "সাবিনা আক্তার (কল্যাণ কর্মকর্তা)",
+  "অলি মণ্ডল (সেবিকা)",
+  "তানিয়া আক্তার (সেবিকা)"
+];
+function getResponsibleText(){ return maternityResponsiblePersons.join(", "); }
+function renderResponsibleTags(){
+  const wrap=document.getElementById('responsibleTags');
+  if(!wrap) return;
+  if(maternityResponsiblePersons.length===0){
+    wrap.innerHTML='<span class="text-[11px] text-[#9a95a6] italic">কোন ব্যক্তি যোগ করা হয়নি — উপরে নাম লিখে Add করুন</span>';
+  } else {
+    wrap.innerHTML=maternityResponsiblePersons.map((name,idx)=>`
+      <span onclick="editResponsiblePerson(${idx})" title="ক্লিক করে পরিবর্তন করুন" class="inline-flex items-center gap-1.5 bg-white border border-[#4a148c]/15 rounded-full px-3 py-1.5 text-[11px] font-medium shadow-sm cursor-pointer hover:border-[#4a148c]/30">
+        <i class="bi bi-person-circle text-[#4a148c]"></i> ${name}
+        <button onclick="event.stopPropagation(); removeResponsiblePerson(${idx})" class="ml-1 w-5 h-5 rounded-full bg-[#fee2e2] text-[#b42318] grid place-items-center hover:bg-[#fecaca]" title="Remove"><i class="bi bi-x text-[12px]"></i></button>
+      </span>`).join('');
+  }
+}
+function addResponsiblePerson(){
+  const inp=document.getElementById('newPersonInput');
+  if(!inp) return;
+  const val=inp.value.trim();
+  if(!val){ inp.focus(); return; }
+  // prevent duplicate
+  if(maternityResponsiblePersons.includes(val)){
+    inp.value=''; inp.placeholder='এই নামটি আগেই আছে';
+    setTimeout(()=> inp.placeholder='নাম + পদবী  e.g.  রহিম উদ্দিন (এইচআর)  বা  তানিয়া আক্তার (সেবিকা)', 2000);
+    return;
+  }
+  maternityResponsiblePersons.push(val);
+  inp.value='';
+  renderResponsibleTags();
+  renderMaternity();
+}
+function removeResponsiblePerson(idx){
+  maternityResponsiblePersons.splice(idx,1);
+  renderResponsibleTags();
+  renderMaternity();
+}
+function editResponsiblePerson(idx){
+  const cur=maternityResponsiblePersons[idx];
+  const next=prompt('নাম / পদবী পরিবর্তন করুন:', cur);
+  if(next===null) return;
+  const v=next.trim();
+  if(!v) return;
+  maternityResponsiblePersons[idx]=v;
+  renderResponsibleTags();
+  renderMaternity();
+}
+
+// === SMART BI-MONTHLY PERIOD SELECTOR ===
+const periodRanges = ["January-February", "March-April", "May-June", "July-August", "September-October", "November-December"];
+let currentPeriodMonth = "September-October";
+let currentPeriodYear = "2026";
+function getCurrentPeriodString(){ return `${currentPeriodMonth} : ${currentPeriodYear}`; }
+function updatePeriodDisplay(){
+  const badge=document.getElementById('rcaPeriodBadge');
+  if(badge) badge.textContent=getCurrentPeriodString();
+  const sSel=document.getElementById('rcaPeriodStartMonth');
+  const eSel=document.getElementById('rcaPeriodEndMonth');
+  if(sSel && eSel && currentPeriodMonth.includes("-")){
+    const parts=currentPeriodMonth.split("-");
+    sSel.value=parts[0]||"September";
+    eSel.value=parts[1]||"October";
+  }
+  const ySel=document.getElementById('rcaPeriodYear');
+  if(ySel) ySel.value=currentPeriodYear;
+}
+function setPeriod(month, year){
+  currentPeriodMonth=month;
+  currentPeriodYear=String(year);
+  updatePeriodDisplay();
+  renderRca();
+}
+let currentRcaDept = 'dyeing';
+function switchRcaDept(dept){
+  currentRcaDept = dept;
+  // update tab active styles
+  ['dyeing','printing','weaving'].forEach(d=>{
+    const btn=document.getElementById('btnRca'+d.charAt(0).toUpperCase()+d.slice(1));
+    if(btn){
+      if(d===dept){ btn.className='flex-1 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-extrabold border bg-[#4a148c] text-white shadow'; }
+      else { btn.className='flex-1 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-bold border bg-gray-100 text-[#333] hover:bg-gray-200'; }
+    }
+  });
+  renderRca();
+}
+
+// === RCA LOGIC — 5-INPUT GRID WITH MANUAL TABLEDATA + AUTO-SUGGEST ===
+const toBnNum = (n) => String(n).replace(/\d/g, d => ({'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'}[d]));
+const fmtCountManual = (raw) => {
+  if(raw === null || raw === undefined) return "-";
+  const v = String(raw).trim();
+  if(v === "" || v === "0" || v === "০" || v === "-") return "-";
+  const en = v.replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d)).replace(/[^0-9]/g,"");
+  if(en === "" || en === "0") return "-";
+  return toBnNum(en.padStart(2,'0')) + " জন";
+};
+const fmtPctManual = (raw) => {
+  if(raw === null || raw === undefined) return "-";
+  let v = String(raw).trim();
+  if(v === "" || v === "0" || v === "0%" || v === "০" || v === "-") return "-";
+  v = v.replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d));
+  v = v.replace(/%/g,"").trim();
+  if(v === "" || isNaN(v) || Number(v) === 0) return "-";
+  return toBnNum(v) + "%";
+};
+function getSuggestedPct(dept, countStr){
+  const n = parseInt(String(countStr).replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d)).replace(/[^0-9]/g,"") || "0");
+  if(isNaN(n) || n<=0) return "";
+  if(dept === 'dyeing'){
+    if(n===3) return "1.76";
+    if(n===2) return "0.88";
+    if(n===1) return "0.44";
+  } else if(dept === 'printing' || dept === 'weaving'){
+    if(n===1) return "0.44";
+    if(n===2) return "0.88";
+    if(n===3) return "1.32";
+  }
+  return "";
+}
+function renderRca(){
+  const monthYear=getCurrentPeriodString();
+  const rData = rcaData[currentRcaDept] || rcaData.dyeing;
+  const tSec=document.getElementById('rcaTitleSection'); if(tSec) tSec.textContent=rData.titleSec;
+  const tMon=document.getElementById('rcaTitleMonth'); if(tMon) tMon.textContent=monthYear;
+  const rTitle=document.getElementById('rcaRiskTitle'); if(rTitle) rTitle.textContent=rData.riskTitle;
+  const rList=document.getElementById('rcaRiskList'); if(rList) rList.innerHTML=rData.risks.map(r=>`<li>${r}</li>`).join('');
+  const pList=document.getElementById('rcaPreventList'); if(pList) pList.innerHTML=rData.prevents.map(p=>`<li>${p}</li>`).join('');
+  document.querySelectorAll('.rcaSecCell').forEach(el=> el.textContent=rData.tableSec);
+  // 5-input grid: count inputs drive both count and auto-suggested percentage (tableData manual logic)
+  const cSharp = document.getElementById('rcaSharp')?.value || "";
+  const cBlunt = document.getElementById('rcaBlunt')?.value || "";
+  const cBurn = document.getElementById('rcaBurn')?.value || "";
+  const cFrac = document.getElementById('rcaFracture')?.value || "";
+  const cMask = document.getElementById('rcaMask')?.value || "";
+  const pSharp = getSuggestedPct(currentRcaDept, cSharp);
+  const pBlunt = getSuggestedPct(currentRcaDept, cBlunt);
+  const pBurn = getSuggestedPct(currentRcaDept, cBurn);
+  const pFrac = getSuggestedPct(currentRcaDept, cFrac);
+  const pMask = getSuggestedPct(currentRcaDept, cMask);
+  document.getElementById('rcaCellSharpCount').textContent = fmtCountManual(cSharp);
+  document.getElementById('rcaCellSharpPct').textContent = fmtPctManual(pSharp);
+  document.getElementById('rcaCellBluntCount').textContent = fmtCountManual(cBlunt);
+  document.getElementById('rcaCellBluntPct').textContent = fmtPctManual(pBlunt);
+  document.getElementById('rcaCellBurnCount').textContent = fmtCountManual(cBurn);
+  document.getElementById('rcaCellBurnPct').textContent = fmtPctManual(pBurn);
+  document.getElementById('rcaCellFractureCount').textContent = fmtCountManual(cFrac);
+  document.getElementById('rcaCellFracturePct').textContent = fmtPctManual(pFrac);
+  document.getElementById('rcaCellMaskCount').textContent = fmtCountManual(cMask);
+  document.getElementById('rcaCellMaskPct').textContent = fmtPctManual(pMask);
+}
+function downloadRcaPdf(){
+  const el=document.getElementById('rcaPreview');
+  const pdfDept = (rcaData[currentRcaDept]?.titleSec || 'Dyeing Section').replace(/\s+/g,'_');
+  html2pdf().set({ margin:8, filename:'RCA_'+pdfDept+'_'+getCurrentPeriodString().replace(/\s+/g,'_')+'.pdf', image:{type:'jpeg', quality:.98}, html2canvas:{scale:2}, jsPDF:{unit:'mm', format:'a4', orientation:'portrait'} }).from(el).save();
+}
+async function downloadRcaDocx(){
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, HeadingLevel, BorderStyle } = docx;
+  const monthYear=getCurrentPeriodString();
+  const section=rcaData[currentRcaDept]?.titleSec || 'Dyeing Section';
+  const rDdocx = rcaData[currentRcaDept] || rcaData.dyeing;
+  const secBn=rDdocx.tableSec||'ডাইং';
+  const toBnNumD = (n) => String(n).replace(/\d/g, d => ({'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'}[d]));
+  const fmtCntD = (raw) => {
+    if(raw===null||raw===undefined) return "-";
+    const v=String(raw).trim();
+    if(v===""||v==="0"||v==="০"||v==="-") return "-";
+    const en=v.replace(/[০-৯]/g, d=>"০১২৩৪৫৬৭৮৯".indexOf(d)).replace(/[^0-9]/g,"");
+    if(en===""||en==="0") return "-";
+    return toBnNumD(en.padStart(2,'0'))+" জন";
+  };
+  const fmtPctD = (raw) => {
+    if(raw===null||raw===undefined) return "-";
+    let v=String(raw).trim();
+    if(v===""||v==="0"||v==="0%"||v==="০"||v==="-") return "-";
+    v=v.replace(/[০-৯]/g, d=>"০১২৩৪৫৬৭৮৯".indexOf(d)).replace(/%/g,"").trim();
+    if(v===""||isNaN(v)||Number(v)===0) return "-";
+    return toBnNumD(v)+"%";
+  };
+  const cS = document.getElementById('rcaSharp')?.value || "";
+  const cB = document.getElementById('rcaBlunt')?.value || "";
+  const cBr = document.getElementById('rcaBurn')?.value || "";
+  const cFr = document.getElementById('rcaFracture')?.value || "";
+  const cM = document.getElementById('rcaMask')?.value || "";
+  const vSharp={cnt:fmtCntD(cS), pct:fmtPctD(getSuggestedPct(currentRcaDept, cS))};
+  const vBlunt={cnt:fmtCntD(cB), pct:fmtPctD(getSuggestedPct(currentRcaDept, cB))};
+  const vBurn={cnt:fmtCntD(cBr), pct:fmtPctD(getSuggestedPct(currentRcaDept, cBr))};
+  const vFrac={cnt:fmtCntD(cFr), pct:fmtPctD(getSuggestedPct(currentRcaDept, cFr))};
+  const vMask={cnt:fmtCntD(cM), pct:fmtPctD(getSuggestedPct(currentRcaDept, cM))};
+  const children=[];
+  // Header
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: SIM_FABRICS_HEADER.company, bold:true, size:36 }) ], spacing:{after:60} }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: SIM_FABRICS_HEADER.address, size:21 }) ], spacing:{after:80}, border:{ bottom:{ color:'000000', space:4, size:6, style:'single' } } }));
+  // Title
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: 'Injury Root Cause Analysis for '+section, bold:true, size:30 }) ], spacing:{before:120, after:60} }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: 'Month of '+monthYear, bold:true, size:26 }) ], spacing:{after:120} }));
+  // Section 1 heading
+  children.push(new Paragraph({ children:[ new TextRun({ text: 'আহত/ দুর্ঘটনার বিবরণঃ', bold:true, size:24, underline:{} }) ], spacing:{before:120, after:80} }));
+  // Table
+  const mkCell=(t,bold=false,shading)=> new TableCell({ shading: shading?{ fill:'FFFFFF' }:undefined, children:[ new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:t, bold:bold, size:20 }) ] }) ], width:{ size:25, type:WidthType.PERCENTAGE } });
+  const headerRow=new TableRow({ children:[ mkCell('আহত/ দুর্ঘটনার বিবরণ',true,true), mkCell('সেকশন',true,true), mkCell('আহত দুর্ঘটনার সংখ্যা',true,true), mkCell('শতকরা হার',true,true) ] });
+  const rows=[
+    ['ধারালো কাটা আঘাত', secBn, vSharp.cnt, vSharp.pct],
+    ['ভোঁতা আঘাত', secBn, vBlunt.cnt, vBlunt.pct],
+    ['পোড়া ক্ষত', secBn, vBurn.cnt, vBurn.pct],
+    ['হাড় ভাঙা', secBn, vFrac.cnt, vFrac.pct],
+    ['মাস্ক ব্যবহার না করা', secBn, vMask.cnt, vMask.pct]
+  ].map(r=> new TableRow({ children: r.map(c=> mkCell(c)) }));
+  children.push(new Table({ rows: [headerRow, ...rows], width:{ size:100, type:WidthType.PERCENTAGE } }));
+  // Helper for lists
+  const addList=(title, items)=>{
+    children.push(new Paragraph({ children:[ new TextRun({ text: title, bold:true, size:24, underline:{} }) ], spacing:{before:200, after:80} }));
+    items.forEach((it,i)=> children.push(new Paragraph({ children:[ new TextRun({ text: ' '+it, size:22 }) ], spacing:{after:40} })));
+  };
+  const rD = rcaData[currentRcaDept] || rcaData.dyeing;
+  addList(rD.riskTitle, rD.risks);
+  addList('প্রতিরোধ ব্যবস্থাঃ', rD.prevents);
+  addList('কারখানা কর্তৃপক্ষের নেওয়া পদক্ষেপসমূহঃ', [
+    '১. প্রয়োজনীয় পিপিই ব্যবহার ও রক্ষণাবেক্ষণে শ্রমিকদের সচেতন করতে হবে।',
+    '২. মেঝে সবসময় পরিষ্কার ও শুকনা রাখতে হবে।',
+    '৩. পুনঃপ্রশিক্ষন প্রদান করতে হবে।'
+  ]);
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, children:[ new TextRun({ text:'Signature', size:22 }) ], spacing:{before:300} }));
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, spacing:{before:400}, children:[ new TextRun({ text:'Doctor', bold:true, size:22 }) ] }));
+  const doc=new Document({ sections:[{ properties:{ page:{ margin:{ top:800, bottom:800, left:720, right:720 } } }, children }] });
+  const blob=await Packer.toBlob(doc);
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='RCA_'+section.replace(/\s+/g,'_')+'.docx'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+
+function openWorkspace(key){
+  currentKey=key;
+  // RCA/Maternity special handling
+  const rcaEl=document.getElementById('rcaWorkspace');
+  const matEl=document.getElementById('maternityWorkspace');
+  const tabBar=document.getElementById('workspaceTabBar');
+  if(key==='rca'){
+    document.getElementById('wsTitle').textContent='Injury Root Cause Analysis (RCA)';
+    if(tabBar) tabBar.classList.add('hidden');
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+    if(rcaEl) rcaEl.classList.remove('hidden');
+    if(matEl) matEl.classList.add('hidden');
+    document.getElementById('workspaceModal').classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    renderRca();
+    return;
+  } else if(key==='maternity'){
+    document.getElementById('wsTitle').textContent='Maternity Risk Assessment';
+    if(tabBar) tabBar.classList.add('hidden');
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+    if(rcaEl) rcaEl.classList.add('hidden');
+    if(matEl) matEl.classList.remove('hidden');
+    document.getElementById('workspaceModal').classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    renderResponsibleTags();
+    renderMaternity();
+    return;
+  } else {
+    if(rcaEl) rcaEl.classList.add('hidden');
+    if(matEl) matEl.classList.add('hidden');
+    if(tabBar) tabBar.classList.remove('hidden');
+  }
+  const title=TOPIC_LABEL[key]||key;
+  document.getElementById('wsTitle').textContent=title;
+  const _pt=document.getElementById('picTitle'); if(_pt) _pt.value='Pictorial Evidence of '+title;
+  const _ph=document.getElementById('picHeader'); if(_ph) _ph.innerHTML='Pictorial Evidence of <span class="trainingName">'+title+'</span>';
+  renderNotice();
+  document.getElementById('workspaceModal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  switchTab('notice');
+}
+function closeWorkspace(){
+  const rcaEl=document.getElementById('rcaWorkspace');
+  const matEl=document.getElementById('maternityWorkspace');
+  const tabBar=document.getElementById('workspaceTabBar');
+  if(rcaEl) rcaEl.classList.add('hidden');
+  if(matEl) matEl.classList.add('hidden');
+  if(tabBar) tabBar.classList.remove('hidden');
+  document.getElementById('workspaceModal').classList.add('hidden');
+  document.body.style.overflow='';
+}
+function formatDateToBengali(dateStr){
+  if(!dateStr) return "০১/১০/২০২৬";
+  const d=new Date(dateStr+'T00:00:00');
+  if(isNaN(d)) return "০১/১০/২০২৬";
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const yyyy=String(d.getFullYear());
+  return toBnNum(dd+'/'+mm+'/'+yyyy);
+}
+function getNextMonthBengali(dateStr){
+  if(!dateStr) dateStr='2026-10-01';
+  const d=new Date(dateStr+'T00:00:00');
+  if(isNaN(d)) return toBnNum('01/11/2026');
+  d.setMonth(d.getMonth()+1);
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const yyyy=String(d.getFullYear());
+  return toBnNum(dd+'/'+mm+'/'+yyyy);
+}
+function renderMaternity(){
+  const tbody1=document.getElementById('maternityTableBodyPage1');
+  const tbody2=document.getElementById('maternityTableBodyPage2');
+  if(!tbody1 || !tbody2) return;
+  const assessDate=document.getElementById('maternityAssessmentDate')?.value || '2026-10-01';
+  const nextDate=document.getElementById('maternityNextAssessmentDate')?.value || '2026-11-01';
+  const newRiskStatus=document.getElementById('maternityNewRiskStatus')?.value?.trim() || 'কোন নতুন রিস্ক পাওয়া যায়নি ।';
+  const assessBengali=formatDateToBengali(assessDate)+' ইং';
+  const nextBengali=formatDateToBengali(nextDate);
+  const topDateEl=document.getElementById('maternityTopDate');
+  if(topDateEl) topDateEl.textContent=assessBengali;
+  const topDateEl2=document.getElementById('maternityTopDate2');
+  if(topDateEl2) topDateEl2.textContent=assessBengali;
+  const responsibleText=getResponsibleText() || "—";
+  const rowHtml=(r,i)=>`
+    <tr>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:center; font-size:12px; width:4%;">${toBnNum(String(i+1))}</td>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:left; font-size:12px; width:14%;">${r.risk}</td>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:left; font-size:12px; width:15%;">${r.impact}</td>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:left; font-size:12px; width:34%;">${r.action}</td>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:center; font-size:12px; width:10%;">${nextBengali}</td>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:center; font-size:12px; width:12%; word-break:keep-all; white-space:normal;">${newRiskStatus}</td>
+      <td style="border:1px solid #000000; padding:8px; font-family:'SolaimanLipi', sans-serif; text-align:center; font-size:12px; width:12%;">${responsibleText}</td>
+    </tr>`;
+  tbody1.innerHTML=maternityData.slice(0,4).map((r,i)=>rowHtml(r,i)).join('');
+  tbody2.innerHTML=maternityData.slice(4,8).map((r,i)=>rowHtml(r,i+4)).join('');
+}
+async function downloadMaternityDocx(){
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
+  const assessDate=document.getElementById('maternityAssessmentDate')?.value || '2026-10-01';
+  const nextDate=document.getElementById('maternityNextAssessmentDate')?.value || '2026-11-01';
+  const newRiskStatus=document.getElementById('maternityNewRiskStatus')?.value?.trim() || 'কোন নতুন রিস্ক পাওয়া যায়নি ।';
+  const assessBengali=formatDateToBengali(assessDate)+' ইং';
+  const nextBengali=formatDateToBengali(nextDate);
+  const children=[];
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: SIM_FABRICS_HEADER.company, bold:true, size:36 }) ], spacing:{after:60} }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: SIM_FABRICS_HEADER.address, size:21 }) ], spacing:{after:80}, border:{ bottom:{ color:'000000', space:4, size:6, style:'single' } } }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: 'প্রসূতি/ সন্তান সম্ভবা নারী কর্মীদের রিস্ক এসেসমেন্ট', bold:true, size:24 }) ], spacing:{before:120, after:60} }));
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, children:[ new TextRun({ text: 'তারিখঃ '+assessBengali, size:20 }) ], spacing:{after:80} }));
+  const colWidths=[4,14,15,34,10,12,12];
+  const mkCell=(t,bold=false,w=14)=> new TableCell({ children:[ new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:t, bold:bold, size:16 }) ] }) ], width:{ size:w, type:WidthType.PERCENTAGE } });
+  const headerRow=new TableRow({ children: maternityHeaders.map((h,i)=> mkCell(h,true,colWidths[i])) });
+  const responsibleTextDoc=getResponsibleText() || "—";
+  const rows=maternityData.map((r,i)=> new TableRow({ children: [ toBnNum(String(i+1)), r.risk, r.impact, r.action, nextBengali, newRiskStatus, responsibleTextDoc ].map((c,idx)=> mkCell(c,false,colWidths[idx])) }));
+  children.push(new Table({ rows: [headerRow, ...rows], width:{ size:100, type:WidthType.PERCENTAGE } }));
+  // Footer signatures
+  children.push(new Paragraph({ children:[ new TextRun({ text: '', size:22 }) ], spacing:{before:600} }));
+  const footerRow=new TableRow({ children: [
+    new TableCell({ children:[ new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:'অ্যাসেসমেন্টকারী', size:18 }) ] }), new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:'ডা. রাশনা মাহজাবীন তন্বী', bold:true, size:18 }) ] }), new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:'এমবিবিএস (ডিইউ), ডি অ্যাজমা (ইউকে)', size:14 }) ] }), new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:'পিজিটি (বিএসএমএমইউ), সিসিডি (বারডেম), সিএমইউ', size:14 }) ] }), new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:'সিনিয়র মেডিকেল অফিসার, সিম গ্রুপ', size:14 }) ] }) ], width:{ size:50, type:WidthType.PERCENTAGE } }),
+    new TableCell({ children:[ new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text:'ব্যবস্থাপক, অ্যাডমিন অ্যান্ড কমপ্লায়েন্স', bold:true, size:18 }) ] }) ], width:{ size:50, type:WidthType.PERCENTAGE } })
+  ]});
+  children.push(new Table({ rows:[footerRow], width:{ size:100, type:WidthType.PERCENTAGE } }));
+  const doc=new Document({ sections:[{ properties:{ page:{ margin:{ top:600, bottom:600, left:500, right:500 } } }, children }] });
+  const blob=await Packer.toBlob(doc);
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='Maternity_Risk_Assessment.docx'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+async function downloadMaternityPdf(){
+  const { jsPDF }=window.jspdf;
+  const page1=document.getElementById('maternityPage1');
+  const page2=document.getElementById('maternityPage2');
+  const pdf=new jsPDF('p','mm','a4');
+  const pageW=210, pageH=297;
+  if(page1){
+    const c1=await html2canvas(page1,{ scale:2, useCORS:true, backgroundColor:'#ffffff' });
+    const img1=c1.toDataURL('image/png');
+    const imgH1=c1.height*pageW/c1.width;
+    pdf.addImage(img1,'PNG',0,0,pageW,Math.min(imgH1, pageH));
+  }
+  if(page2){
+    pdf.addPage();
+    const c2=await html2canvas(page2,{ scale:2, useCORS:true, backgroundColor:'#ffffff' });
+    const img2=c2.toDataURL('image/png');
+    const imgH2=c2.height*pageW/c2.width;
+    pdf.addImage(img2,'PNG',0,0,pageW,Math.min(imgH2, pageH));
+  }
+  pdf.save('Maternity_Risk_Assessment_2Page.pdf');
+}
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    const is=b.dataset.tab===id;
+    b.classList.toggle('tab-active', is);
+    b.classList.toggle('bg-white', !is);
+    b.classList.toggle('border', !is);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=> p.classList.add('hidden'));
+  document.getElementById('tab-'+id).classList.remove('hidden');
+}
+(function(){
+  const el=document.getElementById('liveClock');
+  if(!el) return;
+  const fmtT=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true});
+  const fmtD=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Dhaka', day:'2-digit', month:'2-digit', year:'numeric'});
+  const fmtW=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka', weekday:'long'});
+  function tick(){
+    const now=new Date();
+    el.textContent=`${fmtT.format(now)} | ${fmtD.format(now)} | ${fmtW.format(now)}`;
+    setTimeout(tick, 1000 - Date.now()%1000);
+  }
+  tick();
+})();
+['issueDate','trainingDate','trainingTime'].forEach(id=> document.getElementById(id).addEventListener('change', renderNotice));
+document.getElementById('issueDate').addEventListener('input', renderNotice);
+document.getElementById('trainingDate').addEventListener('input', renderNotice);
+['rcaSharp','rcaBlunt','rcaBurn','rcaFracture','rcaMask'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el){ el.addEventListener('input', renderRca); el.addEventListener('change', renderRca); }
+});
+// Smart Period Selector listeners
+document.getElementById('rcaPeriodStartMonth')?.addEventListener('change', e=>{
+  const start=e.target.value;
+  const end=document.getElementById('rcaPeriodEndMonth')?.value || "October";
+  if(start && end) currentPeriodMonth=`${start}-${end}`;
+  else if(start) currentPeriodMonth=start;
+  updatePeriodDisplay();
+  renderRca();
+});
+document.getElementById('rcaPeriodEndMonth')?.addEventListener('change', e=>{
+  const end=e.target.value;
+  const start=document.getElementById('rcaPeriodStartMonth')?.value || "September";
+  if(start && end) currentPeriodMonth=`${start}-${end}`;
+  else if(end) currentPeriodMonth=end;
+  updatePeriodDisplay();
+  renderRca();
+});
+document.getElementById('rcaPeriodYear')?.addEventListener('change', e=>{
+  currentPeriodYear=e.target.value;
+  updatePeriodDisplay();
+  renderRca();
+});
+function findPairIndex(){
+  if(periodRanges.includes(currentPeriodMonth)) return periodRanges.indexOf(currentPeriodMonth);
+  for(let i=0;i<periodRanges.length;i++){
+    if(periodRanges[i].split("-").includes(currentPeriodMonth)) return i;
+  }
+  return periodRanges.indexOf("September-October");
+}
+document.getElementById('rcaPeriodPrev')?.addEventListener('click', ()=>{
+  let idx=findPairIndex()-1;
+  let y=parseInt(currentPeriodYear);
+  if(idx<0){ idx=periodRanges.length-1; y--; }
+  currentPeriodMonth=periodRanges[idx];
+  currentPeriodYear=String(y);
+  updatePeriodDisplay();
+  renderRca();
+});
+document.getElementById('rcaPeriodNext')?.addEventListener('click', ()=>{
+  let idx=findPairIndex()+1;
+  let y=parseInt(currentPeriodYear);
+  if(idx>=periodRanges.length){ idx=0; y++; }
+  currentPeriodMonth=periodRanges[idx];
+  currentPeriodYear=String(y);
+  updatePeriodDisplay();
+  renderRca();
+});
+// Maternity Control Panel listeners
+document.getElementById('maternityAssessmentDate')?.addEventListener('change', renderMaternity);
+document.getElementById('maternityAssessmentDate')?.addEventListener('input', renderMaternity);
+document.getElementById('maternityNextAssessmentDate')?.addEventListener('change', renderMaternity);
+document.getElementById('maternityNextAssessmentDate')?.addEventListener('input', renderMaternity);
+document.getElementById('maternityNewRiskStatus')?.addEventListener('input', renderMaternity);
+document.getElementById('maternityNewRiskStatus')?.addEventListener('change', renderMaternity);
+// Init responsible tags on load
+document.addEventListener('DOMContentLoaded', ()=>{ renderResponsibleTags(); });
+document.getElementById('picTitle').addEventListener('input', e=> {
+  const t = e.target.value || TOPIC_LABEL[currentKey] || '';
+  // Keep A4 title exact: Pictorial Evidence of [TRAINING_NAME]
+  document.getElementById('picHeader').innerHTML='Pictorial Evidence of <span class="trainingName">'+ (t.replace(/^Pictorial Evidence of\s*/i,'') || TOPIC_LABEL[currentKey]) +'</span>';
+});
+
+// Drag & drop
+const dropZone=document.getElementById('dropZone');
+const fileInput=document.getElementById('fileInput');
+const thumbGrid=document.getElementById('thumbGrid');
+const previewGrid=document.getElementById('picPreviewGrid');
+let images=[];
+function handleFiles(files){
+  [...files].forEach(file=>{
+    if(!file.type.startsWith('image/')) return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+      images.push({ name:file.name, src:e.target.result });
+      renderThumbs();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderThumbs(){
+  thumbGrid.innerHTML=images.map((im,i)=> `
+    <div class="relative group border rounded-xl overflow-hidden bg-white">
+      <img src="${im.src}" class="w-full h-24 object-cover">
+      <button onclick="removeImg(${i})" class="absolute top-1 right-1 bg-black/60 text-white rounded-full w-6 h-6 grid place-items-center text-xs"><i class="bi bi-x"></i></button>
+      <button onclick="openCropper(${i})" class="absolute bottom-1 left-1 bg-[#4a148c] text-white rounded-full px-2 py-1 text-[10px] font-bold shadow">✂️ Crop</button>
+      <p class="text-[10px] p-1 truncate">${im.name}</p>
+    </div>
+  `).join('');
+  const bar=document.getElementById('cropActionBar'); if(bar) bar.classList.toggle('hidden', images.length===0);
+  if(images.length){
+    // A4 clean: 85-90% width, centered, NO borders/shadows/captions
+    previewGrid.innerHTML=images.map(im=> `<img src="${im.src}" style="width:88%; max-width:88%; height:auto; display:block; margin:0 auto; object-fit:contain;">`).join('');
+  } else {
+    previewGrid.innerHTML='<p style="color:#999; font-size:13px;">No images yet — upload to see A4 preview</p>';
+  }
+}
+function removeImg(i){ images.splice(i,1); renderThumbs(); }
+dropZone.addEventListener('click', e=>{ if(e.target===dropZone) fileInput.click(); });
+dropZone.addEventListener('dragover', e=>{ e.preventDefault(); dropZone.classList.add('drag'); });
+dropZone.addEventListener('dragleave', ()=> dropZone.classList.remove('drag'));
+dropZone.addEventListener('drop', e=>{ e.preventDefault(); dropZone.classList.remove('drag'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', e=> handleFiles(e.target.files));
+
+// === CROP LOGIC — FREESTYLE (aspectRatio: NaN, viewMode:0) ===
+const CROPPER_OPTIONS = {
+  aspectRatio: NaN, // freeform — unlimited
+  viewMode: 0, // allow crop box to extend anywhere, full right edge
+  cropBoxResizable: true,
+  cropBoxMovable: true,
+  dragMode: 'move',
+  autoCropArea: 1, // initial 100% full image width
+  responsive: true,
+  restore: true,
+  checkOrientation: false
+};
+let cropIndex=null, isDrag=false, dragMode=null, startX=0, startY=0, startBox=null;
+const cropModal=document.getElementById('cropModal'), cropImg=document.getElementById('cropImage'), cropRect=document.getElementById('cropRect'), cropWrap=document.getElementById('cropWrap');
+function openCropper(idx){
+  if(!images[idx]) return;
+  cropIndex=idx;
+  cropImg.src=images[idx].src;
+  cropModal.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  cropImg.onload=()=>{
+    // autoCropArea:1 => initial crop box covers 100% full image width (left to right edge)
+    setTimeout(()=>{
+      const r=cropImg.getBoundingClientRect(), w=r.width, h=r.height;
+      const bw=w * CROPPER_OPTIONS.autoCropArea, bh=h * CROPPER_OPTIONS.autoCropArea;
+      cropBox={x:0, y:0, w:bw, h:bh};
+      updateCropRect();
+    },50);
+  };
+}
+function closeCropper(){
+  cropModal.classList.add('hidden');
+  document.body.style.overflow='';
+  cropIndex=null;
+}
+function updateCropRect(){
+  cropRect.style.left=cropBox.x+'px';
+  cropRect.style.top=cropBox.y+'px';
+  cropRect.style.width=cropBox.w+'px';
+  cropRect.style.height=cropBox.h+'px';
+}
+let cropBox={x:0,y:0,w:0,h:0};
+function getWrapOffset(){
+  const wr=cropWrap.getBoundingClientRect(), ir=cropImg.getBoundingClientRect();
+  return { left: ir.left - wr.left, top: ir.top - wr.top, w: ir.width, h: ir.height };
+}
+cropRect.addEventListener('mousedown', e=>{
+  e.preventDefault(); isDrag=true; dragMode='move'; startX=e.clientX; startY=e.clientY; startBox={...cropBox};
+});
+cropRect.querySelectorAll('.crop-handle').forEach(h=>{
+  h.addEventListener('mousedown', e=>{
+    e.stopPropagation(); e.preventDefault();
+    isDrag=true; dragMode=e.target.dataset.dir;
+    startX=e.clientX; startY=e.clientY; startBox={...cropBox};
+  });
+});
+window.addEventListener('mousemove', e=>{
+  if(!isDrag) return;
+  const dx=e.clientX-startX, dy=e.clientY-startY;
+  const wrap=getWrapOffset();
+  let nb={...startBox};
+  if(dragMode==='move'){
+    nb.x=Math.max(0, Math.min(wrap.w - startBox.w, startBox.x + dx));
+    nb.y=Math.max(0, Math.min(wrap.h - startBox.h, startBox.y + dy));
+  }else{
+    if(dragMode.includes('e')) nb.w=Math.max(40, Math.min(wrap.w - startBox.x, startBox.w + dx));
+    if(dragMode.includes('s')) nb.h=Math.max(40, Math.min(wrap.h - startBox.y, startBox.h + dy));
+    if(dragMode.includes('w')){ const nx=Math.max(0, Math.min(startBox.x+startBox.w-40, startBox.x+dx)); nb.w=startBox.w + (startBox.x-nx); nb.x=nx; }
+    if(dragMode.includes('n')){ const ny=Math.max(0, Math.min(startBox.y+startBox.h-40, startBox.y+dy)); nb.h=startBox.h + (startBox.y-ny); nb.y=ny; }
+  }
+  cropBox=nb; updateCropRect();
+});
+window.addEventListener('mouseup', ()=>{ isDrag=false; dragMode=null; });
+// touch
+cropRect.addEventListener('touchstart', e=>{ const t=e.touches[0]; isDrag=true; dragMode='move'; startX=t.clientX; startY=t.clientY; startBox={...cropBox}; e.preventDefault(); }, {passive:false});
+window.addEventListener('touchmove', e=>{
+  if(!isDrag) return;
+  const t=e.touches[0], dx=t.clientX-startX, dy=t.clientY-startY;
+  const wrap=getWrapOffset();
+  let nb={...startBox};
+  nb.x=Math.max(0, Math.min(wrap.w - startBox.w, startBox.x + dx));
+  nb.y=Math.max(0, Math.min(wrap.h - startBox.h, startBox.y + dy));
+  cropBox=nb; updateCropRect();
+  e.preventDefault();
+}, {passive:false});
+window.addEventListener('touchend', ()=>{ isDrag=false; });
+function applyCrop(){
+  if(cropIndex===null) return;
+  const imgEl=cropImg;
+  const wrapOff=getWrapOffset();
+  // map cropBox from displayed to natural
+  const scaleX=imgEl.naturalWidth / wrapOff.w;
+  const scaleY=imgEl.naturalHeight / wrapOff.h;
+  const sx=(cropBox.x) * scaleX;
+  const sy=(cropBox.y) * scaleY;
+  const sw=cropBox.w * scaleX;
+  const sh=cropBox.h * scaleY;
+  const canvas=document.createElement('canvas');
+  canvas.width=Math.max(1, Math.round(sw));
+  canvas.height=Math.max(1, Math.round(sh));
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(imgEl, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+  const newUrl=canvas.toDataURL('image/jpeg', 0.92);
+  images[cropIndex].src=newUrl;
+  renderThumbs();
+  closeCropper();
+}
+cropModal.addEventListener('click', e=>{ if(e.target===cropModal) closeCropper(); });
+
+// Downloads — STRICT Word-exact (no outer border, no ref, no dept, no left signatory, no footer)
+async function downloadDocx(){
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = docx;
+  const tpl=NOTICE_TEMPLATES[currentKey];
+  const issue=document.getElementById('issueDate').value, train=document.getElementById('trainingDate').value, time=document.getElementById('trainingTime').value;
+  const dtTrain=new Date(train+'T00:00:00');
+  const bnTrain=isNaN(dtTrain)?'—':bnDays[dtTrain.getDay()];
+  const trainingNameForBody = tpl ? tpl.title : (TOPIC_LABEL[currentKey]||currentKey);
+  const timeBn = formatTimeBn(time);
+  const p1Before = `এতদ্বারা ${SIM_FABRICS_HEADER.company} এর সকল শ্রমিক ও কর্মচারীদের অবগতির জন্য জানানো যাইতেছে যে, আগামী ${fmtDateBn(train)} ইং তারিখ রোজ ${bnTrain} অত্র কারখানার প্রশিক্ষণ কক্ষে দুপুর ${timeBn} ঘটিকার সময় “`;
+  const p1After = `” এর উপর এক প্রশিক্ষণ ও আলোচনা সভার আয়োজন করা হয়েছে।`;
+  const p2 = `উক্ত প্রশিক্ষণ ও আলোচনা সভায় সংশ্লিষ্ট সকলকে যথাসময়ে প্রশিক্ষণ কক্ষে উপস্থিত থাকার জন্য অনুরোধ করা যাচ্ছে।`;
+  const children=[];
+  // TOP HEADER — Side-by-side logo(60px)+ text 38px/14px + divider (1px letter-spacing)
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: SIM_FABRICS_HEADER.company, bold:true, size:57 }) ], spacing:{after:40} }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: SIM_FABRICS_HEADER.address, size:21 }) ], spacing:{after:60},
+    border:{ bottom:{ color:"000000", space:4, size:6, style: "single" } } }));
+  // DOCUMENT TITLE 26px
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing:{before:200, after:180}, children:[ new TextRun({ text: "নোটিশ", bold:true, size:39, underline:{} }) ] }));
+  // DATE LINE
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, spacing:{after:200}, children:[ new TextRun({ text: `তারিখঃ ${fmtDateBn(issue)} ইং`, size:24 }) ] }));
+  // BODY 16px = 12pt = size 24
+  children.push(new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing:{after:120}, children:[ new TextRun({ text: p1Before, size:24 }), new TextRun({ text: trainingNameForBody, bold:true, size:24 }), new TextRun({ text: p1After, size:24 }) ] }));
+  children.push(new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing:{after:160}, children:[ new TextRun({ text: p2, size:24 }) ] }));
+  // AGENDA 16px bullets
+  if(tpl && tpl.agendas && tpl.agendas.length){
+    children.push(new Paragraph({ spacing:{before:100, after:80}, children:[ new TextRun({ text: tpl.agenda_title || 'প্রশিক্ষণের আলোচ্য বিষয় সমূহঃ', bold:true, size:24, underline:{} }) ] }));
+    tpl.agendas.forEach(a=>{
+      children.push(new Paragraph({ alignment: AlignmentType.LEFT, bullet:{ level:0 }, spacing:{after:40}, children:[ new TextRun({ text: a, size:24 }) ] }));
+    });
+  }
+  // SIGNATURE — right corner, center-inner, 50px gap
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, spacing:{before:360}, children:[ new TextRun({ text: "ধন্যবাদান্তে,", size:22 }) ] }));
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, spacing:{before:800}, children:[ new TextRun({ text: SIM_FABRICS_HEADER.signatory, bold:true, size:23 }) ] }));
+  children.push(new Paragraph({ alignment: AlignmentType.RIGHT, children:[ new TextRun({ text: SIM_FABRICS_HEADER.designation, size:20 }) ] }));
+
+  const doc=new Document({
+    sections:[{ properties:{ page:{ margin:{ top:800, bottom:800, left:900, right:900 } } }, children }]
+  });
+  const blob=await Packer.toBlob(doc);
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`${(TOPIC_LABEL[currentKey]||currentKey).replace(/\s+/g,'_')}_Notice.docx`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+function downloadPdf(id){
+  const el=document.getElementById(id);
+  html2pdf().set({ margin:8, filename: ((TOPIC_LABEL[currentKey]||currentKey).replace(/\s+/g,'_')+'.pdf'), image:{type:'jpeg', quality:.98}, html2canvas:{scale:2}, jsPDF:{unit:'mm', format:'a4', orientation:'portrait'} }).from(el).save();
+}
+async function downloadDocxPictorial(){
+  if(!images.length){ alert('Please upload at least one photo for Pictorial Evidence.'); return; }
+  const { Document, Packer, Paragraph, TextRun, AlignmentType, ImageRun } = docx;
+  const titleText = document.getElementById('picTitle').value || ('Pictorial Evidence of '+(TOPIC_LABEL[currentKey]||''));
+  const children=[];
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: 'SIM FABRICS LTD', bold:true, size:42, color:'333333' }) ], spacing:{after:40} }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: 'Thakurbari Tek, Masumabad, Rupganj, Narayanganj.', size:20, color:'555555' }) ], spacing:{after:60}, border:{ bottom:{ color:'000000', space:4, size:8, style:'single' } } }));
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing:{before:240, after:200}, children:[ new TextRun({ text: titleText, bold:true, size:30, underline:{} }) ] }));
+  for(let im of images){
+    try{
+      const dataUrl=im.src;
+      const base64=dataUrl.split(',')[1];
+      const mime=(dataUrl.match(/data:(.*?);/)||[])[1]||'image/png';
+      const type=mime.includes('png') ? 'png' : 'jpg';
+      const binary=atob(base64);
+      const len=binary.length;
+      const bytes=new Uint8Array(len);
+      for(let i=0;i<len;i++) bytes[i]=binary.charCodeAt(i);
+      children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing:{before:120, after:120}, children:[ new ImageRun({ data: bytes, transformation:{ width: 550, height: 350 }, type: type }) ] }));
+    }catch(e){
+      children.push(new Paragraph({ alignment: AlignmentType.CENTER, children:[ new TextRun({ text: im.name, italics:true, size:18 }) ] }));
+    }
+  }
+  const doc=new Document({ sections:[{ properties:{ page:{ margin:{ top:720, bottom:720, left:720, right:720 } } }, children }] });
+  const blob=await Packer.toBlob(doc);
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`${(TOPIC_LABEL[currentKey]||currentKey).replace(/\s+/g,'_')}_Pictorial.docx`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+window.openWorkspace=openWorkspace; window.closeWorkspace=closeWorkspace; window.handleOpenWorkspace=handleOpenWorkspace; window.handleCloseWorkspace=handleCloseWorkspace; window.switchTab=switchTab;
+window.downloadDocx=downloadDocx; window.downloadPdf=downloadPdf; window.downloadDocxPictorial=downloadDocxPictorial; window.removeImg=removeImg;
+// init
+renderNotice();
+</script>
+</body>
+</html>
